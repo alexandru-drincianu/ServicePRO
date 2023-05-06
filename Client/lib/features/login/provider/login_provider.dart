@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fimber_io/fimber_io.dart';
+import 'package:service_pro/core/models/user_model.dart';
 
 import '../../../core/base_exception.dart';
 import '../../../core/locator.dart';
@@ -30,6 +31,16 @@ class LoginProvider extends ChangeNotifier {
         ? const BaseState.data(Void())
         : const BaseState.empty();
     notifyListeners();
+  }
+
+  /// Loads the user details from Shared Preferences and updates authentication
+  /// state.
+  Future<UserModel?> getLoggedInUserData() async {
+    try {
+      await _userSettingsService.load();
+    } catch (_) {}
+
+    return _userSettingsService.user;
   }
 
   /// Resets the authentication state

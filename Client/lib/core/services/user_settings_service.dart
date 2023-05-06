@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:service_pro/core/enums/enums.dart';
+import 'package:service_pro/core/services/register_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../locator.dart';
@@ -73,6 +75,20 @@ class UserSettingsService {
   }) async {
     _user = await locator<LoginService>().login(username, password);
     await _sharedPreferences.saveUser(_user!);
+  }
+
+  Future<dynamic> register({
+    required String username,
+    required String password,
+    required String fullname,
+    required UserRole role,
+  }) async {
+    return await locator<RegisterService>().register(
+      username,
+      password,
+      fullname,
+      role,
+    );
   }
 
   /// Logs out an user. Clears all saved settings.

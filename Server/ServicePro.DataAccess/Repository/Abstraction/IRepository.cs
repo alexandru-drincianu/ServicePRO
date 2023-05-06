@@ -13,7 +13,8 @@ namespace ServicePro.DataAccess.Repository.Abstraction
         Task RemoveAsync(TEntity item, bool applyChanges = true);
         Task RemoveRangeAsync(IEnumerable<TEntity> items, bool applyChanges = true);
         Task<IQueryable<TEntity>> GetAll();
-        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity?> Find(Expression<Func<TEntity, bool>> predicate);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> GetByIdAsync<TId>(TId id);
     }
 }

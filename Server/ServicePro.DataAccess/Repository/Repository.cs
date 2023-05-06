@@ -1,4 +1,5 @@
-﻿using ServicePro.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using ServicePro.DataAccess.Context;
 using ServicePro.DataAccess.Repository.Abstraction;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,14 @@ namespace ServicePro.DataAccess.Repository
             }
         }
 
-        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity?> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().Where(predicate);
+            return await _context.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _context.Set<TEntity>().AnyAsync(predicate);
         }
 
         public async Task<IQueryable<TEntity>> GetAll()

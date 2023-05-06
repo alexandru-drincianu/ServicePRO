@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:service_pro/core/constants/theme_constants.dart';
 
+import '../core/custom_colors.dart';
 import '../core/localization/localization.dart';
 import '../core/theme/theme.dart';
 import '../features/login/provider/login_provider.dart';
@@ -55,23 +57,31 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: CustomColors.nroGreen,
       body: Stack(
         children: [
           Align(
             alignment: Alignment.center,
-            child: Image.asset(
-              'assets/images/logo.png',
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.width * 0.8,
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.width * 1,
-              ), // adjust the margin to move the loader below the image
-              child: const CircularProgressIndicator(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  height: MediaQuery.of(context).size.width * 0.7,
+                ),
+                Text(
+                  context.translate(
+                    TranslationKeys.appTitle,
+                  ),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: ThemeConstants.sizeUnitXXL,
+                    fontWeight: FontWeight.bold,
+                    color: CustomColors.splashColor,
+                  ),
+                ),
+              ],
             ),
           ),
           const Align(
@@ -80,13 +90,8 @@ class _SplashPageState extends State<SplashPage> {
               widthFactor: 1,
               child: Padding(
                 padding: EdgeInsets.only(bottom: 32.0),
-                child: Text(
-                  'ServicePro',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: LinearProgressIndicator(
+                  backgroundColor: CustomColors.splashColor,
                 ),
               ),
             ),

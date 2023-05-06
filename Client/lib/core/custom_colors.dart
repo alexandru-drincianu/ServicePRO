@@ -25,4 +25,5 @@ class CustomColors {
   static const Color nroGreen = Color(0xFFD1CC00);
   static const Color nroSecondaryGreen = Color(0xffBFB700);
   static const Color grey = Color(0xfff5f5f5);
+  static const Color splashColor = Color(0xff294159);
 }

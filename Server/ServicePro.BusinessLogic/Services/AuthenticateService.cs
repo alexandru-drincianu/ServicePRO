@@ -31,14 +31,18 @@ namespace ServicePro.BusinessLogic.Services
             return await Task.FromResult(_mapper.Map<User>(user));
         }
 
-        public async Task<UserDTO> Register(UserDTO item, bool applyChanges = true)
+        public async Task<User> Register(UserDTO item, bool applyChanges = true)
         {
-            var login = _mapper.Map<User>(item);
-            var x = await _userRepository.GetAll();
-            var user = x.ToList();
-            await _userRepository.AddAsync(login);
+            if(await _userRepository.AnyAsync(user => user.Username == item.Username))
+            {
+                throw new Exception("Username already exists");
+            }
+            var user = _mapper.Map<User>(item);
+            await _userRepository.AddAsync(user);
 
-            return item;
+            var createdUser = await _userRepository.Find(user => user.Username == item.Username);
+
+            return createdUser;
         }
     }
 }

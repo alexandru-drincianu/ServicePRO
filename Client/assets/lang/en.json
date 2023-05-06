@@ -1,5 +1,6 @@
 {
-  "app_title": "Boilerplate",
+  "app_title": "ServicePro",
+  "welcome": "Welcome",
   "locale_name": "English",
   "language": "Language",
   "login_title": "Login",
@@ -7,6 +8,7 @@
   "login_password": "Password",
   "login_button": "Login",
   "login_error": "Login failed.",
+  "registration_error": "Registration failed.",
   "fetch_orders_error": "Could not retrieve orders.",
   "home_title": "Home",
   "orders_title": "Orders",
@@ -38,5 +40,10 @@
   "light": "Light",
   "dark": "Dark",
   "system": "System",
-  "logout": "Logout"
+  "logout": "Logout",
+  "admin_panel": "Admin panel",
+  "create_account": "Create account",
+  "full_name": "Full name",
+  "create_mechanic": "Create mechanic",
+  "user_list": "User list"
 }

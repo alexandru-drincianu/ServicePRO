@@ -19,6 +19,7 @@ class UserModel with _$UserModel {
     required String token,
     ThemeMode? themeMode,
     @LocaleConverter() Locale? locale,
+    @JsonKey(name: 'role') required int role,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

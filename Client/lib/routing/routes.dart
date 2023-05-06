@@ -10,6 +10,7 @@ class Routes {
   static const login = '/login';
   static const orders = '/orders';
   static const settings = '/settings';
+  static const adminPanel = '/adminPanel';
 
   // TODO: https://pub.dev/packages/auto_route#working-with-paths
   static const createOrder = '/orders/new';

@@ -7,6 +7,6 @@ namespace ServicePro.BusinessLogic.Services.Abstractions
     public interface IAuthenticateService
     {
         public Task<User> Login(LoginDTO loginModel);
-        public Task<UserDTO> Register(UserDTO item, bool applyChanges = true);
+        public Task<User> Register(UserDTO item, bool applyChanges = true);
     }
 }

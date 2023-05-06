@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServicePro.Common.Enums
 {
-    public enum UserRoles
+    public enum UserRole
     {
         Admin,
         Mechanic,

@@ -11,35 +11,34 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
 
-import 'package:flutter/material.dart' as _i8;
-
-import 'package:auto_route/auto_route.dart' as _i7;
-
-import '../core/models/order_model.dart' as _i10;
+import '../core/models/order_model.dart' as _i11;
+import '../features/admin/presentation/pages/admin_panel_page.dart' as _i7;
 import '../features/home/presentation/pages/home_page.dart' as _i3;
 import '../features/login/presentation/pages/login_page.dart' as _i2;
 import '../features/orders/presentation/pages/manage_order_page.dart' as _i5;
 import '../features/orders/presentation/pages/orders_page.dart' as _i4;
 import '../features/settings/presentation/pages/settings_page.dart' as _i6;
-import 'guards/auth_guard.dart' as _i9;
+import 'guards/auth_guard.dart' as _i10;
 import 'splash_page.dart' as _i1;
 
-class AppRouter extends _i7.RootStackRouter {
+class AppRouter extends _i8.RootStackRouter {
   AppRouter({
-    _i8.GlobalKey<_i8.NavigatorState>? navigatorKey,
+    _i9.GlobalKey<_i9.NavigatorState>? navigatorKey,
     required this.authGuard,
   }) : super(navigatorKey);
 
-  final _i9.AuthGuard authGuard;
+  final _i10.AuthGuard authGuard;
 
   @override
-  final Map<String, _i7.PageFactory> pagesMap = {
+  final Map<String, _i8.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i1.SplashPage(),
-        transitionsBuilder: _i7.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i8.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
@@ -47,32 +46,32 @@ class AppRouter extends _i7.RootStackRouter {
     LoginRoute.name: (routeData) {
       final args = routeData.argsAs<LoginRouteArgs>(
           orElse: () => const LoginRouteArgs());
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
         child: _i2.LoginPage(
           onAuthenticationResult: args.onAuthenticationResult,
           key: args.key,
         ),
-        transitionsBuilder: _i7.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i8.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     HomeRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i3.HomePage(),
-        transitionsBuilder: _i7.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i8.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     OrdersRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i7.WrappedRoute(child: const _i4.OrdersPage()),
+        child: _i8.WrappedRoute(child: const _i4.OrdersPage()),
         maintainState: false,
-        transitionsBuilder: _i7.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i8.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
@@ -81,23 +80,32 @@ class AppRouter extends _i7.RootStackRouter {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<ManageOrderRouteArgs>(
           orElse: () => ManageOrderRouteArgs(id: pathParams.optInt('id')));
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
         child: _i5.ManageOrderPage(
           id: args.id,
           orderModel: args.orderModel,
           key: args.key,
         ),
-        transitionsBuilder: _i7.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i8.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     SettingsRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i7.WrappedRoute(child: const _i6.SettingsPage()),
-        transitionsBuilder: _i7.TransitionsBuilders.noTransition,
+        child: _i8.WrappedRoute(child: const _i6.SettingsPage()),
+        transitionsBuilder: _i8.TransitionsBuilders.noTransition,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    AdminPanelRoute.name: (routeData) {
+      return _i8.CustomPage<dynamic>(
+        routeData: routeData,
+        child: const _i7.AdminPanelPage(),
+        transitionsBuilder: _i8.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
@@ -105,50 +113,55 @@ class AppRouter extends _i7.RootStackRouter {
   };
 
   @override
-  List<_i7.RouteConfig> get routes => [
-        _i7.RouteConfig(
+  List<_i8.RouteConfig> get routes => [
+        _i8.RouteConfig(
           SplashRoute.name,
           path: '/initial',
           guards: [authGuard],
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           LoginRoute.name,
           path: '/login',
           guards: [authGuard],
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           HomeRoute.name,
           path: '/',
           guards: [authGuard],
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           OrdersRoute.name,
           path: '/orders',
           guards: [authGuard],
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           ManageOrderRoute.name,
           path: '/orders/edit/:id',
           guards: [authGuard],
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           '/orders/new#redirect',
           path: '/orders/new',
           redirectTo: '/orders/edit/:id',
           fullMatch: true,
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           SettingsRoute.name,
           path: '/settings',
           guards: [authGuard],
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
+          AdminPanelRoute.name,
+          path: '/adminPanel',
+          guards: [authGuard],
+        ),
+        _i8.RouteConfig(
           '/orders/details/:id#redirect',
           path: '/orders/details/:id',
           redirectTo: '/orders/:id',
           fullMatch: true,
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           '*#redirect',
           path: '*',
           redirectTo: '/',
@@ -159,7 +172,7 @@ class AppRouter extends _i7.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashPage]
-class SplashRoute extends _i7.PageRouteInfo<void> {
+class SplashRoute extends _i8.PageRouteInfo<void> {
   const SplashRoute()
       : super(
           SplashRoute.name,
@@ -171,10 +184,10 @@ class SplashRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.LoginPage]
-class LoginRoute extends _i7.PageRouteInfo<LoginRouteArgs> {
+class LoginRoute extends _i8.PageRouteInfo<LoginRouteArgs> {
   LoginRoute({
     void Function(bool)? onAuthenticationResult,
-    _i8.Key? key,
+    _i9.Key? key,
   }) : super(
           LoginRoute.name,
           path: '/login',
@@ -195,7 +208,7 @@ class LoginRouteArgs {
 
   final void Function(bool)? onAuthenticationResult;
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {
@@ -205,7 +218,7 @@ class LoginRouteArgs {
 
 /// generated route for
 /// [_i3.HomePage]
-class HomeRoute extends _i7.PageRouteInfo<void> {
+class HomeRoute extends _i8.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -217,7 +230,7 @@ class HomeRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.OrdersPage]
-class OrdersRoute extends _i7.PageRouteInfo<void> {
+class OrdersRoute extends _i8.PageRouteInfo<void> {
   const OrdersRoute()
       : super(
           OrdersRoute.name,
@@ -229,11 +242,11 @@ class OrdersRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.ManageOrderPage]
-class ManageOrderRoute extends _i7.PageRouteInfo<ManageOrderRouteArgs> {
+class ManageOrderRoute extends _i8.PageRouteInfo<ManageOrderRouteArgs> {
   ManageOrderRoute({
     int? id,
-    _i10.OrderModel? orderModel,
-    _i8.Key? key,
+    _i11.OrderModel? orderModel,
+    _i9.Key? key,
   }) : super(
           ManageOrderRoute.name,
           path: '/orders/edit/:id',
@@ -257,9 +270,9 @@ class ManageOrderRouteArgs {
 
   final int? id;
 
-  final _i10.OrderModel? orderModel;
+  final _i11.OrderModel? orderModel;
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {
@@ -269,7 +282,7 @@ class ManageOrderRouteArgs {
 
 /// generated route for
 /// [_i6.SettingsPage]
-class SettingsRoute extends _i7.PageRouteInfo<void> {
+class SettingsRoute extends _i8.PageRouteInfo<void> {
   const SettingsRoute()
       : super(
           SettingsRoute.name,
@@ -277,4 +290,16 @@ class SettingsRoute extends _i7.PageRouteInfo<void> {
         );
 
   static const String name = 'SettingsRoute';
+}
+
+/// generated route for
+/// [_i7.AdminPanelPage]
+class AdminPanelRoute extends _i8.PageRouteInfo<void> {
+  const AdminPanelRoute()
+      : super(
+          AdminPanelRoute.name,
+          path: '/adminPanel',
+        );
+
+  static const String name = 'AdminPanelRoute';
 }

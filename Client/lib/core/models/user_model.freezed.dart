@@ -27,6 +27,8 @@ mixin _$UserModel {
   ThemeMode? get themeMode => throw _privateConstructorUsedError;
   @LocaleConverter()
   Locale? get locale => throw _privateConstructorUsedError;
+  @JsonKey(name: 'role')
+  int get role => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +46,8 @@ abstract class $UserModelCopyWith<$Res> {
       @JsonKey(name: 'fullName') String name,
       String token,
       ThemeMode? themeMode,
-      @LocaleConverter() Locale? locale});
+      @LocaleConverter() Locale? locale,
+      @JsonKey(name: 'role') int role});
 }
 
 /// @nodoc
@@ -65,6 +68,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? token = null,
     Object? themeMode = freezed,
     Object? locale = freezed,
+    Object? role = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -87,6 +91,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as Locale?,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -103,7 +111,8 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       @JsonKey(name: 'fullName') String name,
       String token,
       ThemeMode? themeMode,
-      @LocaleConverter() Locale? locale});
+      @LocaleConverter() Locale? locale,
+      @JsonKey(name: 'role') int role});
 }
 
 /// @nodoc
@@ -122,6 +131,7 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? token = null,
     Object? themeMode = freezed,
     Object? locale = freezed,
+    Object? role = null,
   }) {
     return _then(_$_UserModel(
       id: null == id
@@ -144,6 +154,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as Locale?,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -156,7 +170,8 @@ class _$_UserModel implements _UserModel {
       @JsonKey(name: 'fullName') required this.name,
       required this.token,
       this.themeMode,
-      @LocaleConverter() this.locale});
+      @LocaleConverter() this.locale,
+      @JsonKey(name: 'role') required this.role});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
@@ -173,10 +188,13 @@ class _$_UserModel implements _UserModel {
   @override
   @LocaleConverter()
   final Locale? locale;
+  @override
+  @JsonKey(name: 'role')
+  final int role;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, token: $token, themeMode: $themeMode, locale: $locale)';
+    return 'UserModel(id: $id, name: $name, token: $token, themeMode: $themeMode, locale: $locale, role: $role)';
   }
 
   @override
@@ -189,13 +207,14 @@ class _$_UserModel implements _UserModel {
             (identical(other.token, token) || other.token == token) &&
             (identical(other.themeMode, themeMode) ||
                 other.themeMode == themeMode) &&
-            (identical(other.locale, locale) || other.locale == locale));
+            (identical(other.locale, locale) || other.locale == locale) &&
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, token, themeMode, locale);
+      Object.hash(runtimeType, id, name, token, themeMode, locale, role);
 
   @JsonKey(ignore: true)
   @override
@@ -217,7 +236,8 @@ abstract class _UserModel implements UserModel {
       @JsonKey(name: 'fullName') required final String name,
       required final String token,
       final ThemeMode? themeMode,
-      @LocaleConverter() final Locale? locale}) = _$_UserModel;
+      @LocaleConverter() final Locale? locale,
+      @JsonKey(name: 'role') required final int role}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
@@ -234,6 +254,9 @@ abstract class _UserModel implements UserModel {
   @override
   @LocaleConverter()
   Locale? get locale;
+  @override
+  @JsonKey(name: 'role')
+  int get role;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

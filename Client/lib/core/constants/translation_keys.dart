@@ -7,6 +7,7 @@ class TranslationKeys {
 
   // App
   static const appTitle = 'app_title';
+  static const welcome = 'welcome';
 
   // Pages titles
   static const homeTitle = 'home_title';
@@ -15,6 +16,7 @@ class TranslationKeys {
   static const addOrdersTitle = 'add_orders_title';
   static const editOrderTitle = 'edit_order_title';
   static const settingsTitle = 'settings_title';
+  static const adminPanel = 'admin_panel';
 
   // Login Page
   static const username = 'login_username';
@@ -49,4 +51,10 @@ class TranslationKeys {
   static const language = 'language';
   static const theme = 'theme';
   static const logout = 'logout';
+
+  // Admin panel
+  static const userList = 'user_list';
+  static const createMechanic = 'create_mechanic';
+  static const fullName = 'full_name';
+  static const createAccount = 'create_account';
 }

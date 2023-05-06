@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:service_pro/features/admin/presentation/pages/admin_panel_page.dart';
 
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/login/presentation/pages/login_page.dart';
@@ -11,7 +12,6 @@ import 'splash_page.dart';
 
 part 'routes.dart';
 
-// TODO: merge Home + Orders into Home screen and declare subpages as nested children.
 @CustomAutoRouter(
   replaceInRouteName: 'Page,Route',
   transitionsBuilder: TransitionsBuilders.noTransition,
@@ -53,6 +53,11 @@ part 'routes.dart';
     AutoRoute(
       path: Routes.settings,
       page: SettingsPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.adminPanel,
+      page: AdminPanelPage,
       guards: [AuthGuard],
     ),
     RedirectRoute(

@@ -13,6 +13,7 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       themeMode: $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']),
       locale: const LocaleConverter()
           .fromJson(json['locale'] as Map<String, dynamic>?),
+      role: json['role'] as int,
     );
 
 Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
@@ -22,6 +23,7 @@ Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
       'token': instance.token,
       'themeMode': _$ThemeModeEnumMap[instance.themeMode],
       'locale': const LocaleConverter().toJson(instance.locale),
+      'role': instance.role,
     };
 
 const _$ThemeModeEnumMap = {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServicePro.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,6 @@ namespace ServicePro.BusinessLogic.DTOs.Orders
         public string Username { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
+        public UserRole Role { get; set; }
     }
 }

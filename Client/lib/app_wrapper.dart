@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:service_pro/features/admin/provider/register_provider.dart';
 
 import 'app.dart';
 import 'core/localization/localization.dart';
@@ -21,6 +22,10 @@ class AppWrapper extends StatelessWidget {
         // guards are based on it.
         ChangeNotifierProvider<LoginProvider>(
           create: (context) => LoginProvider(),
+        ),
+
+        ChangeNotifierProvider<RegisterProvider>(
+          create: (context) => RegisterProvider(),
         ),
 
         // Locale provider needs to be accessible in the whole app since locales

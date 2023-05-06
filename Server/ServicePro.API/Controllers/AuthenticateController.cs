@@ -3,6 +3,7 @@ using ServicePro.BusinessLogic.DTOs;
 using ServicePro.BusinessLogic.DTOs.Orders;
 using ServicePro.BusinessLogic.Helpers.TokenAuthentication;
 using ServicePro.BusinessLogic.Services.Abstractions;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace ServicePro.API.Controllers
             var user = await _authenticateService.Login(loginModel);
             if (user != null)
             {
-                return Ok(new LoginResponseDTO { Token = _tokenManager.NewToken(user), FullName = user.FullName, Id = user.Id });
+                return Ok(new LoginResponseDTO { Token = _tokenManager.NewToken(user), FullName = user.FullName, Id = user.Id, Role = user.Role });
             }
             else
             {
@@ -44,11 +45,18 @@ namespace ServicePro.API.Controllers
         }
 
         [HttpPost("register")]
-        [ProducesResponseType(typeof(UserDTO), (int)HttpStatusCode.Created)]
-        public async Task<ActionResult> Post([FromBody] UserDTO newUser)
+        [ProducesResponseType(typeof(RegisterResponseDTO), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> Register([FromBody] UserDTO newUser)
         {
-            var result = await _authenticateService.Register(newUser);
-            return Ok(result);
+            try
+            {
+                var result = await _authenticateService.Register(newUser);
+                return Ok(new RegisterResponseDTO { FullName = result.FullName, Id = result.Id });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

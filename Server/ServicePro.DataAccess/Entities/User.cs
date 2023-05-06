@@ -12,6 +12,6 @@ namespace ServicePro.DataAccess.Entities
         public string Username { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
-        public UserRoles UserRoles { get; set; }
+        public UserRole Role { get; set; }
     }
 }
