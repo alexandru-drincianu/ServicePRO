@@ -1,0 +1,148 @@
+name: service_pro
+description: ServicePro client
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+2
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # AutoRoute is a declarative routing solution, where everything needed for navigation is
+  # automatically generated for you.
+  auto_route: ^5.0.4
+
+  # Collections and utilities functions and classes related to collections.
+  collection: ^1.17.0
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.5
+
+  # An easy to use flutter toast library that supports popping up various custom toasts.
+  bot_toast: ^4.0.3
+
+  # Overrides the == operator and hashCode so we can compare objects by their contents rather than
+  # comparing them by their instances.
+  equatable: ^2.0.5
+  # This plugin stores Shared Preferences as encrypted values on device storage.
+  encrypted_shared_preferences: ^3.0.1
+  
+  # Version of Fimber package with support for File based loggers - dependent on dart::io
+  fimber_io: ^0.6.6
+  # Annotations for the freezed code-generator. This package does nothing without freezed.
+  freezed_annotation: ^2.2.0
+
+  # TODO: get it is not in concordance with Provider pattern. get_it was developed with replacing Provider in mind
+  # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
+  get_it: ^7.2.0
+
+  # A composable, multi-platform, Future-based API for HTTP requests.
+  http: ^0.13.5
+
+  # Classes and helper functions that support JSON code generation via the `json_serializable` package
+  json_annotation: ^4.7.0
+  # Automatically generate code for converting to and from JSON by annotating Dart classes.
+  json_serializable: ^6.5.4
+  # This small library helps you to decode Json Web Tokens, you can also know if a JWT is already
+  # expired.
+  jwt_decoder: ^2.0.1
+
+  # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories.
+  path_provider: ^2.0.11
+  # The base pub for this boilerplate. Provider is the state management library used in this project.
+  provider: ^6.0.4
+
+  # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android.
+  shared_preferences: ^2.0.15
+  # Lock mechanism to prevent concurrent access to asynchronous code.
+  synchronized: ^3.0.0+3
+
+dependency_overrides:
+  collection: ^1.17.0
+  test: ^1.22.1
+  test_api: ^0.4.17
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # A generator for auto_route library.
+  auto_route_generator: ^5.0.3
+
+  # A build system for Dart code generation and modular compilation.
+  build_runner: ^2.3.3
+
+  # Software analytics tool that helps developers analyse and improve software quality.
+  dart_code_metrics: ^5.3.0
+
+  # A library for generating fake data.
+  faker: ^2.1.0
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.1
+  # Code generation for immutable classes that has a simple syntax/API without compromising on the features.
+  freezed: ^2.3.2
+
+  # Helps to sort imports on categories. It is not a requirement since IDEs have import sorting
+  # functionalities out of the box. We just like this one.
+  # This can be hooked with a pre-commit hook to be automatically triggered upon commit.
+  import_sorter: ^4.6.0
+
+  # A Dart mock library which simplifies mocking with null safety support and no manual mocks or
+  # code generation.
+  mocktail: ^0.3.0
+  # A package that makes it easy to mock, test and verify navigation calls in Flutter.
+  mockingjay: ^0.3.0
+
+  # Utility for providing mocked Image.network response in Flutter widget tests.
+  network_image_mock: ^2.1.1
+
+  # A full featured library for writing and running Dart tests across platforms.
+  test: ^1.22.1
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  assets:
+    - assets/lang/
+    - assets/fonts/
+    - assets/images/logo.png
+  fonts:
+    - family: MaterialIcons
+      fonts:
+        - asset: assets/fonts/MaterialIcons-Regular.otf
+
+# Disables import sorter comments.
+import_sorter:
+  comments: false

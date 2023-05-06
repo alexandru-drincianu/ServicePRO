@@ -1,0 +1,12 @@
+ServicePro.API/bin/
+.vs/
+ServicePro.DataAccess/bin/
+ServicePro.DataAccess/obj/
+ServicePro.API/obj/
+ServicePro.API/ServicePro.API.csproj.user
+.vscode/launch.json
+ServicePro.API/Properties/PublishProfiles/
+ServicePro.BusinessLogic/obj/Debug
+ServicePro.BusinessLogic/bin/Debug
+ServicePro.BusinessLogic/obj
+

@@ -1,0 +1,12 @@
+D:\Licenta\Server\ServicePro.Common\bin\Debug\net7.0\ServicePro.Common.deps.json
+D:\Licenta\Server\ServicePro.Common\bin\Debug\net7.0\ServicePro.Common.dll
+D:\Licenta\Server\ServicePro.Common\bin\Debug\net7.0\ServicePro.Common.pdb
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\ServicePro.Common.csproj.AssemblyReference.cache
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\ServicePro.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\ServicePro.Common.AssemblyInfoInputs.cache
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\ServicePro.Common.AssemblyInfo.cs
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\ServicePro.Common.csproj.CoreCompileInputs.cache
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\ServicePro.Common.dll
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\refint\ServicePro.Common.dll
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\ServicePro.Common.pdb
+D:\Licenta\Server\ServicePro.Common\obj\Debug\net7.0\ref\ServicePro.Common.dll
