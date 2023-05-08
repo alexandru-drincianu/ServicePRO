@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:service_pro/core/enums/enums.dart';
-import 'package:service_pro/core/services/register_service.dart';
+import 'package:service_pro/core/services/users_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../dtos/paginated_result.dart';
 import '../locator.dart';
+import '../models/user_details.dart';
 import '../models/user_model.dart';
 import 'login_service.dart';
 import 'shared_preference_service.dart';
@@ -83,11 +85,31 @@ class UserSettingsService {
     required String fullname,
     required UserRole role,
   }) async {
-    return await locator<RegisterService>().register(
+    return await locator<UserService>().register(
       username,
       password,
       fullname,
       role,
+    );
+  }
+
+  Future<PaginatedResult<UserDetails>> getUsers({
+    required int pageIndex,
+    required int itemsNumber,
+    required String searchTerm,
+  }) async {
+    return await locator<UserService>().getUsers(
+      pageIndex,
+      itemsNumber,
+      searchTerm,
+    );
+  }
+
+  Future<dynamic> deleteUser({
+    required int userId,
+  }) async {
+    return await locator<UserService>().deleteUser(
+      userId,
     );
   }
 

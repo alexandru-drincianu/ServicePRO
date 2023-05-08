@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:service_pro/core/services/register_service.dart';
+import 'package:service_pro/core/services/users_service.dart';
 
 import 'services/login_service.dart';
 import 'services/orders_service.dart';
@@ -16,6 +16,6 @@ void setupLocator() {
     () => UserSettingsService(),
   );
   locator.registerLazySingleton<LoginService>(() => LoginService());
-  locator.registerLazySingleton<RegisterService>(() => RegisterService());
+  locator.registerLazySingleton<UserService>(() => UserService());
   locator.registerLazySingleton<OrdersService>(() => OrdersService());
 }

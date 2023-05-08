@@ -13,6 +13,7 @@ class BaseHttpService {
   final _userSettingsService = locator<UserSettingsService>();
 
   String? get token => _userSettingsService.user?.token;
+  int? get loggedInUserId => _userSettingsService.user?.id;
 
   Future<Response> get(String path, [String? token]) async {
     var response = await http
@@ -27,7 +28,6 @@ class BaseHttpService {
     Object? body, [
     String? token,
   ]) async {
-
     var response = await http
         .post(
           Uri.parse(path),

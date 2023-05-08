@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:fimber_io/fimber_io.dart';
 
-import '../../../core/base_exception.dart';
 import '../../../core/enums/enums.dart';
 import '../../../core/locator.dart';
 import '../../../core/services/user_settings_service.dart';

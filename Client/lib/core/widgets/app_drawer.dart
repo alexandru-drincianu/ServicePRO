@@ -68,7 +68,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   bottom: ThemeConstants.sizeUnitL,
                   right: ThemeConstants.sizeUnitL,
                   child: Text(
-                    UserRoletrings[_user?.role] ?? '',
+                    UserRoleString[_user?.role] ?? '',
                     style: const TextStyle(
                       fontSize: ThemeConstants.sizeUnitL,
                       color: Colors.white,
