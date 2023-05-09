@@ -80,6 +80,8 @@ dependencies:
   shared_preferences: ^2.0.15
   # Lock mechanism to prevent concurrent access to asynchronous code.
   synchronized: ^3.0.0+3
+  intl_phone_field: ^3.1.0
+  csc_picker: ^0.2.7
 
 dependency_overrides:
   collection: ^1.17.0

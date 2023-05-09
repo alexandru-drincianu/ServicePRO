@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Dashboard.Core.Extensions;
+using Microsoft.AspNetCore.DataProtection;
+using ServcicePro.DataAccess.Repository.Abstraction;
 using ServicePro.BusinessLogic.DTOs;
 using ServicePro.BusinessLogic.DTOs.Orders;
 using ServicePro.BusinessLogic.Services.Abstractions;
@@ -16,19 +18,26 @@ namespace ServicePro.BusinessLogic.Services
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IRepository<User> userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+
         }
 
         public async Task<IEnumerable<UserDTO>> GetAll()
         {
             var users = await _userRepository.GetAll();
             return _mapper.Map<IEnumerable<UserDTO>>(users);
+        }
+
+        public async Task<List<ClientDTO>> GetAllClients()
+        {
+            var users = (await _userRepository.GetAllClients()).Where(user => user.Role == UserRole.Client);
+            return _mapper.Map<List<ClientDTO>>(users);
         }
 
         public async Task<UserDTO> GetByIdAsync(int Id, bool applyChanges = true)

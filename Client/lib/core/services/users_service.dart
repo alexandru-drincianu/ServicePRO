@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:fimber_io/fimber_io.dart';
+import 'package:service_pro/core/models/client_model.dart';
 import 'package:service_pro/dtos/paginated_result.dart';
 
 import '../base_exception.dart';
@@ -14,6 +15,7 @@ import 'base_http_service.dart';
 class UserService extends BaseHttpService {
   static const _registerPath = 'Authenticate/register';
   static const _getUsersPath = 'Users/paginated';
+  static const _getClientsPath = 'Users/clients';
 
   Future<dynamic> register(
     String username,
@@ -92,6 +94,39 @@ class UserService extends BaseHttpService {
       );
     }
     return PaginatedResult(rowscount: 0, data: []);
+  }
+
+  Future<List<ClientModel>> getClients() async {
+    try {
+      final res = await get(
+        buildUri(
+          Constants.apiBaseUrl,
+          _getClientsPath,
+        ),
+        token,
+      );
+      if (res.statusCode == HttpStatus.ok) {
+        List<dynamic> body = jsonDecode(res.body);
+        List<ClientModel> result = body
+            .map(
+              (item) => ClientModel.fromJson(item),
+            )
+            .toList();
+        return result;
+      }
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+    return List<ClientModel>.empty();
   }
 
   Future<dynamic> deleteUser(

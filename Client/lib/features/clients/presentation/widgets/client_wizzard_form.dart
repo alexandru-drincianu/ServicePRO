@@ -1,0 +1,287 @@
+import 'package:csc_picker/csc_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+
+class ClientWizzardForm extends StatefulWidget {
+  const ClientWizzardForm({Key? key}) : super(key: key);
+
+  @override
+  ClientWizzardFormState createState() => ClientWizzardFormState();
+}
+
+class ClientWizzardFormState extends State<ClientWizzardForm> {
+  int _currentStep = 0;
+  final TextEditingController _fullnameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _telephoneController = TextEditingController();
+  final TextEditingController _streetController = TextEditingController();
+
+  String countryValue = "";
+  String? stateValue = "";
+  String? cityValue = "";
+
+  @override
+  void dispose() {
+    _fullnameController.dispose();
+    _emailController.dispose();
+    _telephoneController.dispose();
+    _streetController.dispose();
+    super.dispose();
+  }
+
+  void _goToNextStep() {
+    setState(() {
+      _currentStep++;
+    });
+  }
+
+  bool _validateStep() {
+    switch (_currentStep) {
+      case 0:
+        return _fullnameController.text.isNotEmpty &&
+            _emailController.text.isNotEmpty &&
+            _telephoneController.text.isNotEmpty;
+      case 1:
+        return _streetController.text.isNotEmpty &&
+            countryValue.isNotEmpty &&
+            cityValue!.isNotEmpty &&
+            stateValue!.isNotEmpty;
+      case 2:
+        return _streetController.text.isNotEmpty &&
+            countryValue.isNotEmpty &&
+            cityValue!.isNotEmpty &&
+            stateValue!.isNotEmpty &&
+            _fullnameController.text.isNotEmpty &&
+            _emailController.text.isNotEmpty &&
+            _telephoneController.text.isNotEmpty;
+      default:
+        return true;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(children: [
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              "Fields marked with * are required",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Stepper(
+            currentStep: _currentStep,
+            onStepTapped: (value) => setState(() {
+              _currentStep = value;
+            }),
+            onStepContinue: _goToNextStep,
+            controlsBuilder: (context, details) {
+              if (_currentStep == 2) {
+                return Container();
+              } else {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: details.onStepContinue,
+                      child: const Text('Continue'),
+                    ),
+                  ],
+                );
+              }
+            },
+            steps: [
+              Step(
+                title: const Text('Details'),
+                content: Column(
+                  children: [
+                    TextFormField(
+                      controller: _fullnameController,
+                      decoration:
+                          const InputDecoration(labelText: 'Fullname *'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your fullname';
+                        }
+                        final RegExp nameExp = RegExp(r'^[a-zA-Z\s]+$');
+                        if (!nameExp.hasMatch(value)) {
+                          return 'Please enter a valid name';
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(labelText: 'Email *'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(value)) {
+                          return 'Please enter a valid email';
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
+                    IntlPhoneField(
+                      decoration: const InputDecoration(
+                        labelText: 'Phone Number *',
+                      ),
+                      initialCountryCode: 'RO',
+                      controller: _telephoneController,
+                      validator: (value) {
+                        if (value!.completeNumber.toString().isEmpty) {
+                          return 'Please enter your telephone number';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+                isActive: _currentStep == 0,
+              ),
+              Step(
+                title: const Text('Address'),
+                content: Column(
+                  children: [
+                    TextFormField(
+                      controller: _streetController,
+                      decoration: const InputDecoration(labelText: 'Street *'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your street';
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CSCPicker(
+                      dropdownDecoration: const BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                          left: BorderSide.none,
+                          right: BorderSide.none,
+                          top: BorderSide.none,
+                        ),
+                      ),
+
+                      disabledDropdownDecoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                          left: BorderSide.none,
+                          right: BorderSide.none,
+                          top: BorderSide.none,
+                        ),
+                      ),
+
+                      ///placeholders for dropdown search field
+                      countrySearchPlaceholder: "Country",
+                      stateSearchPlaceholder: "State",
+                      citySearchPlaceholder: "City",
+
+                      ///labels for dropdown
+                      countryDropdownLabel: "Country *",
+                      stateDropdownLabel: "State *",
+                      cityDropdownLabel: "City *",
+
+                      defaultCountry: CscCountry.Romania,
+
+                      ///triggers once country selected in dropdown
+                      onCountryChanged: (value) {
+                        setState(() {
+                          ///store value in country variable
+                          countryValue = value;
+                        });
+                      },
+
+                      ///triggers once state selected in dropdown
+                      onStateChanged: (value) {
+                        setState(() {
+                          ///store value in state variable
+                          stateValue = value ?? "";
+                        });
+                      },
+
+                      ///triggers once city selected in dropdown
+                      onCityChanged: (value) {
+                        setState(() {
+                          ///store value in city variable
+                          cityValue = value ?? "";
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+                isActive: _currentStep == 1,
+              ),
+              Step(
+                title: const Text('Create account'),
+                content: Builder(
+                  builder: (BuildContext context) {
+                    bool isValid = _validateStep();
+                    if (!isValid) {
+                      return Text(
+                        'Please fill out all required fields.',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      );
+                    } else {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'You are all set',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (isValid) {
+                                  _createAccount();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(200, 50),
+                              ),
+                              child: const Text('Create'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                ),
+                isActive: _currentStep == 2,
+              ),
+            ],
+          ),
+        ]),
+      ),
+    );
+  }
+
+  void _createAccount() {}
+}

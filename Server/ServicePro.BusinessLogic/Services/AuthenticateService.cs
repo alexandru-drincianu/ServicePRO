@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.DataProtection;
 using ServicePro.BusinessLogic.DTOs.Orders;
 using ServicePro.BusinessLogic.Helpers.TokenAuthentication;
 using ServicePro.BusinessLogic.Services.Abstractions;
@@ -17,12 +18,15 @@ namespace ServicePro.BusinessLogic.Services
         private readonly IRepository<User> _userRepository;
         private readonly IMapper _mapper;
         private readonly ITokenManager _tokenManager;
+        private readonly IDataProtector _dataProtector;
 
-        public AuthenticateService(IRepository<User> userRepository, IMapper mapper, ITokenManager tokenManager)
+
+        public AuthenticateService(IRepository<User> userRepository, IMapper mapper, ITokenManager tokenManager, IDataProtectionProvider protectionProvider)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _tokenManager = tokenManager;
+            _dataProtector = protectionProvider.CreateProtector("Affiliate_PlanI");
         }
 
         public async Task<User> Login(LoginDTO loginModel)
@@ -37,6 +41,10 @@ namespace ServicePro.BusinessLogic.Services
             {
                 throw new Exception("Username already exists");
             }
+
+            // encrypt password
+            item.Password = _dataProtector.Protect(item.Password);
+
             var user = _mapper.Map<User>(item);
             await _userRepository.AddAsync(user);
 

@@ -14,6 +14,7 @@ namespace ServicePro.BusinessLogic.MappingProfiles
         public UserDataProfile()
         {
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, ClientDTO>();
         }
     }
 }

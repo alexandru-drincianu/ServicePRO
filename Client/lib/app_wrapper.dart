@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/features/admin/provider/register_provider.dart';
 import 'package:service_pro/features/admin/provider/user_provider.dart';
+import 'package:service_pro/features/clients/provider/clients_provider.dart';
 
 import 'app.dart';
 import 'core/localization/localization.dart';
@@ -31,6 +32,10 @@ class AppWrapper extends StatelessWidget {
 
         ChangeNotifierProvider<UserProvider>(
           create: (context) => UserProvider(),
+        ),
+
+        ChangeNotifierProvider<ClientsProvider>(
+          create: (context) => ClientsProvider(),
         ),
 
         // Locale provider needs to be accessible in the whole app since locales

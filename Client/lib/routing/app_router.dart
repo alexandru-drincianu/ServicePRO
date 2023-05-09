@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:service_pro/features/admin/presentation/pages/admin_panel_page.dart';
 
+import '../features/clients/presentation/pages/clients_page.dart';
+import '../features/clients/presentation/pages/create_client_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/login/presentation/pages/login_page.dart';
 import '../features/orders/presentation/pages/manage_order_page.dart';
@@ -30,6 +32,16 @@ part 'routes.dart';
     AutoRoute(
       path: Routes.home,
       page: HomePage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.clients,
+      page: ClientsPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.createClient,
+      page: CreateClientPage,
       guards: [AuthGuard],
     ),
     AutoRoute(

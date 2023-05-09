@@ -17,6 +17,8 @@ class TranslationKeys {
   static const editOrderTitle = 'edit_order_title';
   static const settingsTitle = 'settings_title';
   static const adminPanel = 'admin_panel';
+  static const clients = 'clients';
+  static const createClient = 'create_client';
 
   // Login Page
   static const username = 'login_username';

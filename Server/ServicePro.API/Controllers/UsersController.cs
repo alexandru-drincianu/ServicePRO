@@ -9,12 +9,12 @@ using ServicePro.API.Filters;
 using System.Net;
 using ServicePro.DataAccess.Entities;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServicePro.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [TokenAuthenticationFilter]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -29,6 +29,15 @@ namespace ServicePro.API.Controllers
         public async Task<IActionResult> Get()
         {
             var users = await _userService.GetAll();
+            return Ok(users);
+        }
+
+        [HttpGet]
+        [Route("clients")]
+        [ProducesResponseType(typeof(List<ClientDTO>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllClients()
+        {
+            var users = await _userService.GetAllClients();
             return Ok(users);
         }
 

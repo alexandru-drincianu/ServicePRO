@@ -10,6 +10,8 @@
   "login_error": "Login failed.",
   "registration_error": "Registration failed.",
   "fetch_orders_error": "Could not retrieve orders.",
+  "clients": "Clients",
+  "create_client": "Create client",
   "home_title": "Home",
   "orders_title": "Orders",
   "orders_delete_dialog_title": "Confirmation is required!",

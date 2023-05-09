@@ -13,5 +13,6 @@ namespace ServicePro.BusinessLogic.Services.Abstractions
         public Task<UserDTO> GetByIdAsync(int Id, bool applyChanges = true);
         public Task<PaginatedListResponseDto<UserDTO>> GetUsersPaginatedAsync(PaginatedListRequest paginatedRequest);
         public Task<UserDTO> RemoveByAdminAsync(int userId, int loggedInUserId);
+        public Task<List<ClientDTO>> GetAllClients();
     }
 }

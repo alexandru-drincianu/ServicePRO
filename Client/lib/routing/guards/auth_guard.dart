@@ -20,8 +20,6 @@ class AuthGuard extends AutoRouteGuard {
       resolver.next(!isLoaded);
       return;
     } else if (!isLoaded) {
-      // We need this case since the initial property of [AutoRoute] doesn't work,
-      // loading HomeRoute instead of SplashRoute.
       router.replaceAll([const SplashRoute()]);
       return;
     }
