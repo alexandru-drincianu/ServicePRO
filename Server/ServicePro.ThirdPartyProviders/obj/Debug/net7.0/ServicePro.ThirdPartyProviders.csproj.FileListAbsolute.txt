@@ -1,0 +1,12 @@
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\ServicePro.ThirdPartyProviders.csproj.AssemblyReference.cache
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\ServicePro.ThirdPartyProviders.GeneratedMSBuildEditorConfig.editorconfig
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\ServicePro.ThirdPartyProviders.AssemblyInfoInputs.cache
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\ServicePro.ThirdPartyProviders.AssemblyInfo.cs
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\ServicePro.ThirdPartyProviders.csproj.CoreCompileInputs.cache
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\bin\Debug\net7.0\ServicePro.ThirdPartyProviders.deps.json
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\bin\Debug\net7.0\ServicePro.ThirdPartyProviders.dll
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\bin\Debug\net7.0\ServicePro.ThirdPartyProviders.pdb
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\ServicePro.ThirdPartyProviders.dll
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\refint\ServicePro.ThirdPartyProviders.dll
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\ServicePro.ThirdPartyProviders.pdb
+D:\Licenta\Server\ServicePro.ThirdPartyProviders\obj\Debug\net7.0\ref\ServicePro.ThirdPartyProviders.dll

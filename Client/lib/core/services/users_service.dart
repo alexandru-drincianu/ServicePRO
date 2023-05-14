@@ -16,6 +16,7 @@ class UserService extends BaseHttpService {
   static const _registerPath = 'Authenticate/register';
   static const _getUsersPath = 'Users/paginated';
   static const _getClientsPath = 'Users/clients';
+  static const _createClientPath = 'Users/createClient';
 
   Future<dynamic> register(
     String username,
@@ -151,6 +152,34 @@ class UserService extends BaseHttpService {
       );
       throw const BaseException(
         errorId: 'delete_user_error',
+      );
+    }
+  }
+
+  Future<dynamic> createClient(
+    ClientModel model,
+  ) async {
+    try {
+      final res = await post(
+        buildUri(
+          Constants.apiBaseUrl,
+          _createClientPath,
+        ),
+        json.encode(
+          model,
+        ),
+      );
+      return res;
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
       );
     }
   }

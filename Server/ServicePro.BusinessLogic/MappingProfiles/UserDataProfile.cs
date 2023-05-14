@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ServicePro.BusinessLogic.DTOs;
 using ServicePro.BusinessLogic.DTOs.Orders;
 using ServicePro.DataAccess.Entities;
 using System;
@@ -14,7 +15,7 @@ namespace ServicePro.BusinessLogic.MappingProfiles
         public UserDataProfile()
         {
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<User, ClientDTO>();
+            CreateMap<User, ClientDTO>().ReverseMap();
         }
     }
 }

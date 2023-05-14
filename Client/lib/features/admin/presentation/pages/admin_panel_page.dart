@@ -40,6 +40,7 @@ class AdminPanelPageState extends State<AdminPanelPage> {
     _usernameController.dispose();
     _passwordController.dispose();
     _fullnameController.dispose();
+    _searchtermController.dispose();
     super.dispose();
   }
 

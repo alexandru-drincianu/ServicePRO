@@ -16,6 +16,11 @@ using ServicePro.BusinessLogic.Services;
 using ServicePro.BusinessLogic.Helpers.TokenAuthentication;
 using ServcicePro.DataAccess.Repository.Abstraction;
 using ServcicePro.DataAccess.Repository;
+using FluentValidation;
+using ServicePro.BusinessLogic.Validation;
+using ServicePro.BusinessLogic.DTOs;
+using System.Configuration;
+using ServicePro.ThirdPartyProviders.TwilioServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +49,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IValidator<ClientDTO>, ClientValidator>();
+builder.Services.AddScoped<ISmsService, TwilioSmsService>();
+builder.Services.Configure<TwilioSmsServiceSettings>(builder.Configuration.GetSection("Twilio"));
+
 builder.Services.AddDataProtection();
 
 builder.Services.AddSwaggerGen(c =>

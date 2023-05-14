@@ -1,6 +1,16 @@
+import 'dart:convert';
+
+import 'package:bot_toast/bot_toast.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:provider/provider.dart';
+import 'package:service_pro/core/models/address_model.dart';
+import 'package:service_pro/core/models/client_model.dart';
+import 'package:service_pro/routing/app_router.gr.dart';
+
+import '../../../../routing/app_router.dart';
+import '../../provider/clients_provider.dart';
 
 class ClientWizzardForm extends StatefulWidget {
   const ClientWizzardForm({Key? key}) : super(key: key);
@@ -13,9 +23,10 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
   int _currentStep = 0;
   final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _telephoneController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
+  String? telephoneNumber = "";
   String countryValue = "";
   String? stateValue = "";
   String? cityValue = "";
@@ -24,8 +35,8 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
   void dispose() {
     _fullnameController.dispose();
     _emailController.dispose();
-    _telephoneController.dispose();
     _streetController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
@@ -40,7 +51,7 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
       case 0:
         return _fullnameController.text.isNotEmpty &&
             _emailController.text.isNotEmpty &&
-            _telephoneController.text.isNotEmpty;
+            telephoneNumber!.isNotEmpty;
       case 1:
         return _streetController.text.isNotEmpty &&
             countryValue.isNotEmpty &&
@@ -53,9 +64,60 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
             stateValue!.isNotEmpty &&
             _fullnameController.text.isNotEmpty &&
             _emailController.text.isNotEmpty &&
-            _telephoneController.text.isNotEmpty;
+            telephoneNumber!.isNotEmpty;
       default:
         return true;
+    }
+  }
+
+  Future<void> _createAccount(BuildContext context) async {
+    final clientsProvider = context.read<ClientsProvider>();
+    final ClientModel client = ClientModel(
+      id: 0,
+      fullName: _fullnameController.text,
+      username: _usernameController.text,
+      email: _emailController.text,
+      telephoneNumber: telephoneNumber!,
+      notes: "",
+      address: AddressModel(
+        street: _streetController.text,
+        city: cityValue!,
+        country: countryValue.substring(4),
+        county: stateValue!,
+      ),
+    );
+    var response = await clientsProvider.createClient(client);
+    if (response.statusCode == 200) {
+      final clientName = jsonDecode(response.body)['fullName'];
+
+      BotToast.showText(
+        text: 'Client "$clientName" created!',
+        textStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+        contentColor: Colors.green,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 16.0,
+        ),
+      );
+      router.replace(const ClientsRoute());
+    } else {
+      BotToast.showText(
+        text: response.body,
+        textStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+        contentColor: Colors.red,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 16.0,
+        ),
+      );
     }
   }
 
@@ -135,7 +197,11 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
                         labelText: 'Phone Number *',
                       ),
                       initialCountryCode: 'RO',
-                      controller: _telephoneController,
+                      onChanged: (value) {
+                        setState(() {
+                          telephoneNumber = value.completeNumber;
+                        });
+                      },
                       validator: (value) {
                         if (value!.completeNumber.toString().isEmpty) {
                           return 'Please enter your telephone number';
@@ -253,14 +319,22 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              'You are all set',
+                              'You are almost done, choose an username:',
                               style: TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(height: 10),
+                            TextField(
+                              controller: _usernameController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Username',
+                              ),
                             ),
                             const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () {
                                 if (isValid) {
-                                  _createAccount();
+                                  _createAccount(context);
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -282,6 +356,4 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
       ),
     );
   }
-
-  void _createAccount() {}
 }

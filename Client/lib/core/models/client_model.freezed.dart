@@ -23,6 +23,8 @@ mixin _$ClientModel {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'fullName')
   String get fullName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'username')
+  String get username => throw _privateConstructorUsedError;
   @JsonKey(name: 'email')
   String get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'telephoneNumber')
@@ -47,6 +49,7 @@ abstract class $ClientModelCopyWith<$Res> {
   $Res call(
       {int id,
       @JsonKey(name: 'fullName') String fullName,
+      @JsonKey(name: 'username') String username,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'telephoneNumber') String telephoneNumber,
       @JsonKey(name: 'notes') String notes,
@@ -70,6 +73,7 @@ class _$ClientModelCopyWithImpl<$Res, $Val extends ClientModel>
   $Res call({
     Object? id = null,
     Object? fullName = null,
+    Object? username = null,
     Object? email = null,
     Object? telephoneNumber = null,
     Object? notes = null,
@@ -83,6 +87,10 @@ class _$ClientModelCopyWithImpl<$Res, $Val extends ClientModel>
       fullName: null == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
           ? _value.email
@@ -123,6 +131,7 @@ abstract class _$$_ClientModelCopyWith<$Res>
   $Res call(
       {int id,
       @JsonKey(name: 'fullName') String fullName,
+      @JsonKey(name: 'username') String username,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'telephoneNumber') String telephoneNumber,
       @JsonKey(name: 'notes') String notes,
@@ -145,6 +154,7 @@ class __$$_ClientModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? fullName = null,
+    Object? username = null,
     Object? email = null,
     Object? telephoneNumber = null,
     Object? notes = null,
@@ -158,6 +168,10 @@ class __$$_ClientModelCopyWithImpl<$Res>
       fullName: null == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
           ? _value.email
@@ -185,6 +199,7 @@ class _$_ClientModel implements _ClientModel {
   const _$_ClientModel(
       {required this.id,
       @JsonKey(name: 'fullName') required this.fullName,
+      @JsonKey(name: 'username') required this.username,
       @JsonKey(name: 'email') required this.email,
       @JsonKey(name: 'telephoneNumber') required this.telephoneNumber,
       @JsonKey(name: 'notes') required this.notes,
@@ -198,6 +213,9 @@ class _$_ClientModel implements _ClientModel {
   @override
   @JsonKey(name: 'fullName')
   final String fullName;
+  @override
+  @JsonKey(name: 'username')
+  final String username;
   @override
   @JsonKey(name: 'email')
   final String email;
@@ -213,7 +231,7 @@ class _$_ClientModel implements _ClientModel {
 
   @override
   String toString() {
-    return 'ClientModel(id: $id, fullName: $fullName, email: $email, telephoneNumber: $telephoneNumber, notes: $notes, address: $address)';
+    return 'ClientModel(id: $id, fullName: $fullName, username: $username, email: $email, telephoneNumber: $telephoneNumber, notes: $notes, address: $address)';
   }
 
   @override
@@ -224,6 +242,8 @@ class _$_ClientModel implements _ClientModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.telephoneNumber, telephoneNumber) ||
                 other.telephoneNumber == telephoneNumber) &&
@@ -233,8 +253,8 @@ class _$_ClientModel implements _ClientModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, fullName, email, telephoneNumber, notes, address);
+  int get hashCode => Object.hash(runtimeType, id, fullName, username, email,
+      telephoneNumber, notes, address);
 
   @JsonKey(ignore: true)
   @override
@@ -255,6 +275,8 @@ abstract class _ClientModel implements ClientModel {
       {required final int id,
       @JsonKey(name: 'fullName')
           required final String fullName,
+      @JsonKey(name: 'username')
+          required final String username,
       @JsonKey(name: 'email')
           required final String email,
       @JsonKey(name: 'telephoneNumber')
@@ -272,6 +294,9 @@ abstract class _ClientModel implements ClientModel {
   @override
   @JsonKey(name: 'fullName')
   String get fullName;
+  @override
+  @JsonKey(name: 'username')
+  String get username;
   @override
   @JsonKey(name: 'email')
   String get email;

@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServicePro.BusinessLogic\ServicePro.BusinessLogic.csproj" />
+    <ProjectReference Include="..\ServicePro.ThirdPartyProviders\ServicePro.ThirdPartyProviders.csproj" />
   </ItemGroup>
 
 </Project>

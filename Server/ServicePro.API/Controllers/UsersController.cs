@@ -15,6 +15,7 @@ namespace ServicePro.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    //[TokenAuthenticationFilter]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -47,6 +48,23 @@ namespace ServicePro.API.Controllers
         {
             var user = await _userService.GetByIdAsync(id);
             return Ok(user);
+        }
+
+        [HttpPost]
+        [Route("createClient")]
+        [ProducesResponseType(typeof(UserDTO), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> CreateClientAccount([FromBody] ClientDTO clientDTO)
+        {
+            try
+            {
+                var createdClient = await _userService.CreateClientAccount(clientDTO);
+                return Ok(clientDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
 

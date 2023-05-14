@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:fimber_io/fimber_io.dart';
@@ -25,5 +27,21 @@ class ClientsProvider extends ChangeNotifier {
       notifyListeners();
     }
     return List<ClientModel>.empty();
+  }
+
+  Future<dynamic> createClient(ClientModel client) async {
+    try {
+      final res = await _userService.createClient(client);
+      return res;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+    } finally {
+      // After changing state to success or error, rebuild widgets.
+      notifyListeners();
+    }
   }
 }

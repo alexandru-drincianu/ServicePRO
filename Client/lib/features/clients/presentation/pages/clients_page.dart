@@ -18,7 +18,9 @@ class ClientsPage extends StatefulWidget {
 
 class ClientsPageState extends State<ClientsPage> {
   List<ClientModel> _clients = [];
+  List<ClientModel> _filterClients = [];
   bool _setupComplete = false;
+  final _searchtermController = TextEditingController();
 
   @override
   void initState() {
@@ -26,12 +28,18 @@ class ClientsPageState extends State<ClientsPage> {
     initialize();
   }
 
+  @override
+  void dispose() {
+    _searchtermController.dispose();
+    super.dispose();
+  }
+
   Future<void> initialize() async {
     final clientsProvider = context.read<ClientsProvider>();
-    // Check if user is logged in by loading user data
     final clientsData = await clientsProvider.getClients();
     setState(() {
       _clients = clientsData;
+      _filterClients = clientsData;
       _setupComplete = true;
     });
   }
@@ -67,7 +75,34 @@ class ClientsPageState extends State<ClientsPage> {
                       ? const Text("No clients available")
                       : Expanded(
                           child: PaginatedDataTable(
-                            header: const Text('Clients'),
+                            header: Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(12),
+                                ),
+                              ),
+                              child: TextField(
+                                controller: _searchtermController,
+                                decoration: const InputDecoration(
+                                  hintText: "Enter username",
+                                ),
+                                onChanged: (value) {
+                                  var filteredClients = _filterClients
+                                      .where(
+                                        (element) =>
+                                            element.fullName.contains(value),
+                                      )
+                                      .toList();
+                                  setState(() {
+                                    _clients = filteredClients;
+                                  });
+                                },
+                              ),
+                            ),
                             columns: const [
                               DataColumn(label: Text("Name")),
                               DataColumn(label: Text("Telephone")),
