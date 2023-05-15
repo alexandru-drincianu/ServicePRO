@@ -1,4 +1,4 @@
-﻿using ServicePro.BusinessLogic.DTOs.Orders;
+﻿using ServicePro.BusinessLogic.DTOs;
 using ServicePro.DataAccess.Entities;
 using System.Threading.Tasks;
 

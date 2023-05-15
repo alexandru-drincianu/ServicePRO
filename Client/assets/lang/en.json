@@ -12,6 +12,7 @@
   "fetch_orders_error": "Could not retrieve orders.",
   "clients": "Clients",
   "create_client": "Create client",
+  "create_vehicle": "Create vehicle",
   "workorders": "Workorders",
   "vehicles":"Vehicles",
   "home_title": "Home",

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ServicePro.BusinessLogic.DTOs.Orders;
+using ServicePro.BusinessLogic.DTOs;
 using ServicePro.DataAccess.Entities;
 
 namespace ServicePro.BusinessLogic.MappingProfiles

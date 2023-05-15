@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServicePro.BusinessLogic.DTOs.Orders;
 using System.Collections.Generic;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +14,7 @@ namespace ServicePro.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[TokenAuthenticationFilter]
+    [TokenAuthenticationFilter]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;

@@ -1,5 +1,4 @@
-﻿using ServicePro.BusinessLogic.DTOs.Orders;
-using ServicePro.DataAccess.Entities;
+﻿using ServicePro.DataAccess.Entities;
 
 namespace ServicePro.BusinessLogic.DTOs
 {

@@ -1,4 +1,4 @@
-﻿namespace ServicePro.BusinessLogic.DTOs.Orders
+﻿namespace ServicePro.BusinessLogic.DTOs
 {
     public class AddressDTO
     {

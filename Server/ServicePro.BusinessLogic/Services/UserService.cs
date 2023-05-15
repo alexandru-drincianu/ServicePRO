@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using ServcicePro.DataAccess.Repository.Abstraction;
 using ServicePro.BusinessLogic.DTOs;
-using ServicePro.BusinessLogic.DTOs.Orders;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using ServicePro.Common.Enums;
 using ServicePro.DataAccess.Entities;

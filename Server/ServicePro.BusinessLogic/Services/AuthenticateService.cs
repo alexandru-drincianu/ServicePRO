@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.DataProtection;
-using ServicePro.BusinessLogic.DTOs.Orders;
+using ServicePro.BusinessLogic.DTOs;
 using ServicePro.BusinessLogic.Helpers.TokenAuthentication;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using ServicePro.DataAccess.Entities;

@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace ServicePro.BusinessLogic.MappingProfiles
 {
-    public class UserDataProfile : Profile
+    public class VehicleDataProfile : Profile
     {
-        public UserDataProfile()
+        public VehicleDataProfile()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<User, ClientDTO>().ReverseMap();
-            CreateMap<User, UserDetailsModel>().ReverseMap();
+            CreateMap<Vehicle, VehicleResponseDTO>().ReverseMap();
+            CreateMap<Vehicle, VehicleRequestDTO>().ReverseMap();
+            CreateMap<VehicleResponseDTO, UserDetailsModel>().ReverseMap();
         }
     }
 }
