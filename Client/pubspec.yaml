@@ -82,6 +82,8 @@ dependencies:
   synchronized: ^3.0.0+3
   intl_phone_field: ^3.1.0
   csc_picker: ^0.2.7
+  path: ^1.8.2
+  camera: ^0.9.8+1
 
 dependency_overrides:
   collection: ^1.17.0

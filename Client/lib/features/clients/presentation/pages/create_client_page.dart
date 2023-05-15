@@ -29,7 +29,6 @@ class CreateClientPageState extends State<CreateClientPage> {
       ),
       body:
           const ClientWizzardForm(), // Add the ClientWizzardForm as a child widget here
-      // TODO: move app drawer above home page
       drawer: const AppDrawer(),
     );
   }

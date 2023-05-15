@@ -22,6 +22,8 @@ namespace ServicePro.DataAccess.Context
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderLine> OrderLines { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Vehicle> Vehicles { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

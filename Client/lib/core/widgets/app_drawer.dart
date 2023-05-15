@@ -97,6 +97,26 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               onTap: () => router.replace(const ClientsRoute()),
             ),
+          if (_user?.role != UserRole.client.index)
+            ListTile(
+              leading: const Icon(Icons.directions_car),
+              title: Text(
+                context.translate(
+                  TranslationKeys.vehicles,
+                ),
+              ),
+              onTap: () => router.replace(const VehiclesRoute()),
+            ),
+          if (_user?.role != UserRole.client.index)
+            ListTile(
+              leading: const Icon(Icons.construction),
+              title: Text(
+                context.translate(
+                  TranslationKeys.workorders,
+                ),
+              ),
+              onTap: () => router.replace(const WorkordersRoute()),
+            ),
           ListTile(
             leading: const Icon(Icons.list),
             title: Text(
