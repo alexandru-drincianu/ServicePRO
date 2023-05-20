@@ -18,6 +18,7 @@ class Routes {
   static const createVehicles = '/vehicles/create';
   static const vehicleDetails = '/vehicles/:id';
   static const userDetails = '/users/:id';
+  static const newMechanicInfo = '/newMechanicInfo';
 
   // TODO: https://pub.dev/packages/auto_route#working-with-paths
   static const createOrder = '/orders/new';

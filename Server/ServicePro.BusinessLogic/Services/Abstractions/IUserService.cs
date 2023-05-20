@@ -7,7 +7,7 @@ namespace ServicePro.BusinessLogic.Services.Abstractions
     public interface IUserService
     {
         public Task<IEnumerable<UserDTO>> GetAll();
-        public Task<UserDTO> UpdateAsync(UserDTO item, int id, bool applyChanges = true);
+        public Task<ClientDTO> UpdateAsync(ClientDTO item, int id);
         public Task<UserDTO> RemoveAsync(int orderId, bool applyChanges = true);
         public Task<ClientDTO> GetByIdAsync(int Id, bool applyChanges = true);
         public Task<PaginatedListResponseDto<UserDTO>> GetUsersPaginatedAsync(PaginatedListRequest paginatedRequest);

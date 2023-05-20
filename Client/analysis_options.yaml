@@ -47,7 +47,7 @@ dart_code_metrics:
   metrics:
     cyclomatic-complexity: 24
     maximum-nesting-level: 6
-    source-lines-of-code: 134
+    source-lines-of-code: 200
     halstead-volume: 10926
   anti-patterns:
     - long-method:

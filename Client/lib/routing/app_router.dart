@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:service_pro/features/admin/presentation/pages/admin_panel_page.dart';
+import 'package:service_pro/features/info/presentation/pages/new_mechanic_info_page.dart';
 import 'package:service_pro/features/vehicles/presentation/pages/create_vehicle_page.dart';
 
 import '../features/clients/presentation/pages/clients_page.dart';
@@ -72,6 +73,11 @@ part 'routes.dart';
     AutoRoute(
       path: Routes.userDetails,
       page: UserDetailsPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.newMechanicInfo,
+      page: NewMechanicInfoPage,
       guards: [AuthGuard],
     ),
     AutoRoute(

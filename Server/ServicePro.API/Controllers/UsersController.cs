@@ -57,7 +57,7 @@ namespace ServicePro.API.Controllers
             try
             {
                 var createdClient = await _userService.CreateClientAccount(clientDTO);
-                return Ok(clientDTO);
+                return Ok(createdClient);
             }
             catch (Exception ex)
             {
@@ -67,18 +67,20 @@ namespace ServicePro.API.Controllers
         }
 
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(UserDTO), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UserDTO newUser)
+        [ProducesResponseType(typeof(ClientDTO), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Update([FromBody] ClientDTO clientDTO)
         {
-            if (id != newUser.Id)
+            try
             {
-                return BadRequest("Invalid request");
+                var updatedUser = await _userService.UpdateAsync(clientDTO, clientDTO.Id);
+                return Ok(updatedUser);
             }
-
-            var user = await _userService.UpdateAsync(newUser, id);
-            return Ok(user);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{userId}")]

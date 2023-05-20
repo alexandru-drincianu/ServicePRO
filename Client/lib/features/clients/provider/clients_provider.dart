@@ -61,4 +61,20 @@ class ClientsProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<dynamic> updateAccountDetails(ClientModel client) async {
+    try {
+      final res = await _userService.updateAccountDetails(client);
+      return res;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+    } finally {
+      // After changing state to success or error, rebuild widgets.
+      notifyListeners();
+    }
+  }
 }

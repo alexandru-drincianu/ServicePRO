@@ -1,6 +1,10 @@
+import 'package:bot_toast/bot_toast.dart';
+import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/localization/localization.dart';
+import 'package:service_pro/core/models/address_model.dart';
 import 'package:service_pro/core/models/client_model.dart';
 import 'package:service_pro/features/clients/provider/clients_provider.dart';
 
@@ -20,7 +24,7 @@ class UserDetailsPage extends StatefulWidget {
 class UserDetailsPageState extends State<UserDetailsPage> {
   bool _setupComplete = false;
   bool _inEdit = false;
-  late final ClientModel _userData;
+  late ClientModel _userData;
   UserModel? _loggedInUser;
 
   @override
@@ -43,6 +47,40 @@ class UserDetailsPageState extends State<UserDetailsPage> {
 
   bool shouldShowEditButton() {
     return _loggedInUser?.id == _userData.id;
+  }
+
+  Future<void> _updateUser(BuildContext context) async {
+    final clientsProvider = context.read<ClientsProvider>();
+    var response = await clientsProvider.updateAccountDetails(_userData);
+    if (response.statusCode == 200) {
+      BotToast.showText(
+        text: 'Account details updated!',
+        textStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+        contentColor: Colors.green,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 16.0,
+        ),
+      );
+    } else {
+      BotToast.showText(
+        text: response.body,
+        textStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+        contentColor: Colors.red,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 16.0,
+        ),
+      );
+    }
   }
 
   @override
@@ -99,11 +137,13 @@ class UserDetailsPageState extends State<UserDetailsPage> {
                   icon: Icons.phone,
                   label: 'Telephone number:',
                   text: _userData.telephoneNumber ?? "",
+                  property: "telephoneNumber",
                 ),
                 _buildRow(
                   icon: Icons.mail,
                   label: 'E-mail:',
                   text: _userData.email ?? "",
+                  property: "email",
                 ),
                 _buildRow(
                   icon: Icons.signpost,
@@ -111,6 +151,7 @@ class UserDetailsPageState extends State<UserDetailsPage> {
                   text: _userData.address != null
                       ? _userData.address!.street
                       : "",
+                  property: "street",
                 ),
                 _buildRow(
                   icon: Icons.location_city,
@@ -118,11 +159,13 @@ class UserDetailsPageState extends State<UserDetailsPage> {
                   text: _userData.address != null
                       ? "${_userData.address!.city}, ${_userData.address!.country}"
                       : "",
+                  property: "city",
                 ),
                 _buildRow(
                   icon: Icons.notes,
                   label: 'Notes:',
                   text: _userData.notes ?? "",
+                  property: "notes",
                 ),
                 shouldShowEditButton()
                     ? !_inEdit
@@ -154,7 +197,8 @@ class UserDetailsPageState extends State<UserDetailsPage> {
                             height: 100,
                             child: Center(
                               child: ElevatedButton.icon(
-                                onPressed: () => {
+                                onPressed: () async => {
+                                  _updateUser(context),
                                   setState(() {
                                     _inEdit = false;
                                   }),
@@ -188,6 +232,7 @@ class UserDetailsPageState extends State<UserDetailsPage> {
     required IconData icon,
     required String label,
     required String text,
+    required String property,
     String? buttonLabel,
     VoidCallback? onPressed,
   }) {
@@ -211,13 +256,7 @@ class UserDetailsPageState extends State<UserDetailsPage> {
                 ),
                 const SizedBox(height: 5),
                 _inEdit
-                    ? TextFormField(
-                        initialValue: text,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
+                    ? _propertyField(property, text)
                     : Text(
                         text,
                         style: const TextStyle(
@@ -248,5 +287,183 @@ class UserDetailsPageState extends State<UserDetailsPage> {
         ],
       ),
     );
+  }
+
+  Widget _propertyField(String property, String text) {
+    switch (property) {
+      case "telephoneNumber":
+        return IntlPhoneField(
+          decoration: const InputDecoration(
+            labelText: 'Phone Number *',
+          ),
+          initialCountryCode: 'RO',
+          initialValue: text,
+          onChanged: (value) {
+            var updatedUserData =
+                _userData.copyWith(telephoneNumber: value.completeNumber);
+            setState(() {
+              _userData = updatedUserData;
+            });
+          },
+          validator: (value) {
+            if (value!.completeNumber.toString().isEmpty) {
+              return 'Please enter your telephone number';
+            }
+            return null;
+          },
+        );
+      case "email":
+        return TextFormField(
+          initialValue: text,
+          decoration: const InputDecoration(labelText: 'Email *'),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Please enter your email';
+            }
+            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+              return 'Please enter a valid email';
+            }
+            return null;
+          },
+          onChanged: (value) {
+            var updatedUserData = _userData.copyWith(email: value);
+            setState(() {
+              _userData = updatedUserData;
+            });
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+        );
+      case "street":
+        return TextFormField(
+          initialValue: text,
+          decoration: const InputDecoration(labelText: 'Street *'),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Please enter your street';
+            }
+            return null;
+          },
+          onChanged: (value) {
+            var updatedUserData = _userData.address != null
+                ? _userData.copyWith(
+                    address: _userData.address?.copyWith(street: value),
+                  )
+                : _userData.copyWith(
+                    address: AddressModel(
+                      county: "",
+                      city: "",
+                      street: value,
+                      country: "",
+                    ),
+                  );
+            setState(() {
+              _userData = updatedUserData;
+            });
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+        );
+      case "city":
+        return CSCPicker(
+          dropdownDecoration: const BoxDecoration(
+            color: Colors.transparent,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 1,
+              ),
+              left: BorderSide.none,
+              right: BorderSide.none,
+              top: BorderSide.none,
+            ),
+          ),
+
+          disabledDropdownDecoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            border: const Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 1,
+              ),
+              left: BorderSide.none,
+              right: BorderSide.none,
+              top: BorderSide.none,
+            ),
+          ),
+
+          ///placeholders for dropdown search field
+          countrySearchPlaceholder: "Country",
+          stateSearchPlaceholder: "State",
+          citySearchPlaceholder: "City",
+
+          ///labels for dropdown
+          countryDropdownLabel: "Country *",
+          stateDropdownLabel: "State *",
+          cityDropdownLabel: "City *",
+
+          currentCity: _userData.address?.city ?? "",
+          currentCountry: _userData.address?.country ?? "",
+          currentState: _userData.address?.county ?? "",
+
+          ///triggers once country selected in dropdown
+          onCountryChanged: (value) {
+            var updatedUserData = _userData.address != null
+                ? _userData.copyWith(
+                    address: _userData.address
+                        ?.copyWith(country: value.substring(4).trim()),
+                  )
+                : _userData.copyWith(
+                    address: AddressModel(
+                      county: "",
+                      city: "",
+                      street: "",
+                      country: value.substring(4).trim(),
+                    ),
+                  );
+            setState(() {
+              _userData = updatedUserData;
+            });
+          },
+
+          ///triggers once state selected in dropdown
+          onStateChanged: (value) {
+            var updatedUserData = _userData.copyWith(
+              address: _userData.address?.copyWith(county: value ?? ""),
+            );
+            setState(() {
+              _userData = updatedUserData;
+            });
+          },
+
+          ///triggers once city selected in dropdown
+          onCityChanged: (value) {
+            var updatedUserData = _userData.copyWith(
+              address: _userData.address?.copyWith(city: value ?? ""),
+            );
+            setState(() {
+              _userData = updatedUserData;
+            });
+          },
+        );
+      case "notes":
+        return TextFormField(
+          initialValue: text,
+          decoration: const InputDecoration(labelText: 'Notes'),
+          onChanged: (value) {
+            var updatedUserData = _userData.copyWith(notes: value);
+            setState(() {
+              _userData = updatedUserData;
+            });
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+        );
+      default:
+        return const Text(
+          'Invalid property',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        );
+    }
   }
 }

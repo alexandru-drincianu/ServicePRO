@@ -23,14 +23,18 @@ namespace ServicePro.BusinessLogic.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRepository<Address> _addressRepository;
         private readonly IMapper _mapper;
         private readonly IValidator<ClientDTO> _clientValidator;
         private readonly IDataProtector _dataProtector;
         private readonly ISmsService _smsService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, IValidator<ClientDTO> clientValidator, IDataProtectionProvider protectionProvider, ISmsService smsService)
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IRepository<Address> addressRepository, IMapper mapper, IValidator<ClientDTO> clientValidator, IDataProtectionProvider protectionProvider, ISmsService smsService)
         {
+            _unitOfWork = unitOfWork;
             _userRepository = userRepository;
+            _addressRepository = addressRepository;
             _mapper = mapper;
             _clientValidator = clientValidator;
             _dataProtector = protectionProvider.CreateProtector("Affiliate_PlanI");
@@ -104,12 +108,41 @@ namespace ServicePro.BusinessLogic.Services
             return _mapper.Map<UserDTO>(createdUser);
         }
 
-        public async Task<UserDTO> UpdateAsync(UserDTO item, int id, bool applyChanges = true)
+        public async Task<ClientDTO> UpdateAsync(ClientDTO item, int id)
         {
-            var order = _mapper.Map<User>(item);
-            await _userRepository.UpdateAsync(order, id);
+            _unitOfWork.CreateTransaction();
+            try
+            {
+                var user = await _userRepository.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    throw new Exception("User not found");
+                }
 
-            return item;
+                var newAddress = _mapper.Map<Address>(item.Address);
+                if (user.Address == null)
+                {
+                    await _addressRepository.AddAsync(newAddress);
+                }
+                else
+                {
+                    await _addressRepository.UpdateAsync(newAddress, user.Address.Id);
+                }
+
+                user.Notes = item.Notes;
+                user.AddressId = newAddress.Id;
+                user.Email = item.Email;
+                user.TelephoneNumber = item.TelephoneNumber;
+
+                await _userRepository.UpdateAsync(user, id);
+                _unitOfWork.CommitTransaction();
+                return item;
+            } catch (Exception)
+            {
+                _unitOfWork.RollbackTransaction();
+                throw new Exception("Failed updating user");
+            }
+            
 
         }
 
