@@ -56,12 +56,30 @@ class _AppDrawerState extends State<AppDrawer> {
               children: [
                 Positioned(
                   top: ThemeConstants.sizeUnitL,
-                  child: Text(
-                    "${context.translate(TranslationKeys.welcome)}, ${_user?.name}",
-                    style: const TextStyle(
-                      fontSize: ThemeConstants.sizeUnitXL,
-                      color: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "${context.translate(TranslationKeys.welcome)}, ${_user?.name}",
+                        style: const TextStyle(
+                          fontSize: ThemeConstants.sizeUnitXL,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 100,
+                        child: Center(
+                          child: ElevatedButton.icon(
+                            onPressed: () =>
+                                router.replace(UserDetailsRoute(id: _user!.id)),
+                            icon: const Icon(Icons.person),
+                            label: const Text("My Profile"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(

@@ -22,17 +22,17 @@ ClientModel _$ClientModelFromJson(Map<String, dynamic> json) {
 mixin _$ClientModel {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'fullName')
-  String get fullName => throw _privateConstructorUsedError;
+  String? get fullName => throw _privateConstructorUsedError;
   @JsonKey(name: 'username')
-  String get username => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
   @JsonKey(name: 'email')
-  String get email => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'telephoneNumber')
-  String get telephoneNumber => throw _privateConstructorUsedError;
+  String? get telephoneNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'notes')
-  String get notes => throw _privateConstructorUsedError;
+  String? get notes => throw _privateConstructorUsedError;
   @JsonKey(name: 'address')
-  AddressModel get address => throw _privateConstructorUsedError;
+  AddressModel? get address => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,14 +48,14 @@ abstract class $ClientModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'fullName') String fullName,
-      @JsonKey(name: 'username') String username,
-      @JsonKey(name: 'email') String email,
-      @JsonKey(name: 'telephoneNumber') String telephoneNumber,
-      @JsonKey(name: 'notes') String notes,
-      @JsonKey(name: 'address') AddressModel address});
+      @JsonKey(name: 'fullName') String? fullName,
+      @JsonKey(name: 'username') String? username,
+      @JsonKey(name: 'email') String? email,
+      @JsonKey(name: 'telephoneNumber') String? telephoneNumber,
+      @JsonKey(name: 'notes') String? notes,
+      @JsonKey(name: 'address') AddressModel? address});
 
-  $AddressModelCopyWith<$Res> get address;
+  $AddressModelCopyWith<$Res>? get address;
 }
 
 /// @nodoc
@@ -72,49 +72,53 @@ class _$ClientModelCopyWithImpl<$Res, $Val extends ClientModel>
   @override
   $Res call({
     Object? id = null,
-    Object? fullName = null,
-    Object? username = null,
-    Object? email = null,
-    Object? telephoneNumber = null,
-    Object? notes = null,
-    Object? address = null,
+    Object? fullName = freezed,
+    Object? username = freezed,
+    Object? email = freezed,
+    Object? telephoneNumber = freezed,
+    Object? notes = freezed,
+    Object? address = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      fullName: null == fullName
+      fullName: freezed == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: null == username
+              as String?,
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
+              as String?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      telephoneNumber: null == telephoneNumber
+              as String?,
+      telephoneNumber: freezed == telephoneNumber
           ? _value.telephoneNumber
           : telephoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      notes: null == notes
+              as String?,
+      notes: freezed == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: null == address
+              as String?,
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as AddressModel,
+              as AddressModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $AddressModelCopyWith<$Res> get address {
-    return $AddressModelCopyWith<$Res>(_value.address, (value) {
+  $AddressModelCopyWith<$Res>? get address {
+    if (_value.address == null) {
+      return null;
+    }
+
+    return $AddressModelCopyWith<$Res>(_value.address!, (value) {
       return _then(_value.copyWith(address: value) as $Val);
     });
   }
@@ -130,15 +134,15 @@ abstract class _$$_ClientModelCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'fullName') String fullName,
-      @JsonKey(name: 'username') String username,
-      @JsonKey(name: 'email') String email,
-      @JsonKey(name: 'telephoneNumber') String telephoneNumber,
-      @JsonKey(name: 'notes') String notes,
-      @JsonKey(name: 'address') AddressModel address});
+      @JsonKey(name: 'fullName') String? fullName,
+      @JsonKey(name: 'username') String? username,
+      @JsonKey(name: 'email') String? email,
+      @JsonKey(name: 'telephoneNumber') String? telephoneNumber,
+      @JsonKey(name: 'notes') String? notes,
+      @JsonKey(name: 'address') AddressModel? address});
 
   @override
-  $AddressModelCopyWith<$Res> get address;
+  $AddressModelCopyWith<$Res>? get address;
 }
 
 /// @nodoc
@@ -153,42 +157,42 @@ class __$$_ClientModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? fullName = null,
-    Object? username = null,
-    Object? email = null,
-    Object? telephoneNumber = null,
-    Object? notes = null,
-    Object? address = null,
+    Object? fullName = freezed,
+    Object? username = freezed,
+    Object? email = freezed,
+    Object? telephoneNumber = freezed,
+    Object? notes = freezed,
+    Object? address = freezed,
   }) {
     return _then(_$_ClientModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      fullName: null == fullName
+      fullName: freezed == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: null == username
+              as String?,
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
+              as String?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      telephoneNumber: null == telephoneNumber
+              as String?,
+      telephoneNumber: freezed == telephoneNumber
           ? _value.telephoneNumber
           : telephoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      notes: null == notes
+              as String?,
+      notes: freezed == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: null == address
+              as String?,
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as AddressModel,
+              as AddressModel?,
     ));
   }
 }
@@ -198,12 +202,12 @@ class __$$_ClientModelCopyWithImpl<$Res>
 class _$_ClientModel implements _ClientModel {
   const _$_ClientModel(
       {required this.id,
-      @JsonKey(name: 'fullName') required this.fullName,
-      @JsonKey(name: 'username') required this.username,
-      @JsonKey(name: 'email') required this.email,
-      @JsonKey(name: 'telephoneNumber') required this.telephoneNumber,
-      @JsonKey(name: 'notes') required this.notes,
-      @JsonKey(name: 'address') required this.address});
+      @JsonKey(name: 'fullName') this.fullName,
+      @JsonKey(name: 'username') this.username,
+      @JsonKey(name: 'email') this.email,
+      @JsonKey(name: 'telephoneNumber') this.telephoneNumber,
+      @JsonKey(name: 'notes') this.notes,
+      @JsonKey(name: 'address') this.address});
 
   factory _$_ClientModel.fromJson(Map<String, dynamic> json) =>
       _$$_ClientModelFromJson(json);
@@ -212,22 +216,22 @@ class _$_ClientModel implements _ClientModel {
   final int id;
   @override
   @JsonKey(name: 'fullName')
-  final String fullName;
+  final String? fullName;
   @override
   @JsonKey(name: 'username')
-  final String username;
+  final String? username;
   @override
   @JsonKey(name: 'email')
-  final String email;
+  final String? email;
   @override
   @JsonKey(name: 'telephoneNumber')
-  final String telephoneNumber;
+  final String? telephoneNumber;
   @override
   @JsonKey(name: 'notes')
-  final String notes;
+  final String? notes;
   @override
   @JsonKey(name: 'address')
-  final AddressModel address;
+  final AddressModel? address;
 
   @override
   String toString() {
@@ -273,18 +277,12 @@ class _$_ClientModel implements _ClientModel {
 abstract class _ClientModel implements ClientModel {
   const factory _ClientModel(
       {required final int id,
-      @JsonKey(name: 'fullName')
-          required final String fullName,
-      @JsonKey(name: 'username')
-          required final String username,
-      @JsonKey(name: 'email')
-          required final String email,
-      @JsonKey(name: 'telephoneNumber')
-          required final String telephoneNumber,
-      @JsonKey(name: 'notes')
-          required final String notes,
-      @JsonKey(name: 'address')
-          required final AddressModel address}) = _$_ClientModel;
+      @JsonKey(name: 'fullName') final String? fullName,
+      @JsonKey(name: 'username') final String? username,
+      @JsonKey(name: 'email') final String? email,
+      @JsonKey(name: 'telephoneNumber') final String? telephoneNumber,
+      @JsonKey(name: 'notes') final String? notes,
+      @JsonKey(name: 'address') final AddressModel? address}) = _$_ClientModel;
 
   factory _ClientModel.fromJson(Map<String, dynamic> json) =
       _$_ClientModel.fromJson;
@@ -293,22 +291,22 @@ abstract class _ClientModel implements ClientModel {
   int get id;
   @override
   @JsonKey(name: 'fullName')
-  String get fullName;
+  String? get fullName;
   @override
   @JsonKey(name: 'username')
-  String get username;
+  String? get username;
   @override
   @JsonKey(name: 'email')
-  String get email;
+  String? get email;
   @override
   @JsonKey(name: 'telephoneNumber')
-  String get telephoneNumber;
+  String? get telephoneNumber;
   @override
   @JsonKey(name: 'notes')
-  String get notes;
+  String? get notes;
   @override
   @JsonKey(name: 'address')
-  AddressModel get address;
+  AddressModel? get address;
   @override
   @JsonKey(ignore: true)
   _$$_ClientModelCopyWith<_$_ClientModel> get copyWith =>

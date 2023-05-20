@@ -10,7 +10,8 @@ namespace ServicePro.BusinessLogic.Services.Abstractions
 {
     public interface IVehicleService
     {
-        public Task<IEnumerable<VehicleResponseDTO>> GetAll();
-        public Task<VehicleResponseDTO> CreateAsync(VehicleRequestDTO item);
+        Task<IEnumerable<VehicleResponseDTO>> GetAll();
+        Task<VehicleResponseDTO> CreateAsync(VehicleRequestDTO item);
+        Task<VehicleResponseDTO> GetById(int id);
     }
 }

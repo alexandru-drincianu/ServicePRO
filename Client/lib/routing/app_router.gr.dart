@@ -11,40 +11,43 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:flutter/material.dart' as _i14;
+import 'package:auto_route/auto_route.dart' as _i15;
+import 'package:flutter/material.dart' as _i16;
 
-import '../core/models/order_model.dart' as _i16;
-import '../features/admin/presentation/pages/admin_panel_page.dart' as _i12;
+import '../core/models/order_model.dart' as _i18;
+import '../features/admin/presentation/pages/admin_panel_page.dart' as _i14;
 import '../features/clients/presentation/pages/clients_page.dart' as _i4;
 import '../features/clients/presentation/pages/create_client_page.dart' as _i5;
+import '../features/clients/presentation/pages/user_details_page.dart' as _i10;
 import '../features/home/presentation/pages/home_page.dart' as _i3;
 import '../features/login/presentation/pages/login_page.dart' as _i2;
-import '../features/orders/presentation/pages/manage_order_page.dart' as _i10;
-import '../features/orders/presentation/pages/orders_page.dart' as _i9;
-import '../features/settings/presentation/pages/settings_page.dart' as _i11;
+import '../features/orders/presentation/pages/manage_order_page.dart' as _i12;
+import '../features/orders/presentation/pages/orders_page.dart' as _i11;
+import '../features/settings/presentation/pages/settings_page.dart' as _i13;
 import '../features/vehicles/presentation/pages/create_vehicle_page.dart'
     as _i8;
+import '../features/vehicles/presentation/pages/vehicle_details_page.dart'
+    as _i9;
 import '../features/vehicles/presentation/pages/vehicles_page.dart' as _i7;
 import '../features/workorders/presentation/pages/workorders_page.dart' as _i6;
-import 'guards/auth_guard.dart' as _i15;
+import 'guards/auth_guard.dart' as _i17;
 import 'splash_page.dart' as _i1;
 
-class AppRouter extends _i13.RootStackRouter {
+class AppRouter extends _i15.RootStackRouter {
   AppRouter({
-    _i14.GlobalKey<_i14.NavigatorState>? navigatorKey,
+    _i16.GlobalKey<_i16.NavigatorState>? navigatorKey,
     required this.authGuard,
   }) : super(navigatorKey);
 
-  final _i15.AuthGuard authGuard;
+  final _i17.AuthGuard authGuard;
 
   @override
-  final Map<String, _i13.PageFactory> pagesMap = {
+  final Map<String, _i15.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i1.SplashPage(),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
@@ -52,77 +55,103 @@ class AppRouter extends _i13.RootStackRouter {
     LoginRoute.name: (routeData) {
       final args = routeData.argsAs<LoginRouteArgs>(
           orElse: () => const LoginRouteArgs());
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: _i2.LoginPage(
           onAuthenticationResult: args.onAuthenticationResult,
           key: args.key,
         ),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     HomeRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i3.HomePage(),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     ClientsRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i4.ClientsPage(),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     CreateClientRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i5.CreateClientPage(),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     WorkordersRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i6.WorkordersPage(),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     VehiclesRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i7.VehiclesPage(),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     CreateVehicleRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i8.CreateVehiclePage(),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    VehicleDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<VehicleDetailsRouteArgs>();
+      return _i15.CustomPage<dynamic>(
+        routeData: routeData,
+        child: _i9.VehicleDetailsPage(
+          key: args.key,
+          id: args.id,
+        ),
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    UserDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<UserDetailsRouteArgs>();
+      return _i15.CustomPage<dynamic>(
+        routeData: routeData,
+        child: _i10.UserDetailsPage(
+          key: args.key,
+          id: args.id,
+        ),
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     OrdersRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i13.WrappedRoute(child: const _i9.OrdersPage()),
+        child: _i15.WrappedRoute(child: const _i11.OrdersPage()),
         maintainState: false,
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
@@ -131,32 +160,32 @@ class AppRouter extends _i13.RootStackRouter {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<ManageOrderRouteArgs>(
           orElse: () => ManageOrderRouteArgs(id: pathParams.optInt('id')));
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i10.ManageOrderPage(
+        child: _i12.ManageOrderPage(
           id: args.id,
           orderModel: args.orderModel,
           key: args.key,
         ),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     SettingsRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i13.WrappedRoute(child: const _i11.SettingsPage()),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        child: _i15.WrappedRoute(child: const _i13.SettingsPage()),
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
     },
     AdminPanelRoute.name: (routeData) {
-      return _i13.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i12.AdminPanelPage(),
-        transitionsBuilder: _i13.TransitionsBuilders.noTransition,
+        child: const _i14.AdminPanelPage(),
+        transitionsBuilder: _i15.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
       );
@@ -164,80 +193,90 @@ class AppRouter extends _i13.RootStackRouter {
   };
 
   @override
-  List<_i13.RouteConfig> get routes => [
-        _i13.RouteConfig(
+  List<_i15.RouteConfig> get routes => [
+        _i15.RouteConfig(
           SplashRoute.name,
           path: '/initial',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           LoginRoute.name,
           path: '/login',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           HomeRoute.name,
           path: '/',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           ClientsRoute.name,
           path: '/clients',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           CreateClientRoute.name,
           path: '/clients/create',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           WorkordersRoute.name,
           path: '/workorders',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           VehiclesRoute.name,
           path: '/vehicles',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           CreateVehicleRoute.name,
           path: '/vehicles/create',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
+          VehicleDetailsRoute.name,
+          path: '/vehicles/:id',
+          guards: [authGuard],
+        ),
+        _i15.RouteConfig(
+          UserDetailsRoute.name,
+          path: '/users/:id',
+          guards: [authGuard],
+        ),
+        _i15.RouteConfig(
           OrdersRoute.name,
           path: '/orders',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           ManageOrderRoute.name,
           path: '/orders/edit/:id',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           '/orders/new#redirect',
           path: '/orders/new',
           redirectTo: '/orders/edit/:id',
           fullMatch: true,
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           SettingsRoute.name,
           path: '/settings',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           AdminPanelRoute.name,
           path: '/adminPanel',
           guards: [authGuard],
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           '/orders/details/:id#redirect',
           path: '/orders/details/:id',
           redirectTo: '/orders/:id',
           fullMatch: true,
         ),
-        _i13.RouteConfig(
+        _i15.RouteConfig(
           '*#redirect',
           path: '*',
           redirectTo: '/',
@@ -248,7 +287,7 @@ class AppRouter extends _i13.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashPage]
-class SplashRoute extends _i13.PageRouteInfo<void> {
+class SplashRoute extends _i15.PageRouteInfo<void> {
   const SplashRoute()
       : super(
           SplashRoute.name,
@@ -260,10 +299,10 @@ class SplashRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.LoginPage]
-class LoginRoute extends _i13.PageRouteInfo<LoginRouteArgs> {
+class LoginRoute extends _i15.PageRouteInfo<LoginRouteArgs> {
   LoginRoute({
     void Function(bool)? onAuthenticationResult,
-    _i14.Key? key,
+    _i16.Key? key,
   }) : super(
           LoginRoute.name,
           path: '/login',
@@ -284,7 +323,7 @@ class LoginRouteArgs {
 
   final void Function(bool)? onAuthenticationResult;
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -294,7 +333,7 @@ class LoginRouteArgs {
 
 /// generated route for
 /// [_i3.HomePage]
-class HomeRoute extends _i13.PageRouteInfo<void> {
+class HomeRoute extends _i15.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -306,7 +345,7 @@ class HomeRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.ClientsPage]
-class ClientsRoute extends _i13.PageRouteInfo<void> {
+class ClientsRoute extends _i15.PageRouteInfo<void> {
   const ClientsRoute()
       : super(
           ClientsRoute.name,
@@ -318,7 +357,7 @@ class ClientsRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.CreateClientPage]
-class CreateClientRoute extends _i13.PageRouteInfo<void> {
+class CreateClientRoute extends _i15.PageRouteInfo<void> {
   const CreateClientRoute()
       : super(
           CreateClientRoute.name,
@@ -330,7 +369,7 @@ class CreateClientRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.WorkordersPage]
-class WorkordersRoute extends _i13.PageRouteInfo<void> {
+class WorkordersRoute extends _i15.PageRouteInfo<void> {
   const WorkordersRoute()
       : super(
           WorkordersRoute.name,
@@ -342,7 +381,7 @@ class WorkordersRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.VehiclesPage]
-class VehiclesRoute extends _i13.PageRouteInfo<void> {
+class VehiclesRoute extends _i15.PageRouteInfo<void> {
   const VehiclesRoute()
       : super(
           VehiclesRoute.name,
@@ -354,7 +393,7 @@ class VehiclesRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.CreateVehiclePage]
-class CreateVehicleRoute extends _i13.PageRouteInfo<void> {
+class CreateVehicleRoute extends _i15.PageRouteInfo<void> {
   const CreateVehicleRoute()
       : super(
           CreateVehicleRoute.name,
@@ -365,8 +404,76 @@ class CreateVehicleRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.OrdersPage]
-class OrdersRoute extends _i13.PageRouteInfo<void> {
+/// [_i9.VehicleDetailsPage]
+class VehicleDetailsRoute extends _i15.PageRouteInfo<VehicleDetailsRouteArgs> {
+  VehicleDetailsRoute({
+    _i16.Key? key,
+    required int id,
+  }) : super(
+          VehicleDetailsRoute.name,
+          path: '/vehicles/:id',
+          args: VehicleDetailsRouteArgs(
+            key: key,
+            id: id,
+          ),
+        );
+
+  static const String name = 'VehicleDetailsRoute';
+}
+
+class VehicleDetailsRouteArgs {
+  const VehicleDetailsRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final _i16.Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'VehicleDetailsRouteArgs{key: $key, id: $id}';
+  }
+}
+
+/// generated route for
+/// [_i10.UserDetailsPage]
+class UserDetailsRoute extends _i15.PageRouteInfo<UserDetailsRouteArgs> {
+  UserDetailsRoute({
+    _i16.Key? key,
+    required int id,
+  }) : super(
+          UserDetailsRoute.name,
+          path: '/users/:id',
+          args: UserDetailsRouteArgs(
+            key: key,
+            id: id,
+          ),
+        );
+
+  static const String name = 'UserDetailsRoute';
+}
+
+class UserDetailsRouteArgs {
+  const UserDetailsRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final _i16.Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'UserDetailsRouteArgs{key: $key, id: $id}';
+  }
+}
+
+/// generated route for
+/// [_i11.OrdersPage]
+class OrdersRoute extends _i15.PageRouteInfo<void> {
   const OrdersRoute()
       : super(
           OrdersRoute.name,
@@ -377,12 +484,12 @@ class OrdersRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.ManageOrderPage]
-class ManageOrderRoute extends _i13.PageRouteInfo<ManageOrderRouteArgs> {
+/// [_i12.ManageOrderPage]
+class ManageOrderRoute extends _i15.PageRouteInfo<ManageOrderRouteArgs> {
   ManageOrderRoute({
     int? id,
-    _i16.OrderModel? orderModel,
-    _i14.Key? key,
+    _i18.OrderModel? orderModel,
+    _i16.Key? key,
   }) : super(
           ManageOrderRoute.name,
           path: '/orders/edit/:id',
@@ -406,9 +513,9 @@ class ManageOrderRouteArgs {
 
   final int? id;
 
-  final _i16.OrderModel? orderModel;
+  final _i18.OrderModel? orderModel;
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -417,8 +524,8 @@ class ManageOrderRouteArgs {
 }
 
 /// generated route for
-/// [_i11.SettingsPage]
-class SettingsRoute extends _i13.PageRouteInfo<void> {
+/// [_i13.SettingsPage]
+class SettingsRoute extends _i15.PageRouteInfo<void> {
   const SettingsRoute()
       : super(
           SettingsRoute.name,
@@ -429,8 +536,8 @@ class SettingsRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.AdminPanelPage]
-class AdminPanelRoute extends _i13.PageRouteInfo<void> {
+/// [_i14.AdminPanelPage]
+class AdminPanelRoute extends _i15.PageRouteInfo<void> {
   const AdminPanelRoute()
       : super(
           AdminPanelRoute.name,

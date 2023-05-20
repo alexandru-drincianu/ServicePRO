@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/address_model.dart';
 import 'package:service_pro/core/models/client_model.dart';
 import 'package:service_pro/core/models/vehicle_model.dart';
+import 'package:service_pro/features/clients/presentation/pages/clients_page.dart';
 import 'package:service_pro/features/vehicles/provider/vehicles_provider.dart';
 import 'package:service_pro/routing/app_router.gr.dart';
 
@@ -71,7 +72,7 @@ class VehicleWizzardFormState extends State<VehicleWizzardForm> {
   bool _validateStep() {
     switch (_currentStep) {
       case 0:
-        return true;
+        return _selectedClient != null;
       case 1:
         return _brandController.text.isNotEmpty &&
             _modelController.text.isNotEmpty &&
@@ -84,7 +85,8 @@ class VehicleWizzardFormState extends State<VehicleWizzardForm> {
             _modelController.text.isNotEmpty &&
             _vinController.text.isNotEmpty &&
             _registrationController.text.isNotEmpty &&
-            _mileageController.text.isNotEmpty;
+            _mileageController.text.isNotEmpty &&
+            _selectedClient != null;
       default:
         return true;
     }
@@ -191,32 +193,39 @@ class VehicleWizzardFormState extends State<VehicleWizzardForm> {
                       suggestionsCallback: (pattern) async {
                         return _clients
                             .where((item) =>
-                                item.fullName
+                                item.fullName!
                                     .toLowerCase()
                                     .startsWith(pattern.toLowerCase()) ||
-                                item.telephoneNumber.startsWith(pattern))
+                                item.telephoneNumber!.startsWith(pattern))
                             .toList();
                       },
                       itemBuilder: (context, ClientModel suggestion) {
                         return ListTile(
-                          title: Text(suggestion.fullName),
-                          subtitle: Text(suggestion.telephoneNumber),
+                          title: Text(suggestion.fullName!),
+                          subtitle: Text(suggestion.telephoneNumber!),
                         );
                       },
                       onSuggestionSelected: (ClientModel suggestion) {
-                        _typeAheadController.text = suggestion.fullName;
+                        _typeAheadController.text = suggestion.fullName!;
                         _selectedClient = suggestion;
                       },
                       validator: (value) =>
                           value!.isEmpty ? 'Please select a client' : null,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 16.0, top: 4.0),
-                      child: Text(
-                        'You can also add later!',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0, top: 4.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          router.replace(const ClientsRoute());
+                        },
+                        child: const Text(
+                          'Client not here? Please create one!',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.lightBlue,
+                            decoration: TextDecoration
+                                .underline, // Optional: Add underline to simulate hyperlink
+                          ),
                         ),
                       ),
                     ),

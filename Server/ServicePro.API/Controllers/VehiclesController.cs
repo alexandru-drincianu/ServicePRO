@@ -15,7 +15,7 @@ namespace ServicePro.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[TokenAuthenticationFilter]
+    [TokenAuthenticationFilter]
     public class VehiclesController : ControllerBase
     {
         private readonly IVehicleService _vehicleService;
@@ -31,6 +31,15 @@ namespace ServicePro.API.Controllers
         {
             var vehicles = await _vehicleService.GetAll();
             return Ok(vehicles);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(VehicleResponseDTO), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVehicleById([FromRoute] int id)
+        {
+            var vehicle = await _vehicleService.GetById(id);
+            return Ok(vehicle);
         }
 
         [HttpPost]

@@ -14,6 +14,7 @@ import 'base_http_service.dart';
 
 class UserService extends BaseHttpService {
   static const _registerPath = 'Authenticate/register';
+  static const _usersPath = 'Users';
   static const _getUsersPath = 'Users/paginated';
   static const _getClientsPath = 'Users/clients';
   static const _createClientPath = 'Users/createClient';
@@ -128,6 +129,35 @@ class UserService extends BaseHttpService {
       );
     }
     return List<ClientModel>.empty();
+  }
+
+  Future<ClientModel?> getUserById(int id) async {
+    try {
+      final res = await get(
+        buildUri(
+          Constants.apiBaseUrl,
+          "$_usersPath/$id",
+        ),
+        token,
+      );
+      if (res.statusCode == HttpStatus.ok) {
+        Map<String, dynamic> body = jsonDecode(res.body);
+        ClientModel result = ClientModel.fromJson(body);
+        return result;
+      }
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+    return null;
   }
 
   Future<dynamic> deleteUser(

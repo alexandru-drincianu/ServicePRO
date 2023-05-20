@@ -103,6 +103,7 @@ class VehiclesPageState extends State<VehiclesPage> {
                               ),
                             ),
                             columns: const [
+                              DataColumn(label: Text("")),
                               DataColumn(label: Text("Registration")),
                               DataColumn(label: Text("Client")),
                               DataColumn(label: Text("Brand")),
@@ -134,6 +135,15 @@ class _VehiclesDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
+        DataCell(
+          GestureDetector(
+            onTap: () {
+              // Add your desired action here when the cell is tapped
+              router.replace(VehicleDetailsRoute(id: vehicle.id!));
+            },
+            child: const Icon(Icons.visibility),
+          ),
+        ),
         DataCell(Text(vehicle.registration!)),
         DataCell(Text(vehicle.user!.name)),
         DataCell(Text(vehicle.brand!)),

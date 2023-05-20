@@ -25,5 +25,10 @@ namespace ServcicePro.DataAccess.Repository
         {
             return await _context.Set<User>().Include(user => user.Address).ToListAsync();
         }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _context.Set<User>().Include(user => user.Address).Where(user => user.Id == id).FirstOrDefaultAsync();
+        }
     }
 }

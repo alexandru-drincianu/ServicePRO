@@ -10,7 +10,9 @@ import '../features/orders/presentation/pages/manage_order_page.dart';
 import '../features/orders/presentation/pages/orders_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 import '../features/vehicles/presentation/pages/vehicles_page.dart';
+import '../features/vehicles/presentation/pages/vehicle_details_page.dart';
 import '../features/workorders/presentation/pages/workorders_page.dart';
+import '../features/clients/presentation/pages/user_details_page.dart';
 import 'app_router.gr.dart';
 import 'guards/auth_guard.dart';
 import 'splash_page.dart';
@@ -60,6 +62,16 @@ part 'routes.dart';
     AutoRoute(
       path: Routes.createVehicles,
       page: CreateVehiclePage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.vehicleDetails,
+      page: VehicleDetailsPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.userDetails,
+      page: UserDetailsPage,
       guards: [AuthGuard],
     ),
     AutoRoute(

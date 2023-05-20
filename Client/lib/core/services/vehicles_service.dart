@@ -13,7 +13,7 @@ import '../models/user_details.dart';
 import 'base_http_service.dart';
 
 class VehicleService extends BaseHttpService {
-  static const _getVehiclesPath = 'Vehicles';
+  static const _vehiclesPath = 'Vehicles';
   static const _createVehiclePath = 'Vehicles/createVehicle';
 
   Future<List<VehicleModel>> getVehicles() async {
@@ -21,7 +21,7 @@ class VehicleService extends BaseHttpService {
       final res = await get(
         buildUri(
           Constants.apiBaseUrl,
-          _getVehiclesPath,
+          _vehiclesPath,
         ),
         token,
       );
@@ -47,6 +47,35 @@ class VehicleService extends BaseHttpService {
       );
     }
     return List<VehicleModel>.empty();
+  }
+
+  Future<VehicleModel?> getVehicleById(int id) async {
+    try {
+      final res = await get(
+        buildUri(
+          Constants.apiBaseUrl,
+          "$_vehiclesPath/$id",
+        ),
+        token,
+      );
+      if (res.statusCode == HttpStatus.ok) {
+        Map<String, dynamic> body = jsonDecode(res.body);
+        VehicleModel result = VehicleModel.fromJson(body);
+        return result;
+      }
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+    return null;
   }
 
   Future<dynamic> createVehicle(

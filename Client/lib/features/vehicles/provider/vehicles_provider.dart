@@ -28,6 +28,23 @@ class VehiclesProvider extends ChangeNotifier {
     return List<VehicleModel>.empty();
   }
 
+  Future<VehicleModel?> getVehicleById(int id) async {
+    try {
+      final res = await _vehicleService.getVehicleById(id);
+      return res;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+    } finally {
+      // After changing state to success or error, rebuild widgets.
+      notifyListeners();
+    }
+    return null;
+  }
+
   Future<dynamic> createVehicle(VehicleModel vehicle) async {
     try {
       final res = await _vehicleService.createVehicle(vehicle);

@@ -29,6 +29,23 @@ class ClientsProvider extends ChangeNotifier {
     return List<ClientModel>.empty();
   }
 
+  Future<ClientModel?> getUserById(int id) async {
+    try {
+      final res = await _userService.getUserById(id);
+      return res;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+    } finally {
+      // After changing state to success or error, rebuild widgets.
+      notifyListeners();
+    }
+    return null;
+  }
+
   Future<dynamic> createClient(ClientModel client) async {
     try {
       final res = await _userService.createClient(client);

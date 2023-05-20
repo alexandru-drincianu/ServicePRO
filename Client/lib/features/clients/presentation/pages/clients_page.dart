@@ -93,7 +93,7 @@ class ClientsPageState extends State<ClientsPage> {
                                   var filteredClients = _filterClients
                                       .where(
                                         (element) =>
-                                            element.fullName.contains(value),
+                                            element.fullName!.contains(value),
                                       )
                                       .toList();
                                   setState(() {
@@ -103,6 +103,7 @@ class ClientsPageState extends State<ClientsPage> {
                               ),
                             ),
                             columns: const [
+                              DataColumn(label: Text("")),
                               DataColumn(label: Text("Name")),
                               DataColumn(label: Text("Telephone")),
                               DataColumn(label: Text("Email")),
@@ -133,10 +134,19 @@ class _ClientsDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(Text(client.fullName)),
-        DataCell(Text(client.telephoneNumber)),
-        DataCell(Text(client.email)),
-        DataCell(Text("${client.address.city}, ${client.address.country}")),
+        DataCell(
+          GestureDetector(
+            onTap: () {
+              // Add your desired action here when the cell is tapped
+              router.replace(UserDetailsRoute(id: client.id));
+            },
+            child: const Icon(Icons.visibility),
+          ),
+        ),
+        DataCell(Text(client.fullName!)),
+        DataCell(Text(client.telephoneNumber!)),
+        DataCell(Text(client.email!)),
+        DataCell(Text("${client.address!.city}, ${client.address!.country}")),
       ],
     );
   }

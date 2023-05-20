@@ -42,7 +42,7 @@ namespace ServicePro.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(UserDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ClientDTO), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetById(int id)
         {
             var user = await _userService.GetByIdAsync(id);

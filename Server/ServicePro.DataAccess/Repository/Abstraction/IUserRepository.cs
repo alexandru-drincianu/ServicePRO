@@ -11,6 +11,7 @@ namespace ServcicePro.DataAccess.Repository.Abstraction
     public interface IUserRepository
     {
         Task<List<User>> GetAllClients();
+        Task<User> GetUserByIdAsync(int id);
         Task AddAsync(User item, bool applyChanges = true);
         Task UpdateAsync(User item, int id, bool applyChanges = true);
         Task RemoveAsync(User item, bool applyChanges = true);

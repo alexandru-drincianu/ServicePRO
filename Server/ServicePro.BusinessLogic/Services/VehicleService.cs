@@ -54,7 +54,13 @@ namespace ServicePro.BusinessLogic.Services
             return _mapper.Map<IEnumerable<VehicleResponseDTO>>(vehicles);
         }
 
-     
+        public async Task<VehicleResponseDTO> GetById(int id)
+        {
+            var vehicles = await _vehicleRepository.GetVehicleByIdAsync(id);
+            return _mapper.Map<VehicleResponseDTO>(vehicles);
+        }
+
+
     }
 
 }

@@ -15,12 +15,12 @@ part 'client_model.g.dart';
 class ClientModel with _$ClientModel {
   const factory ClientModel({
     required int id,
-    @JsonKey(name: 'fullName') required String fullName,
-    @JsonKey(name: 'username') required String username,
-    @JsonKey(name: 'email') required String email,
-    @JsonKey(name: 'telephoneNumber') required String telephoneNumber,
-    @JsonKey(name: 'notes') required String notes,
-    @JsonKey(name: 'address') required AddressModel address,
+    @JsonKey(name: 'fullName') String? fullName,
+    @JsonKey(name: 'username') String? username,
+    @JsonKey(name: 'email') String? email,
+    @JsonKey(name: 'telephoneNumber') String? telephoneNumber,
+    @JsonKey(name: 'notes') String? notes,
+    @JsonKey(name: 'address') AddressModel? address,
   }) = _ClientModel;
 
   factory ClientModel.fromJson(Map<String, dynamic> json) =>

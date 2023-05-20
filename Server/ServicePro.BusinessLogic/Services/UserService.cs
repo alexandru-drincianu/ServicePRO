@@ -49,10 +49,10 @@ namespace ServicePro.BusinessLogic.Services
             return _mapper.Map<List<ClientDTO>>(users);
         }
 
-        public async Task<UserDTO> GetByIdAsync(int Id, bool applyChanges = true)
+        public async Task<ClientDTO> GetByIdAsync(int Id, bool applyChanges = true)
         {
-            var user = await _userRepository.GetByIdAsync(Id);
-            return _mapper.Map<UserDTO>(user);
+            var user = await _userRepository.GetUserByIdAsync(Id);
+            return _mapper.Map<ClientDTO>(user);
 
         }
 

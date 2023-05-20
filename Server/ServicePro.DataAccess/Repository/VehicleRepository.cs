@@ -23,5 +23,10 @@ namespace ServcicePro.DataAccess.Repository
         {
             return await _context.Set<Vehicle>().Include(vehicle => vehicle.User).ToListAsync();
         }
+
+        public async Task<Vehicle> GetVehicleByIdAsync(int id)
+        {
+            return await _context.Set<Vehicle>().Include(vehicle => vehicle.User).Where(vehicle => vehicle.Id == id).FirstOrDefaultAsync();
+        }
     }
 }

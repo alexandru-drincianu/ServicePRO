@@ -82,7 +82,7 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
       address: AddressModel(
         street: _streetController.text,
         city: cityValue!,
-        country: countryValue.substring(4),
+        country: countryValue.substring(4).trim(),
         county: stateValue!,
       ),
     );
