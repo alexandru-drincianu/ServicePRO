@@ -17,8 +17,9 @@ import '../../../../routing/app_router.dart';
 import '../../../clients/provider/clients_provider.dart';
 
 class VehicleWizzardForm extends StatefulWidget {
-  const VehicleWizzardForm({Key? key}) : super(key: key);
-
+  const VehicleWizzardForm({Key? key, required this.licensePlate})
+      : super(key: key);
+  final String licensePlate;
   @override
   VehicleWizzardFormState createState() => VehicleWizzardFormState();
 }
@@ -43,6 +44,7 @@ class VehicleWizzardFormState extends State<VehicleWizzardForm> {
   }
 
   Future<void> initialize() async {
+    _registrationController.text = widget.licensePlate;
     final clientsProvider = context.read<ClientsProvider>();
     final clientsData = await clientsProvider.getClients();
     setState(() {

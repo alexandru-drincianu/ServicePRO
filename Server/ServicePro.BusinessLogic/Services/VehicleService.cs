@@ -1,24 +1,18 @@
 ﻿using AutoMapper;
-using Dashboard.Core.Extensions;
-using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using ServcicePro.DataAccess.Repository;
 using ServcicePro.DataAccess.Repository.Abstraction;
 using ServicePro.BusinessLogic.DTOs;
-using ServicePro.BusinessLogic.DTOs.Orders;
 using ServicePro.BusinessLogic.Services.Abstractions;
-using ServicePro.Common.Enums;
 using ServicePro.DataAccess.Entities;
-using ServicePro.DataAccess.Repository.Abstraction;
-using ServicePro.ThirdPartyProviders.TwilioServices;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using IronOcr;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using System.Text.RegularExpressions;
 
 namespace ServicePro.BusinessLogic.Services
 {
@@ -60,7 +54,41 @@ namespace ServicePro.BusinessLogic.Services
             return _mapper.Map<VehicleResponseDTO>(vehicles);
         }
 
+        public async Task<VehicleScanModel> UploadLicensePlatePhoto(IFormFile picture)
+        {
+            byte[] photoBytes;
+            var licensePlate = string.Empty;
+            using (var memoryStream = new MemoryStream())
+            {
+                await picture.CopyToAsync(memoryStream);
+                photoBytes = memoryStream.ToArray();
+            }
 
+            IronTesseract ocr = new IronTesseract();
+            using (OcrInput Input = new OcrInput(photoBytes))
+            {
+                Input.Rotate(180);
+                Input.DeNoise();
+                Input.ToGrayScale();
+                Input.Deskew();
+                OcrResult result = ocr.Read(Input);
+                licensePlate =  result.Text;
+            }
+
+            var vehicle = await _vehicleRepository.GetVehicleByLicensePlateAsync(RemoveSpecialCharacters(licensePlate));
+            return new VehicleScanModel
+            {
+                LicensePlate = licensePlate,
+                Vehicle = _mapper.Map<VehicleResponseDTO>(vehicle),
+            };
+        }
+
+        private string RemoveSpecialCharacters(string input)
+        {
+            // Remove special characters, trim spaces, and convert to uppercase
+            string result = Regex.Replace(input, @"[^A-Za-z0-9\s]", "").Trim().ToUpper();
+            return result;
+        }
     }
 
 }

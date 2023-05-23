@@ -62,7 +62,8 @@ class VehiclesPageState extends State<VehiclesPage> {
                 height: 100,
                 child: Center(
                   child: ElevatedButton.icon(
-                    onPressed: () => router.replace(const CreateVehicleRoute()),
+                    onPressed: () =>
+                        router.replace(CreateVehicleRoute(licensePlate: "")),
                     icon: const Icon(Icons.add),
                     label: const Text("Create Vehicle"),
                   ),

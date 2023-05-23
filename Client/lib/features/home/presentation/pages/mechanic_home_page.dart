@@ -40,16 +40,43 @@ class MechanicHomePageState extends State<MechanicHomePage> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: ElevatedButton(
-            onPressed: () async {
-              await availableCameras().then((value) => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CameraPage(cameras: value),
+          child: SizedBox(
+            width: 300,
+            height: 300,
+            child: ElevatedButton(
+              onPressed: () async {
+                await availableCameras().then((value) => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => CameraPage(cameras: value),
+                      ),
+                    ));
+              },
+              style: ElevatedButton.styleFrom(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                padding: const EdgeInsets.all(16.0),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.camera_alt,
+                    size: 120,
+                    color: Colors.black,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Scan License Plate",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
                     ),
-                  ));
-            },
-            child: const Text("Take a Picture"),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

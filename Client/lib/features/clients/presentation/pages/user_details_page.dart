@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/localization/localization.dart';
@@ -47,6 +48,42 @@ class UserDetailsPageState extends State<UserDetailsPage> {
 
   bool shouldShowEditButton() {
     return _loggedInUser?.id == _userData.id;
+  }
+
+  Country? getCountryFromPhoneNumber(
+    String phoneNumber,
+    List<Country> countries,
+  ) {
+    String cleanPhoneNumber = phoneNumber.replaceAll(RegExp(r'\D'), '');
+
+    for (Country country in countries) {
+      if (cleanPhoneNumber.startsWith(country.dialCode) &&
+          cleanPhoneNumber.length >=
+              (country.dialCode.length + country.minLength) &&
+          cleanPhoneNumber.length <=
+              (country.dialCode.length + country.maxLength)) {
+        return country;
+      }
+    }
+
+    return null; // No matching country found
+  }
+
+  String? getCountryPhoneNumber(String phoneNumber, List<Country> countries) {
+    String cleanPhoneNumber = phoneNumber.replaceAll(RegExp(r'\D'), '');
+
+    for (Country country in countries) {
+      if (cleanPhoneNumber.startsWith(country.dialCode) &&
+          cleanPhoneNumber.length >=
+              (country.dialCode.length + country.minLength) &&
+          cleanPhoneNumber.length <=
+              (country.dialCode.length + country.maxLength)) {
+        String number = cleanPhoneNumber.substring(country.dialCode.length);
+        return number;
+      }
+    }
+
+    return null; // No matching country found
   }
 
   Future<void> _updateUser(BuildContext context) async {
@@ -296,8 +333,8 @@ class UserDetailsPageState extends State<UserDetailsPage> {
           decoration: const InputDecoration(
             labelText: 'Phone Number *',
           ),
-          initialCountryCode: 'RO',
-          initialValue: text,
+          initialCountryCode: getCountryFromPhoneNumber(text, countries)?.code,
+          initialValue: getCountryPhoneNumber(text, countries),
           onChanged: (value) {
             var updatedUserData =
                 _userData.copyWith(telephoneNumber: value.completeNumber);

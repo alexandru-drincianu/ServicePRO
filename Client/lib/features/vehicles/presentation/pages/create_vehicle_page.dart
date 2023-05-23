@@ -6,7 +6,9 @@ import '../../../../routing/app_router.dart';
 import '../../../../routing/app_router.gr.dart';
 
 class CreateVehiclePage extends StatefulWidget {
-  const CreateVehiclePage({Key? key}) : super(key: key);
+  const CreateVehiclePage({Key? key, required this.licensePlate})
+      : super(key: key);
+  final String licensePlate;
 
   @override
   CreateVehiclePageState createState() => CreateVehiclePageState();
@@ -27,7 +29,9 @@ class CreateVehiclePageState extends State<CreateVehiclePage> {
           onPressed: () => router.replace(const VehiclesRoute()),
         ),
       ),
-      body: const VehicleWizzardForm(),
+      body: VehicleWizzardForm(
+        licensePlate: widget.licensePlate,
+      ),
       drawer: const AppDrawer(),
     );
   }

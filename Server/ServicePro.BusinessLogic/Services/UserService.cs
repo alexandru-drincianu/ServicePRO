@@ -123,14 +123,15 @@ namespace ServicePro.BusinessLogic.Services
                 if (user.Address == null)
                 {
                     await _addressRepository.AddAsync(newAddress);
+                    user.AddressId = newAddress.Id;
                 }
                 else
                 {
-                    await _addressRepository.UpdateAsync(newAddress, user.Address.Id);
+                    newAddress.Id = (int)user.AddressId;
+                    await _addressRepository.UpdateAsync(newAddress, (int)user.AddressId);
                 }
 
                 user.Notes = item.Notes;
-                user.AddressId = newAddress.Id;
                 user.Email = item.Email;
                 user.TelephoneNumber = item.TelephoneNumber;
 

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -61,6 +64,39 @@ class BaseHttpService {
         .timeout(_timeout);
 
     return response;
+  }
+
+  Future<Response> sendPhoto(
+    String path,
+    XFile photo, [
+    String? token,
+  ]) async {
+    var request = http.MultipartRequest('POST', Uri.parse(path));
+    request.headers.addAll(_getHeaders(token));
+
+    var photoStream = http.ByteStream(photo.openRead());
+    var photoLength = await photo.length();
+
+    var multipartFile = http.MultipartFile(
+      'photo',
+      photoStream,
+      photoLength,
+      filename: photo.path,
+    );
+
+    request.files.add(multipartFile);
+
+    var response = await request.send();
+    var streamedResponse = await response.stream.toBytes();
+
+    var responseData = String.fromCharCodes(streamedResponse);
+
+    return Response(
+      responseData,
+      response.statusCode,
+      headers: response.headers,
+      request: response.request,
+    );
   }
 
   String buildUri(String baseUri, String resource) {

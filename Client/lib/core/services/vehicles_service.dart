@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:fimber_io/fimber_io.dart';
 import 'package:service_pro/core/models/client_model.dart';
 import 'package:service_pro/core/models/vehicle_model.dart';
+import 'package:service_pro/core/models/vehicle_scan_model.dart';
 import 'package:service_pro/dtos/paginated_result.dart';
 
 import '../base_exception.dart';
@@ -15,6 +17,7 @@ import 'base_http_service.dart';
 class VehicleService extends BaseHttpService {
   static const _vehiclesPath = 'Vehicles';
   static const _createVehiclePath = 'Vehicles/createVehicle';
+  static const _uploadPhotoPath = 'Vehicles/upload';
 
   Future<List<VehicleModel>> getVehicles() async {
     try {
@@ -90,8 +93,40 @@ class VehicleService extends BaseHttpService {
         json.encode(
           model,
         ),
+        token,
       );
       return res;
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+  }
+
+  Future<VehicleScanModel?> sendLicenseplatePhoto(
+    XFile photo,
+  ) async {
+    try {
+      final res = await sendPhoto(
+        buildUri(
+          Constants.apiBaseUrl,
+          _uploadPhotoPath,
+        ),
+        photo,
+        token,
+      );
+      if (res.statusCode == HttpStatus.ok) {
+        Map<String, dynamic> body = jsonDecode(res.body);
+        VehicleScanModel result = VehicleScanModel.fromJson(body);
+        return result;
+      }
     } on BaseException {
       rethrow;
     } catch (e, stacktrace) {

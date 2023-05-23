@@ -114,9 +114,13 @@ class AppRouter extends _i16.RootStackRouter {
       );
     },
     CreateVehicleRoute.name: (routeData) {
+      final args = routeData.argsAs<CreateVehicleRouteArgs>();
       return _i16.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i8.CreateVehiclePage(),
+        child: _i8.CreateVehiclePage(
+          key: args.key,
+          licensePlate: args.licensePlate,
+        ),
         transitionsBuilder: _i16.TransitionsBuilders.noTransition,
         opaque: true,
         barrierDismissible: false,
@@ -413,14 +417,36 @@ class VehiclesRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.CreateVehiclePage]
-class CreateVehicleRoute extends _i16.PageRouteInfo<void> {
-  const CreateVehicleRoute()
-      : super(
+class CreateVehicleRoute extends _i16.PageRouteInfo<CreateVehicleRouteArgs> {
+  CreateVehicleRoute({
+    _i17.Key? key,
+    required String licensePlate,
+  }) : super(
           CreateVehicleRoute.name,
           path: '/vehicles/create',
+          args: CreateVehicleRouteArgs(
+            key: key,
+            licensePlate: licensePlate,
+          ),
         );
 
   static const String name = 'CreateVehicleRoute';
+}
+
+class CreateVehicleRouteArgs {
+  const CreateVehicleRouteArgs({
+    this.key,
+    required this.licensePlate,
+  });
+
+  final _i17.Key? key;
+
+  final String licensePlate;
+
+  @override
+  String toString() {
+    return 'CreateVehicleRouteArgs{key: $key, licensePlate: $licensePlate}';
+  }
 }
 
 /// generated route for

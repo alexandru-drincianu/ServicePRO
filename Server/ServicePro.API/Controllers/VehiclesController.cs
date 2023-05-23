@@ -10,6 +10,7 @@ using System.Net;
 using ServicePro.DataAccess.Entities;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 namespace ServicePro.API.Controllers
 {
@@ -57,6 +58,15 @@ namespace ServicePro.API.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        [HttpPost]
+        [Route("upload")]
+        [ProducesResponseType(typeof(VehicleScanModel), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UploadPicture(IFormFile photo)
+        {
+            var vehicleScanModel = await _vehicleService.UploadLicensePlatePhoto(photo);
+            return Ok(vehicleScanModel);
         }
     }
 }
