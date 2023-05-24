@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ServcicePro.DataAccess.Repository.Abstraction;
 using ServicePro.BusinessLogic.DTOs;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using ServicePro.DataAccess.Entities;
@@ -9,48 +8,46 @@ using System.Threading.Tasks;
 using IronOcr;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
 using System.Text.RegularExpressions;
+using ServicePro.DataAccess.Repository.Abstraction;
 
 namespace ServicePro.BusinessLogic.Services
 {
     public class VehicleService : IVehicleService
     {
-        private readonly IVehicleRepository _vehicleRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public VehicleService(IVehicleRepository vehicleRepository, IMapper mapper)
+        public VehicleService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _vehicleRepository = vehicleRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public async Task<VehicleResponseDTO> CreateAsync(VehicleRequestDTO item)
         {
-            if (await _vehicleRepository.AnyAsync(vehicle => vehicle.Registration == item.Registration))
+            if (await _unitOfWork.VehicleRepository.AnyAsync(vehicle => vehicle.Registration == item.Registration))
             {
                 throw new Exception("Vehicle already exists");
             }
 
             var vehicle = _mapper.Map<Vehicle>(item);
-            await _vehicleRepository.AddAsync(vehicle);
+            await _unitOfWork.VehicleRepository.AddAsync(vehicle);
 
-            var createdVehicle = await _vehicleRepository.Find(v => v.Registration == item.Registration);
+            var createdVehicle = await _unitOfWork.VehicleRepository.Find(v => v.Registration == item.Registration);
 
             return _mapper.Map<VehicleResponseDTO>(createdVehicle);
         }
 
         public async Task<IEnumerable<VehicleResponseDTO>> GetAll()
         {
-            var vehicles = await _vehicleRepository.GetVehiclesAsync();
+            var vehicles = await _unitOfWork.VehicleRepository.GetVehiclesAsync();
             return _mapper.Map<IEnumerable<VehicleResponseDTO>>(vehicles);
         }
 
         public async Task<VehicleResponseDTO> GetById(int id)
         {
-            var vehicles = await _vehicleRepository.GetVehicleByIdAsync(id);
+            var vehicles = await _unitOfWork.VehicleRepository.GetVehicleByIdAsync(id);
             return _mapper.Map<VehicleResponseDTO>(vehicles);
         }
 
@@ -75,7 +72,7 @@ namespace ServicePro.BusinessLogic.Services
                 licensePlate =  result.Text;
             }
 
-            var vehicle = await _vehicleRepository.GetVehicleByLicensePlateAsync(RemoveSpecialCharacters(licensePlate));
+            var vehicle = await _unitOfWork.VehicleRepository.GetVehicleByLicensePlateAsync(RemoveSpecialCharacters(licensePlate));
             return new VehicleScanModel
             {
                 LicensePlate = licensePlate,

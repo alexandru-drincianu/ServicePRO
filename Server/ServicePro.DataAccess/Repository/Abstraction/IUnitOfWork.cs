@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServcicePro.DataAccess.Repository.Abstraction;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,9 @@ namespace ServicePro.DataAccess.Repository.Abstraction
         void CreateTransaction();
         void RollbackTransaction();
         void CommitTransaction();
+        IUserRepository UserRepository { get; }
+        IVehicleRepository VehicleRepository { get; }
+        IAddressRepository AddressRepository { get; }
+           
     }
 }

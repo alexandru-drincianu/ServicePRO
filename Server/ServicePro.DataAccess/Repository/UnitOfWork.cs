@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using ServcicePro.DataAccess.Repository;
+using ServcicePro.DataAccess.Repository.Abstraction;
 using ServicePro.DataAccess.Context;
 using ServicePro.DataAccess.Repository.Abstraction;
 using System;
@@ -11,9 +13,18 @@ namespace ServicePro.DataAccess.Repository
         private readonly ServiceProDbContext _dbContext;
         private IDbContextTransaction _transaction;
 
+        #region repos
+        public IUserRepository UserRepository { get; }
+        public IVehicleRepository VehicleRepository { get; }
+        public IAddressRepository AddressRepository { get; }
+        #endregion
+
         public UnitOfWork(ServiceProDbContext dbContext)
         {
             _dbContext = dbContext;
+            UserRepository = new UserRepository(dbContext);
+            VehicleRepository = new VehicleRepository(dbContext);
+            AddressRepository = new AddressRepository(dbContext);
         }
 
         public int CommitChanges()

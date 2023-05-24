@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using Dashboard.Core.Extensions;
 using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using ServcicePro.DataAccess.Repository.Abstraction;
 using ServicePro.BusinessLogic.DTOs;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using ServicePro.Common.Enums;
@@ -15,26 +10,21 @@ using ServicePro.ThirdPartyProviders.TwilioServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ServicePro.BusinessLogic.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IRepository<Address> _addressRepository;
         private readonly IMapper _mapper;
         private readonly IValidator<ClientDTO> _clientValidator;
         private readonly IDataProtector _dataProtector;
         private readonly ISmsService _smsService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IRepository<Address> addressRepository, IMapper mapper, IValidator<ClientDTO> clientValidator, IDataProtectionProvider protectionProvider, ISmsService smsService)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<ClientDTO> clientValidator, IDataProtectionProvider protectionProvider, ISmsService smsService)
         {
             _unitOfWork = unitOfWork;
-            _userRepository = userRepository;
-            _addressRepository = addressRepository;
             _mapper = mapper;
             _clientValidator = clientValidator;
             _dataProtector = protectionProvider.CreateProtector("Affiliate_PlanI");
@@ -43,31 +33,31 @@ namespace ServicePro.BusinessLogic.Services
 
         public async Task<IEnumerable<UserDTO>> GetAll()
         {
-            var users = await _userRepository.GetAll();
+            var users = await _unitOfWork.UserRepository.GetAll();
             return _mapper.Map<IEnumerable<UserDTO>>(users);
         }
 
         public async Task<List<ClientDTO>> GetAllClients()
         {
-            var users = (await _userRepository.GetAllClients()).Where(user => user.Role == UserRole.Client);
+            var users = (await _unitOfWork.UserRepository.GetAllClients()).Where(user => user.Role == UserRole.Client);
             return _mapper.Map<List<ClientDTO>>(users);
         }
 
         public async Task<ClientDTO> GetByIdAsync(int Id, bool applyChanges = true)
         {
-            var user = await _userRepository.GetUserByIdAsync(Id);
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(Id);
             return _mapper.Map<ClientDTO>(user);
 
         }
 
         public async Task<UserDTO> CreateClientAccount(ClientDTO client)
         {
-            if (await _userRepository.AnyAsync(user => user.Username == client.Username))
+            if (await _unitOfWork.UserRepository.AnyAsync(user => user.Username == client.Username))
             {
                 throw new Exception("Username already exists");
             }
 
-            if (await _userRepository.AnyAsync(user => user.Email == client.Email))
+            if (await _unitOfWork.UserRepository.AnyAsync(user => user.Email == client.Email))
             {
                 throw new Exception("Account with this email already exists");
             }
@@ -100,10 +90,10 @@ namespace ServicePro.BusinessLogic.Services
 
             user.Password = _dataProtector.Protect(user.Password);
 
-            await _userRepository.AddAsync(user);
+            await _unitOfWork.UserRepository.AddAsync(user);
 
 
-            var createdUser = await _userRepository.Find(user => user.Username == client.Username);
+            var createdUser = await _unitOfWork.UserRepository.Find(user => user.Username == client.Username);
 
             return _mapper.Map<UserDTO>(createdUser);
         }
@@ -113,7 +103,7 @@ namespace ServicePro.BusinessLogic.Services
             _unitOfWork.CreateTransaction();
             try
             {
-                var user = await _userRepository.GetUserByIdAsync(id);
+                var user = await _unitOfWork.UserRepository.GetUserByIdAsync(id);
                 if (user == null)
                 {
                     throw new Exception("User not found");
@@ -122,20 +112,20 @@ namespace ServicePro.BusinessLogic.Services
                 var newAddress = _mapper.Map<Address>(item.Address);
                 if (user.Address == null)
                 {
-                    await _addressRepository.AddAsync(newAddress);
+                    await _unitOfWork.AddressRepository.AddAsync(newAddress);
                     user.AddressId = newAddress.Id;
                 }
                 else
                 {
                     newAddress.Id = (int)user.AddressId;
-                    await _addressRepository.UpdateAsync(newAddress, (int)user.AddressId);
+                    await _unitOfWork.AddressRepository.UpdateAsync(newAddress, (int)user.AddressId);
                 }
 
                 user.Notes = item.Notes;
                 user.Email = item.Email;
                 user.TelephoneNumber = item.TelephoneNumber;
 
-                await _userRepository.UpdateAsync(user, id);
+                await _unitOfWork.UserRepository.UpdateAsync(user, id);
                 _unitOfWork.CommitTransaction();
                 return item;
             } catch (Exception)
@@ -149,10 +139,10 @@ namespace ServicePro.BusinessLogic.Services
 
         public async Task<UserDTO> RemoveAsync(int userId, bool applyChanges = true)
         {
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
             if (user != null)
             {
-                await _userRepository.RemoveAsync(user);
+                await _unitOfWork.UserRepository.RemoveAsync(user);
 
                 return _mapper.Map<UserDTO>(user);
             }
@@ -161,15 +151,15 @@ namespace ServicePro.BusinessLogic.Services
 
         public async Task<UserDTO> RemoveByAdminAsync(int userId, int loggedInUserId)
         {
-            var loggedInUser = await _userRepository.GetByIdAsync(loggedInUserId);
+            var loggedInUser = await _unitOfWork.UserRepository.GetByIdAsync(loggedInUserId);
             if (loggedInUser.Role != UserRole.Admin)
             {
                 throw new Exception(string.Format("Only administrators can delete this user!"));
             }
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
             if (user != null)
             {
-                await _userRepository.RemoveAsync(user);
+                await _unitOfWork.UserRepository.RemoveAsync(user);
                 return _mapper.Map<UserDTO>(user);
             }
             return null;
@@ -178,7 +168,7 @@ namespace ServicePro.BusinessLogic.Services
         public async Task<PaginatedListResponseDto<UserDTO>> GetUsersPaginatedAsync(PaginatedListRequest paginatedRequest)
         {
             paginatedRequest.SearchTerm = paginatedRequest.SearchTerm.Trim();
-            var baseQuery = await _userRepository.GetAll();
+            var baseQuery = await _unitOfWork.UserRepository.GetAll();
 
             if (!string.IsNullOrEmpty(paginatedRequest.SearchTerm))
             {

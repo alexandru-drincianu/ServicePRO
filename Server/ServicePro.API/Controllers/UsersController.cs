@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ServicePro.BusinessLogic.Services.Abstractions;
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using ServicePro.BusinessLogic.DTOs;
 using ServicePro.API.Filters;
 using System.Net;
-using ServicePro.DataAccess.Entities;
 using System;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ServicePro.API.Controllers
 {
