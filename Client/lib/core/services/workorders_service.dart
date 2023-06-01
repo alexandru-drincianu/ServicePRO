@@ -1,34 +1,30 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:fimber_io/fimber_io.dart';
-import 'package:service_pro/core/models/vehicle_model.dart';
-import 'package:service_pro/core/models/vehicle_scan_model.dart';
 
 import '../base_exception.dart';
 import '../constants/constants.dart';
+import '../models/workorder_model.dart';
 import 'base_http_service.dart';
 
-class VehicleService extends BaseHttpService {
-  static const _vehiclesPath = 'Vehicles';
-  static const _createVehiclePath = 'Vehicles/createVehicle';
-  static const _uploadPhotoPath = 'Vehicles/upload';
+class WorkorderService extends BaseHttpService {
+  static const _workordersPath = 'Workorder';
 
-  Future<List<VehicleModel>> getVehicles() async {
+  Future<List<WorkorderModel>> getWorkorders() async {
     try {
       final res = await get(
         buildUri(
           Constants.apiBaseUrl,
-          _vehiclesPath,
+          _workordersPath,
         ),
         token,
       );
       if (res.statusCode == HttpStatus.ok) {
         List<dynamic> body = jsonDecode(res.body);
-        List<VehicleModel> result = body
+        List<WorkorderModel> result = body
             .map(
-              (item) => VehicleModel.fromJson(item),
+              (item) => WorkorderModel.fromJson(item),
             )
             .toList();
         return result;
@@ -45,21 +41,21 @@ class VehicleService extends BaseHttpService {
         errorId: 'registration_error',
       );
     }
-    return List<VehicleModel>.empty();
+    return List<WorkorderModel>.empty();
   }
 
-  Future<VehicleModel?> getVehicleById(int id) async {
+  Future<WorkorderModel?> getWorkorderById(int id) async {
     try {
       final res = await get(
         buildUri(
           Constants.apiBaseUrl,
-          "$_vehiclesPath/$id",
+          "$_workordersPath/$id",
         ),
         token,
       );
       if (res.statusCode == HttpStatus.ok) {
         Map<String, dynamic> body = jsonDecode(res.body);
-        VehicleModel result = VehicleModel.fromJson(body);
+        WorkorderModel result = WorkorderModel.fromJson(body);
         return result;
       }
     } on BaseException {
@@ -77,51 +73,24 @@ class VehicleService extends BaseHttpService {
     return null;
   }
 
-  Future<dynamic> createVehicle(
-    VehicleModel model,
+  Future<int?> createWorkorder(
+    WorkorderModel model,
   ) async {
     try {
       final res = await post(
         buildUri(
           Constants.apiBaseUrl,
-          _createVehiclePath,
+          _workordersPath,
         ),
         json.encode(
           model,
         ),
         token,
       );
-      return res;
-    } on BaseException {
-      rethrow;
-    } catch (e, stacktrace) {
-      Fimber.e(
-        'Unhandled error',
-        ex: e,
-        stacktrace: stacktrace,
-      );
-      throw const BaseException(
-        errorId: 'registration_error',
-      );
-    }
-  }
-
-  Future<VehicleScanModel?> sendLicenseplatePhoto(
-    XFile photo,
-  ) async {
-    try {
-      final res = await sendPhoto(
-        buildUri(
-          Constants.apiBaseUrl,
-          _uploadPhotoPath,
-        ),
-        photo,
-        token,
-      );
-      if (res.statusCode == HttpStatus.ok) {
+      if (res.statusCode == HttpStatus.created) {
         Map<String, dynamic> body = jsonDecode(res.body);
-        VehicleScanModel result = VehicleScanModel.fromJson(body);
-        return result;
+        WorkorderModel result = WorkorderModel.fromJson(body);
+        return result.id!;
       }
     } on BaseException {
       rethrow;
@@ -135,5 +104,6 @@ class VehicleService extends BaseHttpService {
         errorId: 'registration_error',
       );
     }
+    return null;
   }
 }

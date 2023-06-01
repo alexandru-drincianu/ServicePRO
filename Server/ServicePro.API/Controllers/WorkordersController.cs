@@ -13,7 +13,7 @@ namespace ServicePro.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [TokenAuthenticationFilter]
+    //[TokenAuthenticationFilter]
     public class WorkorderController : ControllerBase
     {
         private readonly IWorkorderService _workorderService;

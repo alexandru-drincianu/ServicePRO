@@ -2,13 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:service_pro/features/admin/presentation/pages/admin_panel_page.dart';
 import 'package:service_pro/features/info/presentation/pages/new_mechanic_info_page.dart';
 import 'package:service_pro/features/vehicles/presentation/pages/create_vehicle_page.dart';
+import 'package:service_pro/features/workorders/presentation/pages/workorder_details_page.dart';
 
 import '../features/clients/presentation/pages/clients_page.dart';
 import '../features/clients/presentation/pages/create_client_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/login/presentation/pages/login_page.dart';
-import '../features/orders/presentation/pages/manage_order_page.dart';
-import '../features/orders/presentation/pages/orders_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 import '../features/vehicles/presentation/pages/vehicles_page.dart';
 import '../features/vehicles/presentation/pages/vehicle_details_page.dart';
@@ -81,24 +80,6 @@ part 'routes.dart';
       guards: [AuthGuard],
     ),
     AutoRoute(
-      path: Routes.orders,
-      page: OrdersPage,
-      guards: [AuthGuard],
-
-      /// Set to false in order to rebuild the [OrdersPage] after returning from the add/edit screen.
-      maintainState: false,
-    ),
-
-    AutoRoute(
-      path: Routes.editOrder,
-      page: ManageOrderPage,
-      guards: [AuthGuard],
-    ),
-    RedirectRoute(
-      path: Routes.createOrder,
-      redirectTo: Routes.editOrder,
-    ),
-    AutoRoute(
       path: Routes.settings,
       page: SettingsPage,
       guards: [AuthGuard],
@@ -108,11 +89,11 @@ part 'routes.dart';
       page: AdminPanelPage,
       guards: [AuthGuard],
     ),
-    RedirectRoute(
-      path: Routes._orderDetailsLong,
-      redirectTo: Routes.orderDetails,
+    AutoRoute(
+      path: Routes.workorderDetails,
+      page: WorkorderDetailsPage,
+      guards: [AuthGuard],
     ),
-
     // Unknown routes will take users to home page.
     RedirectRoute(
       path: '*',

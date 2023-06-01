@@ -13,5 +13,6 @@ namespace ServicePro.BusinessLogic.DTOs.Vehicles
         public string VIN { get; set; }
         public decimal Mileage { get; set; }
         public FuelType FuelType { get; set; }
+        public int? WorkorderId { get; set; }
     }
 }

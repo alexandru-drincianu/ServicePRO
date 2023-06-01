@@ -4,11 +4,11 @@ using AutoMapper;
 
 namespace ServicePro.BusinessLogic.MappingProfiles
 {
-    public class WorkorderItemDataProfile : Profile
+    public class WorkorderDataProfile : Profile
     {
-        public WorkorderItemDataProfile()
+        public WorkorderDataProfile()
         {
-            CreateMap<WorkorderItem, WorkorderItemDTO>().ReverseMap();
+            CreateMap<Workorder, WorkorderDTO>().ReverseMap();
         }
     }
 }

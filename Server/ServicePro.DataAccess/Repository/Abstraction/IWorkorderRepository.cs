@@ -9,6 +9,7 @@ namespace ServcicePro.DataAccess.Repository.Abstraction
 {
     public interface IWorkorderRepository
     {
+        Task<int?> GetWorkorderIdForVehicleAsync(int vehicleId);
         Task AddAsync(Workorder item, bool applyChanges = true);
         Task UpdateAsync(Workorder item, int id, bool applyChanges = true);
         Task RemoveAsync(Workorder item, bool applyChanges = true);

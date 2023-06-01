@@ -16,7 +16,7 @@ class WorkordersPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           context.translate(
-            TranslationKeys.clients,
+            TranslationKeys.workorders,
           ),
         ),
       ),

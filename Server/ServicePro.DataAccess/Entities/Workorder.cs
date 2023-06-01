@@ -10,6 +10,7 @@ namespace ServicePro.DataAccess.Entities
     public partial class Workorder
     {
         public int Id { get; set; }
+        public string Number { get; set; }
         public int VehicleId { get; set; }
         [ForeignKey("VehicleId")]
         public Vehicle Vehicle { get; set; }

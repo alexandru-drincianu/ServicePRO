@@ -43,9 +43,9 @@ namespace ServicePro.BusinessLogic.Services
         {
             var workorder = _mapper.Map<Workorder>(item);
             await _unitOfWork.WorkorderRepository.AddAsync(workorder);
-
-            return item;
-
+            workorder.Number = $"WO-{workorder.Id}";
+            await _unitOfWork.CommitChangesAsync();
+            return _mapper.Map<WorkorderDTO>(workorder);
         }
 
         public async Task<WorkorderDTO> UpdateAsync(WorkorderDTO item, int id, bool applyChanges = true)

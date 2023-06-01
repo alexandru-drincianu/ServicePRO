@@ -19,6 +19,7 @@ _$_VehicleModel _$$_VehicleModelFromJson(Map<String, dynamic> json) =>
       vin: json['vin'] as String?,
       mileage: json['mileage'] as num?,
       fuelType: json['fuelType'] as int?,
+      workorderId: json['workorderId'] as int?,
     );
 
 Map<String, dynamic> _$$_VehicleModelToJson(_$_VehicleModel instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$$_VehicleModelToJson(_$_VehicleModel instance) =>
       'vin': instance.vin,
       'mileage': instance.mileage,
       'fuelType': instance.fuelType,
+      'workorderId': instance.workorderId,
     };

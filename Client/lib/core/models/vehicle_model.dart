@@ -21,6 +21,7 @@ class VehicleModel with _$VehicleModel {
     @JsonKey(name: 'vin') String? vin,
     @JsonKey(name: 'mileage') num? mileage,
     @JsonKey(name: 'fuelType') int? fuelType,
+    @JsonKey(name: 'workorderId') int? workorderId,
   }) = _VehicleModel;
 
   factory VehicleModel.fromJson(Map<String, dynamic> json) =>

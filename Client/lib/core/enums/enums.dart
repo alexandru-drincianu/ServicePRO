@@ -14,3 +14,11 @@ final Map<int, String> FuelTypeString = {
   FuelType.lpg.index: 'LPG',
   FuelType.electric.index: 'Electric',
 };
+
+enum WorkorderStatus { arrived, inProgress, ready }
+
+final Map<int, String> WorkorderStatusString = {
+  WorkorderStatus.arrived.index: 'Arrived',
+  WorkorderStatus.inProgress.index: 'In progress',
+  WorkorderStatus.ready.index: 'Ready',
+};

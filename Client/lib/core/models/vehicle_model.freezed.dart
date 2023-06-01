@@ -37,6 +37,8 @@ mixin _$VehicleModel {
   num? get mileage => throw _privateConstructorUsedError;
   @JsonKey(name: 'fuelType')
   int? get fuelType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'workorderId')
+  int? get workorderId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,7 +61,8 @@ abstract class $VehicleModelCopyWith<$Res> {
       @JsonKey(name: 'model') String? model,
       @JsonKey(name: 'vin') String? vin,
       @JsonKey(name: 'mileage') num? mileage,
-      @JsonKey(name: 'fuelType') int? fuelType});
+      @JsonKey(name: 'fuelType') int? fuelType,
+      @JsonKey(name: 'workorderId') int? workorderId});
 
   $UserDetailsCopyWith<$Res>? get user;
 }
@@ -86,6 +89,7 @@ class _$VehicleModelCopyWithImpl<$Res, $Val extends VehicleModel>
     Object? vin = freezed,
     Object? mileage = freezed,
     Object? fuelType = freezed,
+    Object? workorderId = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -124,6 +128,10 @@ class _$VehicleModelCopyWithImpl<$Res, $Val extends VehicleModel>
           ? _value.fuelType
           : fuelType // ignore: cast_nullable_to_non_nullable
               as int?,
+      workorderId: freezed == workorderId
+          ? _value.workorderId
+          : workorderId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -157,7 +165,8 @@ abstract class _$$_VehicleModelCopyWith<$Res>
       @JsonKey(name: 'model') String? model,
       @JsonKey(name: 'vin') String? vin,
       @JsonKey(name: 'mileage') num? mileage,
-      @JsonKey(name: 'fuelType') int? fuelType});
+      @JsonKey(name: 'fuelType') int? fuelType,
+      @JsonKey(name: 'workorderId') int? workorderId});
 
   @override
   $UserDetailsCopyWith<$Res>? get user;
@@ -183,6 +192,7 @@ class __$$_VehicleModelCopyWithImpl<$Res>
     Object? vin = freezed,
     Object? mileage = freezed,
     Object? fuelType = freezed,
+    Object? workorderId = freezed,
   }) {
     return _then(_$_VehicleModel(
       id: freezed == id
@@ -221,6 +231,10 @@ class __$$_VehicleModelCopyWithImpl<$Res>
           ? _value.fuelType
           : fuelType // ignore: cast_nullable_to_non_nullable
               as int?,
+      workorderId: freezed == workorderId
+          ? _value.workorderId
+          : workorderId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -237,7 +251,8 @@ class _$_VehicleModel implements _VehicleModel {
       @JsonKey(name: 'model') this.model,
       @JsonKey(name: 'vin') this.vin,
       @JsonKey(name: 'mileage') this.mileage,
-      @JsonKey(name: 'fuelType') this.fuelType});
+      @JsonKey(name: 'fuelType') this.fuelType,
+      @JsonKey(name: 'workorderId') this.workorderId});
 
   factory _$_VehicleModel.fromJson(Map<String, dynamic> json) =>
       _$$_VehicleModelFromJson(json);
@@ -268,10 +283,13 @@ class _$_VehicleModel implements _VehicleModel {
   @override
   @JsonKey(name: 'fuelType')
   final int? fuelType;
+  @override
+  @JsonKey(name: 'workorderId')
+  final int? workorderId;
 
   @override
   String toString() {
-    return 'VehicleModel(id: $id, userId: $userId, user: $user, registration: $registration, brand: $brand, model: $model, vin: $vin, mileage: $mileage, fuelType: $fuelType)';
+    return 'VehicleModel(id: $id, userId: $userId, user: $user, registration: $registration, brand: $brand, model: $model, vin: $vin, mileage: $mileage, fuelType: $fuelType, workorderId: $workorderId)';
   }
 
   @override
@@ -289,13 +307,15 @@ class _$_VehicleModel implements _VehicleModel {
             (identical(other.vin, vin) || other.vin == vin) &&
             (identical(other.mileage, mileage) || other.mileage == mileage) &&
             (identical(other.fuelType, fuelType) ||
-                other.fuelType == fuelType));
+                other.fuelType == fuelType) &&
+            (identical(other.workorderId, workorderId) ||
+                other.workorderId == workorderId));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, userId, user, registration,
-      brand, model, vin, mileage, fuelType);
+      brand, model, vin, mileage, fuelType, workorderId);
 
   @JsonKey(ignore: true)
   @override
@@ -321,7 +341,8 @@ abstract class _VehicleModel implements VehicleModel {
       @JsonKey(name: 'model') final String? model,
       @JsonKey(name: 'vin') final String? vin,
       @JsonKey(name: 'mileage') final num? mileage,
-      @JsonKey(name: 'fuelType') final int? fuelType}) = _$_VehicleModel;
+      @JsonKey(name: 'fuelType') final int? fuelType,
+      @JsonKey(name: 'workorderId') final int? workorderId}) = _$_VehicleModel;
 
   factory _VehicleModel.fromJson(Map<String, dynamic> json) =
       _$_VehicleModel.fromJson;
@@ -352,6 +373,9 @@ abstract class _VehicleModel implements VehicleModel {
   @override
   @JsonKey(name: 'fuelType')
   int? get fuelType;
+  @override
+  @JsonKey(name: 'workorderId')
+  int? get workorderId;
   @override
   @JsonKey(ignore: true)
   _$$_VehicleModelCopyWith<_$_VehicleModel> get copyWith =>

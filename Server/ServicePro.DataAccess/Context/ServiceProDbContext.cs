@@ -37,6 +37,18 @@ namespace ServicePro.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Vehicle>()
+                        .Property(p => p.Mileage)
+                        .HasColumnType("decimal(18,4)");
+            modelBuilder.Entity<Workorder>()
+                        .Property(p => p.TotalCost)
+                        .HasColumnType("decimal(18,4)");
+            modelBuilder.Entity<WorkorderItem>()
+                        .Property(p => p.Price)
+                        .HasColumnType("decimal(18,4)");
+            modelBuilder.Entity<WorkorderItem>()
+                        .Property(p => p.Quantity)
+                        .HasColumnType("decimal(18,4)");
         }
     }
 }

@@ -54,7 +54,6 @@ dart_code_metrics:
         exclude:
           - test/**
   rules:
-    - avoid-dynamic
     - avoid-global-state
     - avoid-unused-parameters
     - no-boolean-literal-compare

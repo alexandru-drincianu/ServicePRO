@@ -136,15 +136,6 @@ class _AppDrawerState extends State<AppDrawer> {
               onTap: () => router.replace(const WorkordersRoute()),
             ),
           ListTile(
-            leading: const Icon(Icons.list),
-            title: Text(
-              context.translate(
-                TranslationKeys.ordersTitle,
-              ),
-            ),
-            onTap: () => router.replace(const OrdersRoute()),
-          ),
-          ListTile(
             leading: const Icon(Icons.settings),
             title: Text(
               context.translate(

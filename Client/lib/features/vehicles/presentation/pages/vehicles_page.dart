@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/models/vehicle_model.dart';
 import 'package:service_pro/features/vehicles/provider/vehicles_provider.dart';
+import 'package:service_pro/features/workorders/provider/workorders_provider.dart';
 
 import '../../../../core/localization/localization.dart';
+import '../../../../core/models/workorder_model.dart';
 import '../../../../core/widgets/app_drawer.dart';
 import '../../../../routing/app_router.dart';
 import '../../../../routing/app_router.gr.dart';
@@ -41,6 +44,17 @@ class VehiclesPageState extends State<VehiclesPage> {
       _filterVehicles = vehiclesData;
       _setupComplete = true;
     });
+  }
+
+  void createWorkorder(int vehicleId) async {
+    final workordersProvider = context.read<WorkordersProvider>();
+    final model = WorkorderModel(
+      vehicleId: vehicleId,
+      status: WorkorderStatus.arrived.index,
+      arrivedDate: DateTime.now(),
+    );
+    final workorderId = await workordersProvider.createWorkorder(model);
+    router.replace(WorkorderDetailsRoute(id: workorderId!));
   }
 
   @override
@@ -104,14 +118,18 @@ class VehiclesPageState extends State<VehiclesPage> {
                               ),
                             ),
                             columns: const [
-                              DataColumn(label: Text("")),
+                              DataColumn(label: SizedBox(width: 10)),
+                              DataColumn(label: SizedBox(width: 10)),
                               DataColumn(label: Text("Registration")),
                               DataColumn(label: Text("Client")),
                               DataColumn(label: Text("Brand")),
                               DataColumn(label: Text("Model")),
                               DataColumn(label: Text("Mileage")),
                             ],
-                            source: _VehiclesDataSource(_vehicles),
+                            columnSpacing: 25,
+                            source: _VehiclesDataSource(_vehicles,
+                                createWorkorderCallback: createWorkorder,
+                                context: context),
                             rowsPerPage:
                                 _vehicles.length <= 5 ? _vehicles.length : 5,
                           ),
@@ -125,10 +143,49 @@ class VehiclesPageState extends State<VehiclesPage> {
   }
 }
 
+void _showCreateWorkorderDialog(
+  VehicleModel vehicle,
+  BuildContext context,
+  Function(int) createWorkorderCallback,
+) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Create Workorder'),
+        content: Text(
+          'Do you want to create a workorder for vehicle: "${vehicle.registration}"?',
+        ),
+        actions: [
+          TextButton(
+            child: const Text('Yes'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              createWorkorderCallback(vehicle.id!);
+            },
+          ),
+          TextButton(
+            child: const Text('No'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 class _VehiclesDataSource extends DataTableSource {
   final List<VehicleModel> _vehicles;
+  final Function(int) createWorkorderCallback;
+  final BuildContext context;
 
-  _VehiclesDataSource(this._vehicles);
+  _VehiclesDataSource(
+    this._vehicles, {
+    required this.createWorkorderCallback,
+    required this.context,
+  });
 
   @override
   DataRow getRow(int index) {
@@ -139,10 +196,40 @@ class _VehiclesDataSource extends DataTableSource {
         DataCell(
           GestureDetector(
             onTap: () {
-              // Add your desired action here when the cell is tapped
               router.replace(VehicleDetailsRoute(id: vehicle.id!));
             },
-            child: const Icon(Icons.visibility),
+            child: const Icon(
+              Icons.visibility,
+              color: Color.fromARGB(
+                255,
+                58,
+                4,
+                152,
+              ),
+            ),
+          ),
+        ),
+        DataCell(
+          GestureDetector(
+            onTap: () {
+              vehicle.workorderId != null
+                  ? router
+                      .replace(WorkorderDetailsRoute(id: vehicle.workorderId!))
+                  : _showCreateWorkorderDialog(
+                      vehicle,
+                      context,
+                      createWorkorderCallback,
+                    );
+            },
+            child: vehicle.workorderId != null
+                ? const Icon(
+                    Icons.construction,
+                    color: Colors.green,
+                  )
+                : const Icon(
+                    Icons.construction,
+                    color: Colors.red,
+                  ),
           ),
         ),
         DataCell(Text(vehicle.registration!)),
