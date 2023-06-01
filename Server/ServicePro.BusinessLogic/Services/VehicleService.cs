@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ServicePro.BusinessLogic.DTOs;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using ServicePro.DataAccess.Entities;
 using System;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Text.RegularExpressions;
 using ServicePro.DataAccess.Repository.Abstraction;
+using ServicePro.BusinessLogic.DTOs.Vehicles;
 
 namespace ServicePro.BusinessLogic.Services
 {

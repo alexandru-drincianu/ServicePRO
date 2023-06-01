@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ServicePro.BusinessLogic.DTOs;
+using ServicePro.BusinessLogic.DTOs.Users;
 using ServicePro.DataAccess.Entities;
 using System;
 using System.Collections.Generic;

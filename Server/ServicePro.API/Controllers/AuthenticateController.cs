@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServicePro.BusinessLogic.DTOs;
+using ServicePro.BusinessLogic.DTOs.Users;
 using ServicePro.BusinessLogic.Helpers.TokenAuthentication;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using System;

@@ -1,4 +1,4 @@
-﻿namespace ServicePro.BusinessLogic.DTOs
+﻿namespace ServicePro.BusinessLogic.DTOs.Users
 {
     public class RegisterResponseDTO
     {

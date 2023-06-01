@@ -19,8 +19,8 @@ namespace ServicePro.DataAccess.Context
         {
         }
 
-        public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderLine> OrderLines { get; set; }
+        public virtual DbSet<Workorder> Workorders { get; set; }
+        public virtual DbSet<WorkorderItem> WorkorderItems { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
@@ -37,9 +37,6 @@ namespace ServicePro.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Order>()
-                .Property(p => p.Value)
-                .HasColumnType("decimal(18,4)");
         }
     }
 }

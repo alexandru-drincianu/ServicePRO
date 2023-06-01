@@ -17,6 +17,8 @@ namespace ServicePro.DataAccess.Repository
         public IUserRepository UserRepository { get; }
         public IVehicleRepository VehicleRepository { get; }
         public IAddressRepository AddressRepository { get; }
+        public IWorkorderRepository WorkorderRepository { get; }
+        public IWorkorderItemRepository WorkorderItemRepository { get; }
         #endregion
 
         public UnitOfWork(ServiceProDbContext dbContext)
@@ -25,6 +27,8 @@ namespace ServicePro.DataAccess.Repository
             UserRepository = new UserRepository(dbContext);
             VehicleRepository = new VehicleRepository(dbContext);
             AddressRepository = new AddressRepository(dbContext);
+            WorkorderRepository = new WorkorderRepository(dbContext);
+            WorkorderItemRepository = new WorkorderItemRepository(dbContext);
         }
 
         public int CommitChanges()

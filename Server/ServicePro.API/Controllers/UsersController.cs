@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using System.Threading.Tasks;
-using ServicePro.BusinessLogic.DTOs;
 using ServicePro.API.Filters;
 using System.Net;
 using System;
+using ServicePro.BusinessLogic.DTOs.Users;
+using ServicePro.BusinessLogic.DTOs.Pagination;
 
 namespace ServicePro.API.Controllers
 {
@@ -117,7 +118,7 @@ namespace ServicePro.API.Controllers
         [Route("paginated")]
         [HttpPost]
         [ProducesResponseType(typeof(PaginatedListResponseDto<UserDTO>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetOrdersPaginated([FromBody] PaginatedListRequest paginatedRequest)
+        public async Task<IActionResult> GetUsersPaginated([FromBody] PaginatedListRequest paginatedRequest)
         {
             var paginatedOrders = await _userService.GetUsersPaginatedAsync(paginatedRequest);
             return Ok(paginatedOrders);

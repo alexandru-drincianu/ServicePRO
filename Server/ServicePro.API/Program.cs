@@ -15,8 +15,8 @@ using ServcicePro.DataAccess.Repository.Abstraction;
 using ServcicePro.DataAccess.Repository;
 using FluentValidation;
 using ServicePro.BusinessLogic.Validation;
-using ServicePro.BusinessLogic.DTOs;
 using ServicePro.ThirdPartyProviders.TwilioServices;
+using ServicePro.BusinessLogic.DTOs.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,16 +39,23 @@ builder.Services.AddDbContext<ServiceProDbContext>(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IWorkorderRepository, WorkorderRepository>();
+builder.Services.AddScoped<IWorkorderItemRepository, WorkorderItemRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IWorkorderService, WorkorderService>();
+builder.Services.AddScoped<IWorkorderItemService, WorkorderItemService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
 builder.Services.AddScoped<IValidator<ClientDTO>, ClientValidator>();
+
 builder.Services.AddScoped<ISmsService, TwilioSmsService>();
 builder.Services.Configure<TwilioSmsServiceSettings>(builder.Configuration.GetSection("Twilio"));
 

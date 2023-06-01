@@ -1,4 +1,4 @@
-﻿namespace ServicePro.BusinessLogic.DTOs
+﻿namespace ServicePro.BusinessLogic.DTOs.Vehicles
 {
     public class VehicleScanModel
     {

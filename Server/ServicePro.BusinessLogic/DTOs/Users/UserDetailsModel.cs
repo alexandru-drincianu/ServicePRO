@@ -1,6 +1,6 @@
 ﻿using ServicePro.Common.Enums;
 
-namespace ServicePro.BusinessLogic.DTOs
+namespace ServicePro.BusinessLogic.DTOs.Users
 {
     public class UserDetailsModel
     {

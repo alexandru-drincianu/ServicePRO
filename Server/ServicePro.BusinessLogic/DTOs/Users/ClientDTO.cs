@@ -1,6 +1,7 @@
-﻿using ServicePro.DataAccess.Entities;
+﻿using ServicePro.BusinessLogic.DTOs.Addresses;
+using ServicePro.DataAccess.Entities;
 
-namespace ServicePro.BusinessLogic.DTOs
+namespace ServicePro.BusinessLogic.DTOs.Users
 {
     public class ClientDTO
     {

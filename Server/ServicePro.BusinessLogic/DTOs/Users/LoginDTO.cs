@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServicePro.BusinessLogic.DTOs
+namespace ServicePro.BusinessLogic.DTOs.Users
 {
     public class LoginDTO
     {

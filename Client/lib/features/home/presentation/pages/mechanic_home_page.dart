@@ -41,8 +41,8 @@ class MechanicHomePageState extends State<MechanicHomePage> {
       body: SafeArea(
         child: Center(
           child: SizedBox(
-            width: 300,
-            height: 300,
+            width: 250,
+            height: 250,
             child: ElevatedButton(
               onPressed: () async {
                 await availableCameras().then((value) => Navigator.push(
@@ -54,7 +54,7 @@ class MechanicHomePageState extends State<MechanicHomePage> {
               },
               style: ElevatedButton.styleFrom(
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
                 padding: const EdgeInsets.all(16.0),
               ),

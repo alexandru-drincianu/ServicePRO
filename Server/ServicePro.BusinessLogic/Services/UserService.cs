@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.DataProtection;
-using ServicePro.BusinessLogic.DTOs;
+using ServicePro.BusinessLogic.DTOs.Pagination;
+using ServicePro.BusinessLogic.DTOs.Users;
 using ServicePro.BusinessLogic.Services.Abstractions;
 using ServicePro.Common.Enums;
 using ServicePro.DataAccess.Entities;

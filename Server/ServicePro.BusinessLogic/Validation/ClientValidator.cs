@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ServicePro.BusinessLogic.DTOs;
+using ServicePro.BusinessLogic.DTOs.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;

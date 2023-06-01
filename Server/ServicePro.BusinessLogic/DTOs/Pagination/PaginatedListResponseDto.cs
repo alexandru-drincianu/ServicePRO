@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ServicePro.BusinessLogic.DTOs
+namespace ServicePro.BusinessLogic.DTOs.Pagination
 {
     public class PaginatedListResponseDto<T> where T : class
     {

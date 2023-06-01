@@ -1,11 +1,11 @@
 ﻿using ServicePro.Common.Enums;
+using ServicePro.DataAccess.Entities;
 
-namespace ServicePro.BusinessLogic.DTOs
+namespace ServicePro.BusinessLogic.DTOs.Vehicles
 {
-    public class VehicleResponseDTO
+    public class VehicleRequestDTO
     {
-        public int Id { get; set; }
-        public UserDetailsModel User { get; set; }
+        public int UserId { get; set; }
         public string Registration { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }

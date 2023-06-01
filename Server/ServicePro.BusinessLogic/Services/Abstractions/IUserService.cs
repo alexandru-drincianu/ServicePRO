@@ -1,4 +1,5 @@
-﻿using ServicePro.BusinessLogic.DTOs;
+﻿using ServicePro.BusinessLogic.DTOs.Pagination;
+using ServicePro.BusinessLogic.DTOs.Users;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

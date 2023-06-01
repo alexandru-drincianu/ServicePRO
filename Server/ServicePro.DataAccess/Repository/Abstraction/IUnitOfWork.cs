@@ -17,6 +17,8 @@ namespace ServicePro.DataAccess.Repository.Abstraction
         IUserRepository UserRepository { get; }
         IVehicleRepository VehicleRepository { get; }
         IAddressRepository AddressRepository { get; }
+        IWorkorderRepository WorkorderRepository { get; }
+        IWorkorderItemRepository WorkorderItemRepository { get; }
            
     }
 }
