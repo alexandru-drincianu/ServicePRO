@@ -42,11 +42,10 @@ public class TokenManager : ITokenManager
 
     public string NewToken(User user)
     {
-        // TODO: add claims here (full user name & others if needed)
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
             Subject = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, user.FullName) }),
-            Expires = DateTime.Now.AddHours(1),
+            Expires = DateTime.Now.AddDays(31),
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(secretKey),
                 SecurityAlgorithms.HmacSha256Signature

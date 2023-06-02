@@ -26,6 +26,7 @@ _$_WorkorderModel _$$_WorkorderModelFromJson(Map<String, dynamic> json) =>
       workorderItems: (json['workorderItems'] as List<dynamic>?)
           ?.map((e) => WorkorderItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      number: json['number'] as String?,
     );
 
 Map<String, dynamic> _$$_WorkorderModelToJson(_$_WorkorderModel instance) =>
@@ -41,4 +42,5 @@ Map<String, dynamic> _$$_WorkorderModelToJson(_$_WorkorderModel instance) =>
       'isInvoiced': instance.isInvoiced,
       'workorderItems':
           instance.workorderItems?.map((e) => e.toJson()).toList(),
+      'number': instance.number,
     };

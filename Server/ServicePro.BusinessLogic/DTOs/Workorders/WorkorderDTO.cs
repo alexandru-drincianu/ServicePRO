@@ -22,5 +22,6 @@ namespace ServicePro.BusinessLogic.DTOs.Orders
         public decimal? TotalCost { get; set; }
         public bool? IsInvoiced { get; set; }
         public List<WorkorderItemDTO>? WorkorderItems { get; set; }
+        public string? Number { get; set; }
     }
 }

@@ -40,6 +40,8 @@ mixin _$WorkorderModel {
   @JsonKey(name: 'workorderItems')
   List<WorkorderItemModel>? get workorderItems =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: 'number')
+  String? get number => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,24 +57,16 @@ abstract class $WorkorderModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      @JsonKey(name: 'vehicleId')
-          int? vehicleId,
-      @JsonKey(name: 'vehicle')
-          VehicleModel? vehicle,
-      @JsonKey(name: 'status')
-          int? status,
-      @JsonKey(name: 'remarks')
-          String? remarks,
-      @JsonKey(name: 'arrivedDate')
-          DateTime? arrivedDate,
-      @JsonKey(name: 'departedDate')
-          DateTime? departedDate,
-      @JsonKey(name: 'totalCost')
-          num? totalCost,
-      @JsonKey(name: 'isInvoiced')
-          bool? isInvoiced,
-      @JsonKey(name: 'workorderItems')
-          List<WorkorderItemModel>? workorderItems});
+      @JsonKey(name: 'vehicleId') int? vehicleId,
+      @JsonKey(name: 'vehicle') VehicleModel? vehicle,
+      @JsonKey(name: 'status') int? status,
+      @JsonKey(name: 'remarks') String? remarks,
+      @JsonKey(name: 'arrivedDate') DateTime? arrivedDate,
+      @JsonKey(name: 'departedDate') DateTime? departedDate,
+      @JsonKey(name: 'totalCost') num? totalCost,
+      @JsonKey(name: 'isInvoiced') bool? isInvoiced,
+      @JsonKey(name: 'workorderItems') List<WorkorderItemModel>? workorderItems,
+      @JsonKey(name: 'number') String? number});
 
   $VehicleModelCopyWith<$Res>? get vehicle;
 }
@@ -100,6 +94,7 @@ class _$WorkorderModelCopyWithImpl<$Res, $Val extends WorkorderModel>
     Object? totalCost = freezed,
     Object? isInvoiced = freezed,
     Object? workorderItems = freezed,
+    Object? number = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -142,6 +137,10 @@ class _$WorkorderModelCopyWithImpl<$Res, $Val extends WorkorderModel>
           ? _value.workorderItems
           : workorderItems // ignore: cast_nullable_to_non_nullable
               as List<WorkorderItemModel>?,
+      number: freezed == number
+          ? _value.number
+          : number // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -168,24 +167,16 @@ abstract class _$$_WorkorderModelCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      @JsonKey(name: 'vehicleId')
-          int? vehicleId,
-      @JsonKey(name: 'vehicle')
-          VehicleModel? vehicle,
-      @JsonKey(name: 'status')
-          int? status,
-      @JsonKey(name: 'remarks')
-          String? remarks,
-      @JsonKey(name: 'arrivedDate')
-          DateTime? arrivedDate,
-      @JsonKey(name: 'departedDate')
-          DateTime? departedDate,
-      @JsonKey(name: 'totalCost')
-          num? totalCost,
-      @JsonKey(name: 'isInvoiced')
-          bool? isInvoiced,
-      @JsonKey(name: 'workorderItems')
-          List<WorkorderItemModel>? workorderItems});
+      @JsonKey(name: 'vehicleId') int? vehicleId,
+      @JsonKey(name: 'vehicle') VehicleModel? vehicle,
+      @JsonKey(name: 'status') int? status,
+      @JsonKey(name: 'remarks') String? remarks,
+      @JsonKey(name: 'arrivedDate') DateTime? arrivedDate,
+      @JsonKey(name: 'departedDate') DateTime? departedDate,
+      @JsonKey(name: 'totalCost') num? totalCost,
+      @JsonKey(name: 'isInvoiced') bool? isInvoiced,
+      @JsonKey(name: 'workorderItems') List<WorkorderItemModel>? workorderItems,
+      @JsonKey(name: 'number') String? number});
 
   @override
   $VehicleModelCopyWith<$Res>? get vehicle;
@@ -212,6 +203,7 @@ class __$$_WorkorderModelCopyWithImpl<$Res>
     Object? totalCost = freezed,
     Object? isInvoiced = freezed,
     Object? workorderItems = freezed,
+    Object? number = freezed,
   }) {
     return _then(_$_WorkorderModel(
       id: freezed == id
@@ -254,6 +246,10 @@ class __$$_WorkorderModelCopyWithImpl<$Res>
           ? _value._workorderItems
           : workorderItems // ignore: cast_nullable_to_non_nullable
               as List<WorkorderItemModel>?,
+      number: freezed == number
+          ? _value.number
+          : number // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -280,7 +276,9 @@ class _$_WorkorderModel implements _WorkorderModel {
       @JsonKey(name: 'isInvoiced')
           this.isInvoiced,
       @JsonKey(name: 'workorderItems')
-          final List<WorkorderItemModel>? workorderItems})
+          final List<WorkorderItemModel>? workorderItems,
+      @JsonKey(name: 'number')
+          this.number})
       : _workorderItems = workorderItems;
 
   factory _$_WorkorderModel.fromJson(Map<String, dynamic> json) =>
@@ -324,8 +322,12 @@ class _$_WorkorderModel implements _WorkorderModel {
   }
 
   @override
+  @JsonKey(name: 'number')
+  final String? number;
+
+  @override
   String toString() {
-    return 'WorkorderModel(id: $id, vehicleId: $vehicleId, vehicle: $vehicle, status: $status, remarks: $remarks, arrivedDate: $arrivedDate, departedDate: $departedDate, totalCost: $totalCost, isInvoiced: $isInvoiced, workorderItems: $workorderItems)';
+    return 'WorkorderModel(id: $id, vehicleId: $vehicleId, vehicle: $vehicle, status: $status, remarks: $remarks, arrivedDate: $arrivedDate, departedDate: $departedDate, totalCost: $totalCost, isInvoiced: $isInvoiced, workorderItems: $workorderItems, number: $number)';
   }
 
   @override
@@ -348,7 +350,8 @@ class _$_WorkorderModel implements _WorkorderModel {
             (identical(other.isInvoiced, isInvoiced) ||
                 other.isInvoiced == isInvoiced) &&
             const DeepCollectionEquality()
-                .equals(other._workorderItems, _workorderItems));
+                .equals(other._workorderItems, _workorderItems) &&
+            (identical(other.number, number) || other.number == number));
   }
 
   @JsonKey(ignore: true)
@@ -364,7 +367,8 @@ class _$_WorkorderModel implements _WorkorderModel {
       departedDate,
       totalCost,
       isInvoiced,
-      const DeepCollectionEquality().hash(_workorderItems));
+      const DeepCollectionEquality().hash(_workorderItems),
+      number);
 
   @JsonKey(ignore: true)
   @override
@@ -400,7 +404,9 @@ abstract class _WorkorderModel implements WorkorderModel {
       @JsonKey(name: 'isInvoiced')
           final bool? isInvoiced,
       @JsonKey(name: 'workorderItems')
-          final List<WorkorderItemModel>? workorderItems}) = _$_WorkorderModel;
+          final List<WorkorderItemModel>? workorderItems,
+      @JsonKey(name: 'number')
+          final String? number}) = _$_WorkorderModel;
 
   factory _WorkorderModel.fromJson(Map<String, dynamic> json) =
       _$_WorkorderModel.fromJson;
@@ -434,6 +440,9 @@ abstract class _WorkorderModel implements WorkorderModel {
   @override
   @JsonKey(name: 'workorderItems')
   List<WorkorderItemModel>? get workorderItems;
+  @override
+  @JsonKey(name: 'number')
+  String? get number;
   @override
   @JsonKey(ignore: true)
   _$$_WorkorderModelCopyWith<_$_WorkorderModel> get copyWith =>

@@ -9,13 +9,13 @@ namespace ServcicePro.DataAccess.Repository.Abstraction
 {
     public interface IWorkorderRepository
     {
+        Task<List<Workorder>> GetAllWorkordersAsync();
+        Task<Workorder> GetWorkorderByIdAsync(int id);
         Task<int?> GetWorkorderIdForVehicleAsync(int vehicleId);
         Task AddAsync(Workorder item, bool applyChanges = true);
         Task UpdateAsync(Workorder item, int id, bool applyChanges = true);
         Task RemoveAsync(Workorder item, bool applyChanges = true);
         Task RemoveRangeAsync(IEnumerable<Workorder> items, bool applyChanges = true);
-        Task<IQueryable<Workorder>> GetAll();
-        Task<List<Workorder>> GetAllAsync();
         Task<Workorder?> Find(Expression<Func<Workorder, bool>> predicate);
         Task<bool> AnyAsync(Expression<Func<Workorder, bool>> predicate);
         Task<Workorder> GetByIdAsync<TId>(TId id);

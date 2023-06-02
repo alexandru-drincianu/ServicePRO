@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
 enum UserRole { admin, mechanic, client }
 
 final Map<int, String> UserRoleString = {
@@ -21,4 +25,10 @@ final Map<int, String> WorkorderStatusString = {
   WorkorderStatus.arrived.index: 'Arrived',
   WorkorderStatus.inProgress.index: 'In progress',
   WorkorderStatus.ready.index: 'Ready',
+};
+
+final Map<int, Color> WorkorderStatusColor = {
+  WorkorderStatus.arrived.index: Colors.blue,
+  WorkorderStatus.inProgress.index: Colors.orange,
+  WorkorderStatus.ready.index: Colors.green,
 };

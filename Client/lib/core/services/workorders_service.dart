@@ -106,4 +106,33 @@ class WorkorderService extends BaseHttpService {
     }
     return null;
   }
+
+  Future<dynamic> updateWorkorder(
+    WorkorderModel model,
+  ) async {
+    try {
+      final res = await put(
+        buildUri(
+          Constants.apiBaseUrl,
+          "$_workordersPath/${model.id}",
+        ),
+        json.encode(
+          model,
+        ),
+        token,
+      );
+      return res;
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+  }
 }

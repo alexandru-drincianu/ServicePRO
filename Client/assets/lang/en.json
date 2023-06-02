@@ -15,6 +15,7 @@
   "workorders": "Workorders",
   "vehicles":"Vehicles",
   "vehicle_details":"Vehicle details",
+  "workorder_details":"Workorder details",
   "user_details":"User details",
   "home_title": "Home",
   "add_order_error": "Add order failed.",
