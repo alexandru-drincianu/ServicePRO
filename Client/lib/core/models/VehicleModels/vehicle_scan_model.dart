@@ -1,8 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:service_pro/core/enums/enums.dart';
-import 'package:service_pro/core/models/address_model.dart';
-import 'package:service_pro/core/models/user_details.dart';
-import 'package:service_pro/core/models/vehicle_model.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_model.dart';
 
 part 'vehicle_scan_model.freezed.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fimber_io/fimber_io.dart';
-import 'package:service_pro/core/models/workorder_model.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_model.dart';
 import 'package:service_pro/core/services/workorders_service.dart';
 
 import '../../../core/locator.dart';

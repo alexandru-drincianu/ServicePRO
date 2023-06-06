@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:fimber_io/fimber_io.dart';
-import 'package:service_pro/core/models/client_model.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
+import 'package:service_pro/core/models/UserModels/user_details.dart';
 import 'package:service_pro/dtos/paginated_result.dart';
 
 import '../base_exception.dart';
 import '../constants/constants.dart';
 import '../enums/enums.dart';
-import '../models/user_details.dart';
-import '../models/user_model.dart';
 import 'base_http_service.dart';
 
 class UserService extends BaseHttpService {

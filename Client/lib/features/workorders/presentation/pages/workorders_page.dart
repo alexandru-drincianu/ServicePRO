@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
-import 'package:service_pro/core/models/workorder_model.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_model.dart';
 import 'package:service_pro/features/workorders/provider/workorders_provider.dart';
 
 import '../../../../core/localization/localization.dart';
@@ -50,7 +50,7 @@ class WorkordersPageState extends State<WorkordersPage> {
       appBar: AppBar(
         title: Text(
           context.translate(
-            TranslationKeys.vehicles,
+            TranslationKeys.workorders,
           ),
         ),
       ),

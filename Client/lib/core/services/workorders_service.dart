@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:fimber_io/fimber_io.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_model.dart';
 
 import '../base_exception.dart';
 import '../constants/constants.dart';
-import '../models/workorder_model.dart';
 import 'base_http_service.dart';
 
 class WorkorderService extends BaseHttpService {

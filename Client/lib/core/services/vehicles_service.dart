@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:fimber_io/fimber_io.dart';
-import 'package:service_pro/core/models/vehicle_model.dart';
-import 'package:service_pro/core/models/vehicle_scan_model.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_model.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_scan_model.dart';
 
 import '../base_exception.dart';
 import '../constants/constants.dart';
@@ -135,5 +135,6 @@ class VehicleService extends BaseHttpService {
         errorId: 'registration_error',
       );
     }
+    return null;
   }
 }

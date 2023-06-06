@@ -1,18 +1,15 @@
 import 'dart:convert';
 
 import 'package:fimber_io/fimber_io.dart';
+import 'package:service_pro/core/models/UserModels/user_model.dart';
 
 import '../base_exception.dart';
 import '../constants/constants.dart';
-import '../models/user_model.dart';
 import 'base_http_service.dart';
 
-// TODO: add documentation
 class LoginService extends BaseHttpService {
-  // TODO: a path rather than a resource
   static const _loginResourceName = 'Authenticate/login';
 
-  // TODO: make parameters named
   Future<UserModel> login(String username, String password) async {
     try {
       final res = await post(

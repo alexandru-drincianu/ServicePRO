@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/localization/localization.dart';
-import 'package:service_pro/core/models/user_details.dart';
+import 'package:service_pro/core/models/UserModels/user_details.dart';
 import 'package:service_pro/features/admin/provider/user_provider.dart';
 
 import '../../../../core/input_validators/mandatory_input_validator.dart';

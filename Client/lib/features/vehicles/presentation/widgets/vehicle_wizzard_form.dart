@@ -1,14 +1,11 @@
 import 'dart:convert';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
-import 'package:service_pro/core/models/address_model.dart';
-import 'package:service_pro/core/models/client_model.dart';
-import 'package:service_pro/core/models/vehicle_model.dart';
-import 'package:service_pro/features/clients/presentation/pages/clients_page.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_model.dart';
 import 'package:service_pro/features/vehicles/provider/vehicles_provider.dart';
 import 'package:service_pro/routing/app_router.gr.dart';
 

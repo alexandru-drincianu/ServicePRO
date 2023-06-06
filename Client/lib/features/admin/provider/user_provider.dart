@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:fimber_io/fimber_io.dart';
-import 'package:service_pro/core/models/user_model.dart';
+import 'package:service_pro/core/models/UserModels/user_details.dart';
 import 'package:service_pro/dtos/paginated_result.dart';
 
 import '../../../core/locator.dart';
-import '../../../core/models/user_details.dart';
 import '../../../core/services/user_settings_service.dart';
 
 class UserProvider extends ChangeNotifier {

@@ -4,8 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fimber_io/fimber_io.dart';
-import 'package:service_pro/core/models/vehicle_model.dart';
-import 'package:service_pro/core/models/vehicle_scan_model.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_model.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_scan_model.dart';
 
 import '../../../core/locator.dart';
 import '../../../core/services/vehicles_service.dart';

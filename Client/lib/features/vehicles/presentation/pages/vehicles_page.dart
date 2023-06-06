@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
-import 'package:service_pro/core/models/vehicle_model.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_model.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_model.dart';
 import 'package:service_pro/features/vehicles/provider/vehicles_provider.dart';
 import 'package:service_pro/features/workorders/provider/workorders_provider.dart';
 
 import '../../../../core/localization/localization.dart';
-import '../../../../core/models/workorder_model.dart';
 import '../../../../core/widgets/app_drawer.dart';
 import '../../../../routing/app_router.dart';
 import '../../../../routing/app_router.gr.dart';

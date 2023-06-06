@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
-import 'package:service_pro/core/models/client_model.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
+import 'package:service_pro/core/models/UserModels/user_model.dart';
 import 'package:service_pro/features/home/presentation/pages/client_home_page.dart';
 import 'package:service_pro/features/home/presentation/pages/mechanic_home_page.dart';
 
 import '../../../../core/localization/localization.dart';
-import '../../../../core/models/user_model.dart';
 import '../../../../core/widgets/app_drawer.dart';
 import '../../../clients/provider/clients_provider.dart';
 import '../../../login/provider/login_provider.dart';

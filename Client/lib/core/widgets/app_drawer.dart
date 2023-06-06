@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:service_pro/core/models/user_model.dart';
+import 'package:service_pro/core/models/UserModels/user_model.dart';
 
 import '../../features/login/provider/login_provider.dart';
 import '../../routing/routing.dart';
@@ -134,6 +134,16 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
               onTap: () => router.replace(const WorkordersRoute()),
+            ),
+          if (_user?.role != UserRole.client.index)
+            ListTile(
+              leading: const Icon(Icons.warehouse),
+              title: Text(
+                context.translate(
+                  TranslationKeys.warehouse,
+                ),
+              ),
+              onTap: () => router.replace(const WarehouseRoute()),
             ),
           ListTile(
             leading: const Icon(Icons.settings),

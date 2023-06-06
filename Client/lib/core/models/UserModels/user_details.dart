@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../converters/locale_converter.dart';
 
 part 'user_details.freezed.dart';
 

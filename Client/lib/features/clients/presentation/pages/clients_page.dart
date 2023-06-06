@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
 import 'package:service_pro/features/clients/provider/clients_provider.dart';
 import 'package:service_pro/routing/app_router.gr.dart';
 
 import '../../../../core/localization/localization.dart';
-import '../../../../core/models/client_model.dart';
 import '../../../../core/widgets/app_drawer.dart';
 import '../../../../routing/app_router.dart';
 

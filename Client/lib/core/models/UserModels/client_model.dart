@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:service_pro/core/models/address_model.dart';
-
-import '../converters/locale_converter.dart';
+import 'package:service_pro/core/models/AddressModels/address_model.dart';
 
 part 'client_model.freezed.dart';
 

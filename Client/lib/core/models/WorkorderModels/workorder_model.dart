@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:service_pro/core/enums/enums.dart';
-import 'package:service_pro/core/models/vehicle_model.dart';
-import 'package:service_pro/core/models/workorder_item_model.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_model.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_item_model.dart';
 
 part 'workorder_model.freezed.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../converters/locale_converter.dart';
+import '../../converters/locale_converter.dart';
 
 part 'user_model.freezed.dart';
 

@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
+import 'package:service_pro/core/models/UserModels/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/synchronized.dart';
 
-import '../models/user_model.dart';
-
-// TODO: add docs
 class SharedPreferenceService {
   /// Lock is used to ensure safe asynchronous write operations on [SharedPreferences].
   final _lock = Lock();

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:fimber_io/fimber_io.dart';
-import 'package:service_pro/core/models/client_model.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
 import 'package:service_pro/core/services/users_service.dart';
 
 import '../../../core/locator.dart';

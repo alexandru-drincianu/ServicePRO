@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:service_pro/core/enums/enums.dart';
+import 'package:service_pro/core/models/UserModels/user_details.dart';
+import 'package:service_pro/core/models/UserModels/user_model.dart';
 import 'package:service_pro/core/services/users_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../dtos/paginated_result.dart';
 import '../locator.dart';
-import '../models/user_details.dart';
-import '../models/user_model.dart';
 import 'login_service.dart';
 import 'shared_preference_service.dart';
 

@@ -1,11 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
 import 'package:service_pro/routing/app_router.gr.dart';
 
-import '../../../../core/models/client_model.dart';
 import '../../../../routing/app_router.dart';
 import '../../../camera/presentation/pages/camera_page.dart';
-import '../../../info/presentation/pages/new_mechanic_info_page.dart';
 
 /// [MechanicHomePage] is the page displayed under Home tab in the app. It is the first
 /// screen displayed after a successful login.

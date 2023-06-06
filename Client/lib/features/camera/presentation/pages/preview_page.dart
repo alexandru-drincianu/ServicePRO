@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:service_pro/core/models/VehicleModels/vehicle_scan_model.dart';
 import 'package:service_pro/features/vehicles/presentation/widgets/vehicle_wizzard_form.dart';
 import 'dart:io';
 
@@ -11,7 +12,6 @@ import 'package:service_pro/routing/app_router.dart';
 import 'package:service_pro/routing/app_router.gr.dart';
 
 import '../../../../core/custom_colors.dart';
-import '../../../../core/models/vehicle_scan_model.dart';
 
 class PreviewPage extends StatefulWidget {
   const PreviewPage({Key? key, required this.picture}) : super(key: key);

@@ -5,12 +5,12 @@ import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/localization/localization.dart';
-import 'package:service_pro/core/models/address_model.dart';
-import 'package:service_pro/core/models/client_model.dart';
+import 'package:service_pro/core/models/AddressModels/address_model.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
+import 'package:service_pro/core/models/UserModels/user_model.dart';
 import 'package:service_pro/features/clients/provider/clients_provider.dart';
 
 import '../../../../core/custom_colors.dart';
-import '../../../../core/models/user_model.dart';
 import '../../../../core/widgets/app_drawer.dart';
 import '../../../login/provider/login_provider.dart';
 

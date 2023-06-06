@@ -5,8 +5,8 @@ import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
-import 'package:service_pro/core/models/address_model.dart';
-import 'package:service_pro/core/models/client_model.dart';
+import 'package:service_pro/core/models/AddressModels/address_model.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
 import 'package:service_pro/routing/app_router.gr.dart';
 
 import '../../../../routing/app_router.dart';

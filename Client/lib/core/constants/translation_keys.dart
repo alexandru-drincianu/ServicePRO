@@ -17,6 +17,7 @@ class TranslationKeys {
   static const clients = 'clients';
   static const createClient = 'create_client';
   static const workorders = 'workorders';
+  static const warehouse = 'warehouse';
   static const vehicles = 'vehicles';
   static const createVehicle = 'create_vehicle';
   static const vehicleDetails = 'vehicle_details';

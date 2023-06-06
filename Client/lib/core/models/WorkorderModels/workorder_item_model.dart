@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:service_pro/core/models/user_details.dart';
 
 part 'workorder_item_model.freezed.dart';
 
