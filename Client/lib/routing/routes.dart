@@ -28,4 +28,6 @@ class Routes {
 
   // warehouse
   static const warehouse = '/warehouse';
+  static const consumableDetails = '/consumables/:id';
+  static const labourDetails = '/labours/:id';
 }

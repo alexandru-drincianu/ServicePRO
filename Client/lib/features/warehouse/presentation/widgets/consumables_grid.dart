@@ -59,8 +59,7 @@ class ConsumablesGridState extends State<ConsumablesGrid> {
                 height: 100,
                 child: Center(
                   child: ElevatedButton.icon(
-                    onPressed: () =>
-                        router.replace(CreateVehicleRoute(licensePlate: "")),
+                    onPressed: () => router.replace(ConsumableDetailsRoute()),
                     icon: const Icon(Icons.add),
                     label: const Text("Add Consumable"),
                   ),
@@ -135,7 +134,7 @@ class _ConsumablesDataSource extends DataTableSource {
         DataCell(
           GestureDetector(
             onTap: () {
-              router.replace(WorkorderDetailsRoute(id: consumable.id!));
+              router.replace(ConsumableDetailsRoute(id: consumable.id!));
             },
             child: const Icon(
               Icons.visibility,

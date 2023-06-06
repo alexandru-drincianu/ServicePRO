@@ -59,8 +59,7 @@ class LaboursGridState extends State<LaboursGrid> {
                 height: 100,
                 child: Center(
                   child: ElevatedButton.icon(
-                    onPressed: () =>
-                        router.replace(CreateVehicleRoute(licensePlate: "")),
+                    onPressed: () => router.replace(LabourDetailsRoute()),
                     icon: const Icon(Icons.add),
                     label: const Text("Add Labour"),
                   ),
@@ -136,7 +135,7 @@ class _laboursDataSource extends DataTableSource {
         DataCell(
           GestureDetector(
             onTap: () {
-              router.replace(WorkorderDetailsRoute(id: labour.id!));
+              router.replace(LabourDetailsRoute(id: labour.id!));
             },
             child: const Icon(
               Icons.visibility,

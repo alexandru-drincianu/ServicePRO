@@ -23,6 +23,8 @@ class TranslationKeys {
   static const vehicleDetails = 'vehicle_details';
   static const userDetails = 'user_details';
   static const workorderDetails = 'workorder_details';
+  static const consumableDetails = 'consumable_details';
+  static const labourDetails = 'labour_details';
 
   // Login Page
   static const username = 'login_username';

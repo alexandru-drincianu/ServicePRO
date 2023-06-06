@@ -11,6 +11,8 @@ import '../features/login/presentation/pages/login_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 import '../features/vehicles/presentation/pages/vehicles_page.dart';
 import '../features/vehicles/presentation/pages/vehicle_details_page.dart';
+import '../features/warehouse/presentation/pages/consumable_details_page.dart';
+import '../features/warehouse/presentation/pages/labour_details_page.dart';
 import '../features/warehouse/presentation/pages/warehouse_page.dart';
 import '../features/workorders/presentation/pages/workorders_page.dart';
 import '../features/clients/presentation/pages/user_details_page.dart';
@@ -98,6 +100,16 @@ part 'routes.dart';
     AutoRoute(
       path: Routes.warehouse,
       page: WarehousePage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.consumableDetails,
+      page: ConsumableDetailsPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.labourDetails,
+      page: LabourDetailsPage,
       guards: [AuthGuard],
     ),
     // Unknown routes will take users to home page.

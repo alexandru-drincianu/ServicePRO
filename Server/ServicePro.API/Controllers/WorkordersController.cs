@@ -2,12 +2,9 @@
 using ServicePro.BusinessLogic.DTOs.Orders;
 using System.Collections.Generic;
 using ServicePro.BusinessLogic.Services.Abstractions;
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using ServicePro.API.Filters;
 using System.Net;
-using ServicePro.DataAccess.Entities;
-using ServicePro.BusinessLogic.DTOs.Pagination;
 
 namespace ServicePro.API.Controllers
 {
