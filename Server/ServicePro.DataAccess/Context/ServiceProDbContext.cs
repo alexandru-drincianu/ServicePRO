@@ -24,6 +24,9 @@ namespace ServicePro.DataAccess.Context
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
+        public virtual DbSet<Labour> Labours { get; set; }
+        public virtual DbSet<Consumable> Consumables { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -43,11 +46,14 @@ namespace ServicePro.DataAccess.Context
             modelBuilder.Entity<Workorder>()
                         .Property(p => p.TotalCost)
                         .HasColumnType("decimal(18,4)");
-            modelBuilder.Entity<WorkorderItem>()
+            modelBuilder.Entity<Consumable>()
                         .Property(p => p.Price)
                         .HasColumnType("decimal(18,4)");
-            modelBuilder.Entity<WorkorderItem>()
+            modelBuilder.Entity<Consumable>()
                         .Property(p => p.Quantity)
+                        .HasColumnType("decimal(18,4)");
+            modelBuilder.Entity<Labour>()
+                        .Property(p => p.HourlyWage)
                         .HasColumnType("decimal(18,4)");
         }
     }

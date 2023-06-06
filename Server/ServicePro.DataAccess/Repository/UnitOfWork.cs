@@ -19,6 +19,9 @@ namespace ServicePro.DataAccess.Repository
         public IAddressRepository AddressRepository { get; }
         public IWorkorderRepository WorkorderRepository { get; }
         public IWorkorderItemRepository WorkorderItemRepository { get; }
+        public IConsumableRepository ConsumableRepository { get; }
+        public ILabourRepository LabourRepository { get; }
+
         #endregion
 
         public UnitOfWork(ServiceProDbContext dbContext)
@@ -29,6 +32,9 @@ namespace ServicePro.DataAccess.Repository
             AddressRepository = new AddressRepository(dbContext);
             WorkorderRepository = new WorkorderRepository(dbContext);
             WorkorderItemRepository = new WorkorderItemRepository(dbContext);
+            ConsumableRepository = new ConsumableRepository(dbContext);
+            LabourRepository = new LabourRepository(dbContext);
+            
         }
 
         public int CommitChanges()

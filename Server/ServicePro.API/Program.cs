@@ -46,12 +46,16 @@ builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IWorkorderRepository, WorkorderRepository>();
 builder.Services.AddScoped<IWorkorderItemRepository, WorkorderItemRepository>();
+builder.Services.AddScoped<IConsumableRepository, ConsumableRepository>();
+builder.Services.AddScoped<ILabourRepository, LabourRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
 builder.Services.AddScoped<IWorkorderService, WorkorderService>();
 builder.Services.AddScoped<IWorkorderItemService, WorkorderItemService>();
+builder.Services.AddScoped<IConsumableService, ConsumableService>();
+builder.Services.AddScoped<ILabourService, LabourService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
 builder.Services.AddScoped<IValidator<ClientDTO>, ClientValidator>();

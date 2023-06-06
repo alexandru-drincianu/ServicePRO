@@ -19,6 +19,8 @@ namespace ServicePro.DataAccess.Repository.Abstraction
         IAddressRepository AddressRepository { get; }
         IWorkorderRepository WorkorderRepository { get; }
         IWorkorderItemRepository WorkorderItemRepository { get; }
-           
+        IConsumableRepository ConsumableRepository { get; }
+        ILabourRepository LabourRepository { get; }
+
     }
 }

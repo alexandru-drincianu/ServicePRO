@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServicePro.DataAccess.Context;
 
@@ -11,9 +12,11 @@ using ServicePro.DataAccess.Context;
 namespace ServicePro.DataAccess.Migrations
 {
     [DbContext(typeof(ServiceProDbContext))]
-    partial class ServiceProDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230606165135_AddConsumablesAndLaboursTableAndModifyWorkorderItems")]
+    partial class AddConsumablesAndLaboursTableAndModifyWorkorderItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
