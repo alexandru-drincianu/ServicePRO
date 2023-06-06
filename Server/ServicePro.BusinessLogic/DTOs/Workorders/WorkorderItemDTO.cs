@@ -8,6 +8,7 @@ namespace ServicePro.BusinessLogic.DTOs.Orders
     {
         public int Id { get; set; }
         public WorkorderItemType ItemType { get; set; }
+        public decimal Quantity { get; set; }
         public int? ConsumableId { get; set; }
         public ConsumableDTO? Consumable { get; set; }
         public int? LabourId { get; set; }

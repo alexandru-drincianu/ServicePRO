@@ -49,7 +49,7 @@ namespace ServicePro.DataAccess.Context
             modelBuilder.Entity<Consumable>()
                         .Property(p => p.Price)
                         .HasColumnType("decimal(18,4)");
-            modelBuilder.Entity<Consumable>()
+            modelBuilder.Entity<WorkorderItem>()
                         .Property(p => p.Quantity)
                         .HasColumnType("decimal(18,4)");
             modelBuilder.Entity<Labour>()

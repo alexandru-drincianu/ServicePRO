@@ -12,6 +12,7 @@ namespace ServicePro.DataAccess.Entities
     {
         public int Id { get; set; }
         public WorkorderItemType ItemType { get; set; }
+        public decimal Quantity { get; set; }
         public int WorkorderId { get; set; }
         [ForeignKey("WorkorderId")]
         public Workorder Workorder { get; set; }

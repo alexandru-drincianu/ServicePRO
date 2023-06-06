@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:service_pro/core/services/consumables_service.dart';
+import 'package:service_pro/core/services/labours_service.dart';
 import 'package:service_pro/core/services/users_service.dart';
 import 'package:service_pro/core/services/vehicles_service.dart';
 import 'package:service_pro/core/services/workorders_service.dart';
@@ -20,4 +22,6 @@ void setupLocator() {
   locator.registerLazySingleton<UserService>(() => UserService());
   locator.registerLazySingleton<VehicleService>(() => VehicleService());
   locator.registerLazySingleton<WorkorderService>(() => WorkorderService());
+  locator.registerLazySingleton<ConsumableService>(() => ConsumableService());
+  locator.registerLazySingleton<LabourService>(() => LabourService());
 }

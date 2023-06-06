@@ -32,3 +32,10 @@ final Map<int, Color> WorkorderStatusColor = {
   WorkorderStatus.inProgress.index: Colors.orange,
   WorkorderStatus.ready.index: Colors.green,
 };
+
+enum WorkorderItemType { consumable, labour }
+
+final Map<int, String> WorkorderItemTypeString = {
+  WorkorderItemType.consumable.index: 'Consumable',
+  WorkorderItemType.labour.index: 'Labour',
+};

@@ -21,12 +21,18 @@ WorkorderItemModel _$WorkorderItemModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$WorkorderItemModel {
   int? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'description')
-  int? get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'price')
-  num? get price => throw _privateConstructorUsedError;
+  @JsonKey(name: 'itemType')
+  int? get itemType => throw _privateConstructorUsedError;
   @JsonKey(name: 'quantity')
   num? get quantity => throw _privateConstructorUsedError;
+  @JsonKey(name: 'consumableId')
+  int? get consumableId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'consumable')
+  ConsumableModel? get consumable => throw _privateConstructorUsedError;
+  @JsonKey(name: 'labourId')
+  int? get labourId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'labour')
+  LabourModel? get labour => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,9 +48,15 @@ abstract class $WorkorderItemModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      @JsonKey(name: 'description') int? userId,
-      @JsonKey(name: 'price') num? price,
-      @JsonKey(name: 'quantity') num? quantity});
+      @JsonKey(name: 'itemType') int? itemType,
+      @JsonKey(name: 'quantity') num? quantity,
+      @JsonKey(name: 'consumableId') int? consumableId,
+      @JsonKey(name: 'consumable') ConsumableModel? consumable,
+      @JsonKey(name: 'labourId') int? labourId,
+      @JsonKey(name: 'labour') LabourModel? labour});
+
+  $ConsumableModelCopyWith<$Res>? get consumable;
+  $LabourModelCopyWith<$Res>? get labour;
 }
 
 /// @nodoc
@@ -61,28 +73,67 @@ class _$WorkorderItemModelCopyWithImpl<$Res, $Val extends WorkorderItemModel>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
-    Object? price = freezed,
+    Object? itemType = freezed,
     Object? quantity = freezed,
+    Object? consumableId = freezed,
+    Object? consumable = freezed,
+    Object? labourId = freezed,
+    Object? labour = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      itemType: freezed == itemType
+          ? _value.itemType
+          : itemType // ignore: cast_nullable_to_non_nullable
               as int?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as num?,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as num?,
+      consumableId: freezed == consumableId
+          ? _value.consumableId
+          : consumableId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      consumable: freezed == consumable
+          ? _value.consumable
+          : consumable // ignore: cast_nullable_to_non_nullable
+              as ConsumableModel?,
+      labourId: freezed == labourId
+          ? _value.labourId
+          : labourId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      labour: freezed == labour
+          ? _value.labour
+          : labour // ignore: cast_nullable_to_non_nullable
+              as LabourModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ConsumableModelCopyWith<$Res>? get consumable {
+    if (_value.consumable == null) {
+      return null;
+    }
+
+    return $ConsumableModelCopyWith<$Res>(_value.consumable!, (value) {
+      return _then(_value.copyWith(consumable: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LabourModelCopyWith<$Res>? get labour {
+    if (_value.labour == null) {
+      return null;
+    }
+
+    return $LabourModelCopyWith<$Res>(_value.labour!, (value) {
+      return _then(_value.copyWith(labour: value) as $Val);
+    });
   }
 }
 
@@ -96,9 +147,17 @@ abstract class _$$_WorkorderItemModelCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      @JsonKey(name: 'description') int? userId,
-      @JsonKey(name: 'price') num? price,
-      @JsonKey(name: 'quantity') num? quantity});
+      @JsonKey(name: 'itemType') int? itemType,
+      @JsonKey(name: 'quantity') num? quantity,
+      @JsonKey(name: 'consumableId') int? consumableId,
+      @JsonKey(name: 'consumable') ConsumableModel? consumable,
+      @JsonKey(name: 'labourId') int? labourId,
+      @JsonKey(name: 'labour') LabourModel? labour});
+
+  @override
+  $ConsumableModelCopyWith<$Res>? get consumable;
+  @override
+  $LabourModelCopyWith<$Res>? get labour;
 }
 
 /// @nodoc
@@ -113,27 +172,42 @@ class __$$_WorkorderItemModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
-    Object? price = freezed,
+    Object? itemType = freezed,
     Object? quantity = freezed,
+    Object? consumableId = freezed,
+    Object? consumable = freezed,
+    Object? labourId = freezed,
+    Object? labour = freezed,
   }) {
     return _then(_$_WorkorderItemModel(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      itemType: freezed == itemType
+          ? _value.itemType
+          : itemType // ignore: cast_nullable_to_non_nullable
               as int?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as num?,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as num?,
+      consumableId: freezed == consumableId
+          ? _value.consumableId
+          : consumableId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      consumable: freezed == consumable
+          ? _value.consumable
+          : consumable // ignore: cast_nullable_to_non_nullable
+              as ConsumableModel?,
+      labourId: freezed == labourId
+          ? _value.labourId
+          : labourId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      labour: freezed == labour
+          ? _value.labour
+          : labour // ignore: cast_nullable_to_non_nullable
+              as LabourModel?,
     ));
   }
 }
@@ -143,9 +217,12 @@ class __$$_WorkorderItemModelCopyWithImpl<$Res>
 class _$_WorkorderItemModel implements _WorkorderItemModel {
   const _$_WorkorderItemModel(
       {this.id,
-      @JsonKey(name: 'description') this.userId,
-      @JsonKey(name: 'price') this.price,
-      @JsonKey(name: 'quantity') this.quantity});
+      @JsonKey(name: 'itemType') this.itemType,
+      @JsonKey(name: 'quantity') this.quantity,
+      @JsonKey(name: 'consumableId') this.consumableId,
+      @JsonKey(name: 'consumable') this.consumable,
+      @JsonKey(name: 'labourId') this.labourId,
+      @JsonKey(name: 'labour') this.labour});
 
   factory _$_WorkorderItemModel.fromJson(Map<String, dynamic> json) =>
       _$$_WorkorderItemModelFromJson(json);
@@ -153,18 +230,27 @@ class _$_WorkorderItemModel implements _WorkorderItemModel {
   @override
   final int? id;
   @override
-  @JsonKey(name: 'description')
-  final int? userId;
-  @override
-  @JsonKey(name: 'price')
-  final num? price;
+  @JsonKey(name: 'itemType')
+  final int? itemType;
   @override
   @JsonKey(name: 'quantity')
   final num? quantity;
+  @override
+  @JsonKey(name: 'consumableId')
+  final int? consumableId;
+  @override
+  @JsonKey(name: 'consumable')
+  final ConsumableModel? consumable;
+  @override
+  @JsonKey(name: 'labourId')
+  final int? labourId;
+  @override
+  @JsonKey(name: 'labour')
+  final LabourModel? labour;
 
   @override
   String toString() {
-    return 'WorkorderItemModel(id: $id, userId: $userId, price: $price, quantity: $quantity)';
+    return 'WorkorderItemModel(id: $id, itemType: $itemType, quantity: $quantity, consumableId: $consumableId, consumable: $consumable, labourId: $labourId, labour: $labour)';
   }
 
   @override
@@ -173,15 +259,23 @@ class _$_WorkorderItemModel implements _WorkorderItemModel {
         (other.runtimeType == runtimeType &&
             other is _$_WorkorderItemModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.price, price) || other.price == price) &&
+            (identical(other.itemType, itemType) ||
+                other.itemType == itemType) &&
             (identical(other.quantity, quantity) ||
-                other.quantity == quantity));
+                other.quantity == quantity) &&
+            (identical(other.consumableId, consumableId) ||
+                other.consumableId == consumableId) &&
+            (identical(other.consumable, consumable) ||
+                other.consumable == consumable) &&
+            (identical(other.labourId, labourId) ||
+                other.labourId == labourId) &&
+            (identical(other.labour, labour) || other.labour == labour));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, price, quantity);
+  int get hashCode => Object.hash(runtimeType, id, itemType, quantity,
+      consumableId, consumable, labourId, labour);
 
   @JsonKey(ignore: true)
   @override
@@ -200,10 +294,14 @@ class _$_WorkorderItemModel implements _WorkorderItemModel {
 
 abstract class _WorkorderItemModel implements WorkorderItemModel {
   const factory _WorkorderItemModel(
-      {final int? id,
-      @JsonKey(name: 'description') final int? userId,
-      @JsonKey(name: 'price') final num? price,
-      @JsonKey(name: 'quantity') final num? quantity}) = _$_WorkorderItemModel;
+          {final int? id,
+          @JsonKey(name: 'itemType') final int? itemType,
+          @JsonKey(name: 'quantity') final num? quantity,
+          @JsonKey(name: 'consumableId') final int? consumableId,
+          @JsonKey(name: 'consumable') final ConsumableModel? consumable,
+          @JsonKey(name: 'labourId') final int? labourId,
+          @JsonKey(name: 'labour') final LabourModel? labour}) =
+      _$_WorkorderItemModel;
 
   factory _WorkorderItemModel.fromJson(Map<String, dynamic> json) =
       _$_WorkorderItemModel.fromJson;
@@ -211,14 +309,23 @@ abstract class _WorkorderItemModel implements WorkorderItemModel {
   @override
   int? get id;
   @override
-  @JsonKey(name: 'description')
-  int? get userId;
-  @override
-  @JsonKey(name: 'price')
-  num? get price;
+  @JsonKey(name: 'itemType')
+  int? get itemType;
   @override
   @JsonKey(name: 'quantity')
   num? get quantity;
+  @override
+  @JsonKey(name: 'consumableId')
+  int? get consumableId;
+  @override
+  @JsonKey(name: 'consumable')
+  ConsumableModel? get consumable;
+  @override
+  @JsonKey(name: 'labourId')
+  int? get labourId;
+  @override
+  @JsonKey(name: 'labour')
+  LabourModel? get labour;
   @override
   @JsonKey(ignore: true)
   _$$_WorkorderItemModelCopyWith<_$_WorkorderItemModel> get copyWith =>

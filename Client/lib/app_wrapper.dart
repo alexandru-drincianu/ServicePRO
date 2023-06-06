@@ -5,6 +5,8 @@ import 'package:service_pro/features/admin/provider/register_provider.dart';
 import 'package:service_pro/features/admin/provider/user_provider.dart';
 import 'package:service_pro/features/clients/provider/clients_provider.dart';
 import 'package:service_pro/features/vehicles/provider/vehicles_provider.dart';
+import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
+import 'package:service_pro/features/warehouse/provider/labours_provider.dart';
 import 'package:service_pro/features/workorders/provider/workorders_provider.dart';
 
 import 'app.dart';
@@ -47,6 +49,13 @@ class AppWrapper extends StatelessWidget {
           create: (context) => WorkordersProvider(),
         ),
 
+        ChangeNotifierProvider<ConsumablesProvider>(
+          create: (context) => ConsumablesProvider(),
+        ),
+
+        ChangeNotifierProvider<LaboursProvider>(
+          create: (context) => LaboursProvider(),
+        ),
         // Locale provider needs to be accessible in the whole app since locales
         // depends on it.
         ChangeNotifierProvider<LocalizationProvider>(
