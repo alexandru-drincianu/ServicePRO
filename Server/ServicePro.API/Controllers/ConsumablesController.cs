@@ -58,7 +58,7 @@ namespace ServicePro.API.Controllers
             return Ok(consumable);
         }
 
-        [HttpDelete("{orderId}")]
+        [HttpDelete("{consumableId}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Delete(int consumableId)

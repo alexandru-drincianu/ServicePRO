@@ -142,7 +142,7 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
                   property: "hourlyWage",
                 ),
                 _buildRow(
-                  icon: Icons.currency_exchange,
+                  icon: Icons.hourglass_bottom,
                   label: 'Minutes',
                   text: _labourData?.minutes.toString() ?? "",
                   property: "minutes",
@@ -293,7 +293,7 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
       case "description":
         return TextFormField(
           initialValue: text,
-          decoration: const InputDecoration(labelText: 'Description'),
+          decoration: const InputDecoration(labelText: ''),
           onChanged: (value) {
             var updatedLabourData = _labourData?.copyWith(description: value);
             setState(() {
@@ -305,7 +305,7 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
       case "hourlyWage":
         return TextFormField(
           initialValue: text,
-          decoration: const InputDecoration(labelText: 'Hourly Wage'),
+          decoration: const InputDecoration(labelText: ''),
           keyboardType: const TextInputType.numberWithOptions(),
           onChanged: (value) {
             var updatedLabourData = _labourData?.copyWith(
@@ -320,7 +320,7 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
       case "minutes":
         return TextFormField(
           initialValue: text,
-          decoration: const InputDecoration(labelText: 'Hourly Wage'),
+          decoration: const InputDecoration(labelText: ''),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           onChanged: (value) {
             var updatedLabourData = _labourData?.copyWith(

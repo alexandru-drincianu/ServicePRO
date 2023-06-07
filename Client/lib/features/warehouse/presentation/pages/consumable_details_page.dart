@@ -287,7 +287,7 @@ class ConsumableDetailsPageState extends State<ConsumableDetailsPage> {
       case "description":
         return TextFormField(
           initialValue: text,
-          decoration: const InputDecoration(labelText: 'Description'),
+          decoration: const InputDecoration(labelText: ''),
           onChanged: (value) {
             var updatedConsumableData =
                 _consumableData?.copyWith(description: value);
@@ -300,7 +300,7 @@ class ConsumableDetailsPageState extends State<ConsumableDetailsPage> {
       case "price":
         return TextFormField(
           initialValue: text,
-          decoration: const InputDecoration(labelText: 'Price'),
+          decoration: const InputDecoration(labelText: ''),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           onChanged: (value) {
             var updatedConsumableData =

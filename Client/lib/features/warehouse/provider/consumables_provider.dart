@@ -75,4 +75,20 @@ class ConsumablesProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<dynamic> deleteConsumable(int consumableId) async {
+    try {
+      final res = await _consumableService.deleteConsumable(consumableId);
+      return res;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+    } finally {
+      // After changing state to success or error, rebuild widgets.
+      notifyListeners();
+    }
+  }
 }

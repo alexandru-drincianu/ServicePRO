@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/LabourModels/labour_model.dart';
@@ -38,6 +39,14 @@ class LaboursGridState extends State<LaboursGrid> {
       _labours = laboursData;
       _filteredLabours = laboursData;
       _setupComplete = true;
+    });
+  }
+
+  void updateLaboursList(
+    List<LabourModel> labours,
+  ) {
+    setState(() {
+      _labours = labours;
     });
   }
 
@@ -104,11 +113,16 @@ class LaboursGridState extends State<LaboursGrid> {
                               DataColumn(label: Text("Description")),
                               DataColumn(label: Text("Hourly Wage")),
                               DataColumn(label: Text("Minutes")),
+                              DataColumn(label: SizedBox(width: 10)),
                             ],
-                            source: _laboursDataSource(_labours),
+                            source: _laboursDataSource(
+                              _labours,
+                              context,
+                              updateLaboursList,
+                            ),
                             rowsPerPage:
                                 _labours.length <= 5 ? _labours.length : 5,
-                            columnSpacing: 20,
+                            columnSpacing: 15,
                           ),
                         ),
             ],
@@ -120,10 +134,14 @@ class LaboursGridState extends State<LaboursGrid> {
 }
 
 class _laboursDataSource extends DataTableSource {
-  final List<LabourModel> _labours;
+  late final List<LabourModel> _labours;
+  final BuildContext _context;
+  final Function updateLaboursList;
 
   _laboursDataSource(
     this._labours,
+    this._context,
+    this.updateLaboursList,
   );
 
   @override
@@ -151,6 +169,20 @@ class _laboursDataSource extends DataTableSource {
         DataCell(Text(labour.description!)),
         DataCell(Text(labour.hourlyWage!.toString())),
         DataCell(Text(labour.minutes!.toString())),
+        DataCell(
+          GestureDetector(
+            onTap: () => showConfirmationDialog(
+              _context,
+              labour,
+              _labours,
+              updateLaboursList,
+            ),
+            child: const Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -163,4 +195,72 @@ class _laboursDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+}
+
+Future<void> showConfirmationDialog(
+  BuildContext context,
+  LabourModel labour,
+  List<LabourModel> labours,
+  updateLaboursList,
+) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text('This action cannot be undone.'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('NO'),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+          ),
+          TextButton(
+            child: const Text('YES'),
+            onPressed: () async {
+              Navigator.of(context).pop(true);
+              final response =
+                  await context.read<LaboursProvider>().deleteLabour(
+                        labour.id!,
+                      );
+              if (response.statusCode == 204) {
+                List<LabourModel> updatedLabours = labours
+                    .where((element) => element.id != labour.id)
+                    .toList();
+                updateLaboursList(updatedLabours);
+                BotToast.showText(
+                  text: 'Labour deleted!',
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                  contentColor: Colors.green,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 16.0,
+                  ),
+                );
+              } else {
+                BotToast.showText(
+                  text: response.body,
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                  contentColor: Colors.red,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 16.0,
+                  ),
+                );
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

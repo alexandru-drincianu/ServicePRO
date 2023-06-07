@@ -135,4 +135,30 @@ class LabourService extends BaseHttpService {
       );
     }
   }
+
+  Future<dynamic> deleteLabour(
+    int labourId,
+  ) async {
+    try {
+      final res = await delete(
+        buildUri(
+          Constants.apiBaseUrl,
+          "$_laboursPath/$labourId",
+        ),
+        token,
+      );
+      return res;
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+  }
 }

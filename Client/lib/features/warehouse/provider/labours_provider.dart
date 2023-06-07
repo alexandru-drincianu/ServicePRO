@@ -75,4 +75,20 @@ class LaboursProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<dynamic> deleteLabour(int labourId) async {
+    try {
+      final res = await _laboursService.deleteLabour(labourId);
+      return res;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+    } finally {
+      // After changing state to success or error, rebuild widgets.
+      notifyListeners();
+    }
+  }
 }

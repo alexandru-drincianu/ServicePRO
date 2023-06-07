@@ -135,4 +135,30 @@ class ConsumableService extends BaseHttpService {
       );
     }
   }
+
+  Future<dynamic> deleteConsumable(
+    int consumableId,
+  ) async {
+    try {
+      final res = await delete(
+        buildUri(
+          Constants.apiBaseUrl,
+          "$_consumablesPath/$consumableId",
+        ),
+        token,
+      );
+      return res;
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+  }
 }

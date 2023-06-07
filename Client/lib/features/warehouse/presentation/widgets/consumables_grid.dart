@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/ConsumableModels/consumable_model.dart';
@@ -38,6 +39,14 @@ class ConsumablesGridState extends State<ConsumablesGrid> {
       _consumables = consumablesData;
       _filterConsumables = consumablesData;
       _setupComplete = true;
+    });
+  }
+
+  void updateConsumablesList(
+    List<ConsumableModel> consumables,
+  ) {
+    setState(() {
+      _consumables = consumables;
     });
   }
 
@@ -103,8 +112,13 @@ class ConsumablesGridState extends State<ConsumablesGrid> {
                               DataColumn(label: SizedBox(width: 10)),
                               DataColumn(label: Text("Description")),
                               DataColumn(label: Text("Price")),
+                              DataColumn(label: SizedBox(width: 10)),
                             ],
-                            source: _ConsumablesDataSource(_consumables),
+                            source: _ConsumablesDataSource(
+                              _consumables,
+                              context,
+                              updateConsumablesList,
+                            ),
                             rowsPerPage: _consumables.length <= 5
                                 ? _consumables.length
                                 : 5,
@@ -120,9 +134,13 @@ class ConsumablesGridState extends State<ConsumablesGrid> {
 
 class _ConsumablesDataSource extends DataTableSource {
   final List<ConsumableModel> _consumables;
+  final BuildContext _context;
+  final Function updateConsumablesList;
 
   _ConsumablesDataSource(
     this._consumables,
+    this._context,
+    this.updateConsumablesList,
   );
 
   @override
@@ -149,6 +167,20 @@ class _ConsumablesDataSource extends DataTableSource {
         ),
         DataCell(Text(consumable.description!)),
         DataCell(Text(consumable.price!.toString())),
+        DataCell(
+          GestureDetector(
+            onTap: () => showConfirmationDialog(
+              _context,
+              consumable,
+              _consumables,
+              updateConsumablesList,
+            ),
+            child: const Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -161,4 +193,72 @@ class _ConsumablesDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+}
+
+Future<void> showConfirmationDialog(
+  BuildContext context,
+  ConsumableModel consumable,
+  List<ConsumableModel> consumables,
+  updateConsumablesList,
+) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text('This action cannot be undone.'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('NO'),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+          ),
+          TextButton(
+            child: const Text('YES'),
+            onPressed: () async {
+              Navigator.of(context).pop(true);
+              final response =
+                  await context.read<ConsumablesProvider>().deleteConsumable(
+                        consumable.id!,
+                      );
+              if (response.statusCode == 204) {
+                List<ConsumableModel> updatedConsumables = consumables
+                    .where((element) => element.id != consumable.id)
+                    .toList();
+                updateConsumablesList(updatedConsumables);
+                BotToast.showText(
+                  text: 'Consumable deleted!',
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                  contentColor: Colors.green,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 16.0,
+                  ),
+                );
+              } else {
+                BotToast.showText(
+                  text: response.body,
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                  contentColor: Colors.red,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 16.0,
+                  ),
+                );
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
