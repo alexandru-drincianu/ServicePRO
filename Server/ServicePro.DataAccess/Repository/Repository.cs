@@ -46,6 +46,7 @@ namespace ServicePro.DataAccess.Repository
             return await _context.Set<TEntity>().ToListAsync();
         }
 
+
         public async Task<TEntity> GetByIdAsync<TId>(TId id)
         {
             return await _context.Set<TEntity>().FindAsync(id);

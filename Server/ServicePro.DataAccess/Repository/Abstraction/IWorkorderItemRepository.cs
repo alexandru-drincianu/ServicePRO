@@ -15,6 +15,7 @@ namespace ServcicePro.DataAccess.Repository.Abstraction
         Task RemoveRangeAsync(IEnumerable<WorkorderItem> items, bool applyChanges = true);
         Task<IQueryable<WorkorderItem>> GetAll();
         Task<List<WorkorderItem>> GetAllAsync();
+        Task<List<WorkorderItem>> GetAllForWorkorderAsync(int workorderId);
         Task<WorkorderItem?> Find(Expression<Func<WorkorderItem, bool>> predicate);
         Task<bool> AnyAsync(Expression<Func<WorkorderItem, bool>> predicate);
         Task<WorkorderItem> GetByIdAsync<TId>(TId id);

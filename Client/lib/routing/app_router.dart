@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:service_pro/features/admin/presentation/pages/admin_panel_page.dart';
 import 'package:service_pro/features/info/presentation/pages/new_mechanic_info_page.dart';
 import 'package:service_pro/features/vehicles/presentation/pages/create_vehicle_page.dart';
+import 'package:service_pro/features/workorderItems/presentation/pages/workorder_items_page.dart';
 import 'package:service_pro/features/workorders/presentation/pages/workorder_details_page.dart';
 
 import '../features/clients/presentation/pages/clients_page.dart';
@@ -110,6 +111,11 @@ part 'routes.dart';
     AutoRoute(
       path: Routes.labourDetails,
       page: LabourDetailsPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.workorderItems,
+      page: WorkorderItemsPage,
       guards: [AuthGuard],
     ),
     // Unknown routes will take users to home page.

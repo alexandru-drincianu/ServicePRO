@@ -21,6 +21,7 @@ class TranslationKeys {
   static const vehicles = 'vehicles';
   static const createVehicle = 'create_vehicle';
   static const vehicleDetails = 'vehicle_details';
+  static const workorderItems = 'workorder_items';
   static const userDetails = 'user_details';
   static const workorderDetails = 'workorder_details';
   static const consumableDetails = 'consumable_details';

@@ -230,6 +230,19 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                 const SizedBox(
                   height: 20,
                 ),
+                SizedBox(
+                  child: Center(
+                    child: ElevatedButton.icon(
+                      onPressed: () =>
+                          router.replace(WorkorderItemsRoute(id: widget.id)),
+                      icon: const Icon(Icons.add),
+                      label: const Text("Add workorder item"),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
               ]),
             )
           : const Center(

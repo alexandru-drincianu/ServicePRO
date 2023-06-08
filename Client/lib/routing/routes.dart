@@ -25,6 +25,7 @@ class Routes {
   // workorder
   static const workorders = '/workorders';
   static const workorderDetails = '/workorders/:id';
+  static const workorderItems = '/workorders/:id/items/';
 
   // warehouse
   static const warehouse = '/warehouse';
