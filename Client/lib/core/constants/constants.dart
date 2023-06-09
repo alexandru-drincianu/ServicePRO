@@ -12,8 +12,8 @@ class Constants {
   static const numberOfDaysAhead = 730;
 
   // Api
-  // static const apiBaseUrl = 'http://10.0.2.2:5000';
-  static const apiBaseUrl = 'http://192.168.172.31:5002';
+  static const apiBaseUrl = 'http://10.0.2.2:5000';
+  // static const apiBaseUrl = 'http://192.168.172.31:5002';
 
   // Logger
   static const logPrefix = 'boilerplate';
