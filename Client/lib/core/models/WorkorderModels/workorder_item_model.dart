@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:service_pro/core/models/ConsumableModels/consumable_model.dart';
+import 'package:service_pro/core/models/LabourModels/labour_model.dart';
 
 part 'workorder_item_model.freezed.dart';
 
@@ -15,9 +17,12 @@ class WorkorderItemModel with _$WorkorderItemModel {
     @JsonKey(name: 'consumableId') int? consumableId,
     @JsonKey(name: 'labourId') int? labourId,
     @JsonKey(name: 'description') String? description,
-    @JsonKey(name: 'price') num? price,
+    @JsonKey(name: 'pricePerUnit') num? pricePerUnit,
     @JsonKey(name: 'minutes') int? minutes,
     @JsonKey(name: 'workorderId') int? workorderId,
+    @JsonKey(name: 'totalCost') num? totalCost,
+    @JsonKey(name: 'labour') LabourModel? labour,
+    @JsonKey(name: 'consumable') ConsumableModel? consumable,
   }) = _WorkorderItemModel;
 
   factory WorkorderItemModel.fromJson(Map<String, dynamic> json) =>

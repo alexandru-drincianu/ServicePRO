@@ -160,11 +160,13 @@ class _laboursDataSource extends DataTableSource {
                 itemType: WorkorderItemType.labour.index,
                 quantity: 0,
                 labourId: labour.id,
+                labour: labour,
                 description: labour.description,
-                price:
-                    calculateLabourPrice(labour.hourlyWage!, labour.minutes!),
+                pricePerUnit: 0,
                 minutes: labour.minutes,
                 workorderId: widget.workorder.id,
+                totalCost:
+                    calculateLabourPrice(labour.hourlyWage!, labour.minutes!),
               );
               widget.addWorkorderItem(newWorkorderItem);
             },

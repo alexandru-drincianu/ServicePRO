@@ -31,14 +31,18 @@ namespace ServicePro.BusinessLogic.Services
             var workorderItems = await _unitOfWork.WorkorderItemRepository.GetAllForWorkorderAsync(workorderId);
             return workorderItems.Select(wi => new WorkorderItemDTO
             {
+                WorkorderId = wi.WorkorderId,
                 Id = wi.Id,
                 ItemType = wi.ItemType,
                 ConsumableId = wi.ConsumableId,
+                Consumable = wi.ConsumableId != null ? _mapper.Map<ConsumableDTO>(wi.Consumable) : null,
                 LabourId = wi.LabourId,
+                Labour = wi.LabourId != null ? _mapper.Map<LabourDTO>(wi.Labour) : null,
                 Quantity = wi.Quantity,
                 Minutes = wi.Minutes,
                 Description = wi.ConsumableId != null ? wi.Consumable.Description : wi.Labour.Description,
-                Price = wi.ConsumableId != null ? wi.Consumable.Price * wi.Quantity : CalculateLabourPrice(wi.Labour.HourlyWage, wi.Minutes)
+                PricePerUnit = wi.ConsumableId != null ? wi.Consumable.Price : 0,
+                TotalCost = wi.ConsumableId != null ? wi.Consumable.Price * wi.Quantity : CalculateLabourPrice(wi.Labour.HourlyWage, wi.Minutes)
             }).ToList();
         }
 
@@ -99,14 +103,7 @@ namespace ServicePro.BusinessLogic.Services
             decimal totalCost = 0;
             foreach (var workorderItem in workorderItems)
             {
-                if(workorderItem.LabourId != null && workorderItem.LabourId != 0)
-                {
-                    totalCost += CalculateLabourPrice(workorderItem.Labour.HourlyWage, workorderItem.Labour.Minutes);
-                }
-                if (workorderItem.ConsumableId != null && workorderItem.ConsumableId != 0)
-                {
-                    totalCost += workorderItem.Consumable.Price * workorderItem.Quantity;
-                }
+                totalCost += workorderItem.TotalCost;
             }
             return totalCost;
         }

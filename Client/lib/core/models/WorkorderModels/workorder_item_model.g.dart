@@ -15,9 +15,17 @@ _$_WorkorderItemModel _$$_WorkorderItemModelFromJson(
       consumableId: json['consumableId'] as int?,
       labourId: json['labourId'] as int?,
       description: json['description'] as String?,
-      price: json['price'] as num?,
+      pricePerUnit: json['pricePerUnit'] as num?,
       minutes: json['minutes'] as int?,
       workorderId: json['workorderId'] as int?,
+      totalCost: json['totalCost'] as num?,
+      labour: json['labour'] == null
+          ? null
+          : LabourModel.fromJson(json['labour'] as Map<String, dynamic>),
+      consumable: json['consumable'] == null
+          ? null
+          : ConsumableModel.fromJson(
+              json['consumable'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_WorkorderItemModelToJson(
@@ -29,7 +37,10 @@ Map<String, dynamic> _$$_WorkorderItemModelToJson(
       'consumableId': instance.consumableId,
       'labourId': instance.labourId,
       'description': instance.description,
-      'price': instance.price,
+      'pricePerUnit': instance.pricePerUnit,
       'minutes': instance.minutes,
       'workorderId': instance.workorderId,
+      'totalCost': instance.totalCost,
+      'labour': instance.labour?.toJson(),
+      'consumable': instance.consumable?.toJson(),
     };

@@ -157,10 +157,12 @@ class _ConsumablesDataSource extends DataTableSource {
                 itemType: WorkorderItemType.consumable.index,
                 quantity: 1,
                 consumableId: consumable.id,
+                consumable: consumable,
                 description: consumable.description,
-                price: consumable.price! * 1,
+                pricePerUnit: consumable.price!,
                 minutes: 0,
                 workorderId: widget.workorder.id,
+                totalCost: consumable.price! * 1,
               );
               widget.addWorkorderItem(newWorkorderItem);
             },

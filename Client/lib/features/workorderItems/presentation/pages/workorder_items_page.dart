@@ -56,15 +56,33 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
   }
 
   Future<void> addWorkorderItem(WorkorderItemModel workorderItem) async {
+    var labour = workorderItem.labour;
+    var consumable = workorderItem.consumable;
+    var updatedWorkorderItem =
+        workorderItem.copyWith(consumable: null, labour: null);
     final workorderItemsProvider = context.read<WorkorderItemsProvider>();
     int? workorderItemId =
-        await workorderItemsProvider.createWorkorderItem(workorderItem);
+        await workorderItemsProvider.createWorkorderItem(updatedWorkorderItem);
     if (workorderItemId == null || workorderItemId == 0) {
       showToastFailed("Failed adding item");
     } else {
       showToastSucceded("Item added");
       setState(() {
-        _workorderItems.add(workorderItem.copyWith(id: workorderItemId));
+        _workorderItems.add(workorderItem.copyWith(
+          id: workorderItemId,
+          labour: labour,
+          consumable: consumable,
+        ));
+      });
+    }
+  }
+
+  Future<void> updateWorkorderItem(WorkorderItemModel workorderItem) async {
+    int index =
+        _workorderItems.indexWhere((item) => item.id == workorderItem.id);
+    if (index != -1) {
+      setState(() {
+        _workorderItems[index] = workorderItem;
       });
     }
   }
@@ -72,7 +90,7 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
   double calculateTotalPrice() {
     double totalPrice = 0.0;
     for (var wi in _workorderItems) {
-      totalPrice += wi.price!;
+      totalPrice += wi.totalCost!;
     }
     return totalPrice;
   }
@@ -139,16 +157,18 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
                             DataColumn(label: Text("Description")),
                             DataColumn(label: Text("Quantity")),
                             DataColumn(label: Text("Minutes")),
-                            DataColumn(label: Text("Price")),
+                            DataColumn(label: Text("Price per unit")),
+                            DataColumn(label: Text("Total cost")),
                             DataColumn(label: SizedBox(width: 10)),
                           ],
                           source: _workorderItemsDataSource(
                             _workorderItems,
                             context,
                             updateWorkorderItemList,
+                            updateWorkorderItem,
                             widget.workorder,
                           ),
-                          columnSpacing: 10,
+                          columnSpacing: 5,
                           rowsPerPage: _workorderItems.isEmpty
                               ? 1
                               : _workorderItems.length < 10
@@ -170,12 +190,14 @@ class _workorderItemsDataSource extends DataTableSource {
   late final List<WorkorderItemModel> _workorderItems;
   final BuildContext _context;
   final Function updateWorkorderItemList;
+  final Function updateWorkorderItem;
   final WorkorderModel workorder;
 
   _workorderItemsDataSource(
     this._workorderItems,
     this._context,
     this.updateWorkorderItemList,
+    this.updateWorkorderItem,
     this.workorder,
   );
 
@@ -190,12 +212,69 @@ class _workorderItemsDataSource extends DataTableSource {
             : const Icon(Icons.perm_identity)),
         DataCell(Text(workorderItem.description!)),
         DataCell(workorderItem.itemType == WorkorderItemType.consumable.index
-            ? Text(workorderItem.quantity.toString())
+            ? workorder.isInvoiced!
+                ? Text(workorderItem.quantity.toString())
+                : TextFormField(
+                    initialValue: workorderItem.quantity.toString(),
+                    decoration: const InputDecoration(labelText: ''),
+                    keyboardType: const TextInputType.numberWithOptions(),
+                    onChanged: (value) {
+                      var updatedWorkOrderItem = workorderItem.copyWith(
+                        quantity: double.tryParse(value) ?? 0.0,
+                        totalCost: workorderItem.pricePerUnit! *
+                            (double.tryParse(value) ?? 0),
+                      );
+                      updateWorkorderItem(updatedWorkOrderItem);
+                    },
+                    onEditingComplete: () async {
+                      final workorderItemsProvider =
+                          _context.read<WorkorderItemsProvider>();
+                      var response = await workorderItemsProvider
+                          .updateWorkorderItem(workorderItem);
+                      if (response.statusCode == 200) {
+                        showToastSucceded('Quantity updated!');
+                      } else {
+                        showToastFailed(response.body);
+                      }
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                  )
             : const Icon(Icons.remove)),
         DataCell(workorderItem.itemType == WorkorderItemType.labour.index
-            ? Text(workorderItem.minutes.toString())
+            ? workorder.isInvoiced!
+                ? Text(workorderItem.minutes.toString())
+                : TextFormField(
+                    initialValue: workorderItem.minutes.toString(),
+                    decoration: const InputDecoration(labelText: ''),
+                    keyboardType: const TextInputType.numberWithOptions(),
+                    onChanged: (value) {
+                      var updatedWorkOrderItem = workorderItem.copyWith(
+                        minutes: int.tryParse(value) ?? 0,
+                        totalCost: calculateLabourPrice(
+                          workorderItem.labour!.hourlyWage!,
+                          int.tryParse(value) ?? 0,
+                        ),
+                      );
+                      updateWorkorderItem(updatedWorkOrderItem);
+                    },
+                    onEditingComplete: () async {
+                      final workorderItemsProvider =
+                          _context.read<WorkorderItemsProvider>();
+                      var response = await workorderItemsProvider
+                          .updateWorkorderItem(workorderItem);
+                      if (response.statusCode == 200) {
+                        showToastSucceded('Quantity updated!');
+                      } else {
+                        showToastFailed(response.body);
+                      }
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                  )
             : const Icon(Icons.remove)),
-        DataCell(Text(workorderItem.price!.toStringAsFixed(2))),
+        DataCell(workorderItem.itemType == WorkorderItemType.consumable.index
+            ? Text(workorderItem.pricePerUnit!.toStringAsFixed(2))
+            : const Icon(Icons.remove)),
+        DataCell(Text(workorderItem.totalCost!.toStringAsFixed(2))),
         DataCell(
           workorder.isInvoiced!
               ? const SizedBox()
@@ -337,4 +416,11 @@ void _showModal(
       );
     },
   );
+}
+
+num calculateLabourPrice(num hourlyWage, int minutes) {
+  int minutesPerHour = 60;
+  num pricePerMinute = hourlyWage / minutesPerHour;
+  num price = pricePerMinute * minutes;
+  return price;
 }
