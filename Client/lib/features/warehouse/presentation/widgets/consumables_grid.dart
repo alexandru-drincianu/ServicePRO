@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/ConsumableModels/consumable_model.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
 
 import '../../../../routing/app_router.dart';
@@ -227,33 +228,9 @@ Future<void> showConfirmationDialog(
                     .where((element) => element.id != consumable.id)
                     .toList();
                 updateConsumablesList(updatedConsumables);
-                BotToast.showText(
-                  text: 'Consumable deleted!',
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.green,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
+                showToastSucceded('Consumable deleted!');
               } else {
-                BotToast.showText(
-                  text: response.body,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.red,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
+                showToastFailed(response.body);
               }
             },
           ),

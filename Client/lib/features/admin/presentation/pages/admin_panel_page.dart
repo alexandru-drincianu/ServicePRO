@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/localization/localization.dart';
 import 'package:service_pro/core/models/UserModels/user_details.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/admin/provider/user_provider.dart';
 
 import '../../../../core/input_validators/mandatory_input_validator.dart';
@@ -276,39 +277,14 @@ class AdminPanelPageState extends State<AdminPanelPage> {
                             if (response.statusCode == 200) {
                               final mechanicName =
                                   jsonDecode(response.body)['fullName'];
-
-                              BotToast.showText(
-                                text: 'Mechanic "$mechanicName" created!',
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16.0,
-                                ),
-                                contentColor: Colors.green,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10.0,
-                                  horizontal: 16.0,
-                                ),
+                              showToastSucceded(
+                                'Mechanic "$mechanicName" created!',
                               );
                               _usernameController.clear();
                               _passwordController.clear();
                               _fullnameController.clear();
                             } else {
-                              BotToast.showText(
-                                text: response.body,
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16.0,
-                                ),
-                                contentColor: Colors.red,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10.0,
-                                  horizontal: 16.0,
-                                ),
-                              );
+                              showToastFailed(response.body);
                             }
                           },
                           child: Text(context.translate(
@@ -358,33 +334,9 @@ Future<void> showConfirmationDialog(
                 List<UserDetails> updatedUsers =
                     users.where((element) => element.id != user.id).toList();
                 updateUserList(updatedUsers, updatedUsers.length);
-                BotToast.showText(
-                  text: 'User deleted!',
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.green,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
+                showToastSucceded('User deleted!');
               } else {
-                BotToast.showText(
-                  text: response.body,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.red,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
+                showToastFailed(response.body);
               }
             },
           ),

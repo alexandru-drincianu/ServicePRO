@@ -5,6 +5,7 @@ import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/localization/localization.dart';
 import 'package:service_pro/core/models/LabourModels/labour_model.dart';
 import 'package:service_pro/core/models/WorkorderModels/workorder_item_model.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/warehouse/presentation/widgets/consumables_selection_grid.dart';
 import 'package:service_pro/features/warehouse/presentation/widgets/labours_selection_grid.dart';
 import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
@@ -61,9 +62,14 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
     final workorderItemsProvider = context.read<WorkorderItemsProvider>();
     int? workorderItemId =
         await workorderItemsProvider.createWorkorderItem(workorderItem);
-    setState(() {
-      _workorderItems.add(workorderItem.copyWith(id: workorderItemId));
-    });
+    if (workorderItemId == null || workorderItemId == 0) {
+      showToastFailed("Failed adding item");
+    } else {
+      showToastSucceded("Item added");
+      setState(() {
+        _workorderItems.add(workorderItem.copyWith(id: workorderItemId));
+      });
+    }
   }
 
   @override
@@ -224,33 +230,9 @@ Future<void> showConfirmationDialog(
                     .where((element) => element.id != workorderItem.id)
                     .toList();
                 updateworkorderItemsList(updatedworkorderItems);
-                BotToast.showText(
-                  text: 'workorderItem deleted!',
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.green,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
+                showToastSucceded("Item deleted!");
               } else {
-                BotToast.showText(
-                  text: response.body,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.red,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
+                showToastFailed(response.body);
               }
             },
           ),

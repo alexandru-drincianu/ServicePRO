@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/localization/localization.dart';
 import 'package:service_pro/core/models/LabourModels/labour_model.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/warehouse/provider/labours_provider.dart';
 
 import '../../../../core/widgets/app_drawer.dart';
@@ -48,33 +49,9 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
     final laboursProvider = context.read<LaboursProvider>();
     var int = await laboursProvider.createLabour(_labourData!);
     if (int != null) {
-      BotToast.showText(
-        text: 'Labour created!',
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.green,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastSucceded('Labour created!');
     } else {
-      BotToast.showText(
-        text: "Error while creating!",
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.red,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastFailed("Error while creating!");
     }
   }
 
@@ -82,33 +59,9 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
     final laboursProvider = context.read<LaboursProvider>();
     var response = await laboursProvider.updateLabour(_labourData!);
     if (response.statusCode == 200) {
-      BotToast.showText(
-        text: 'Labour details updated!',
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.green,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastSucceded('Labour details updated!');
     } else {
-      BotToast.showText(
-        text: response.body,
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.red,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastFailed(response.body);
     }
   }
 

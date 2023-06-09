@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/localization/localization.dart';
 import 'package:service_pro/core/models/ConsumableModels/consumable_model.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
 
 import '../../../../core/widgets/app_drawer.dart';
@@ -49,33 +50,9 @@ class ConsumableDetailsPageState extends State<ConsumableDetailsPage> {
     final consumablesProvider = context.read<ConsumablesProvider>();
     var int = await consumablesProvider.createConsumable(_consumableData!);
     if (int != null) {
-      BotToast.showText(
-        text: 'Consumable created!',
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.green,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastSucceded('Consumable created!');
     } else {
-      BotToast.showText(
-        text: "Error while creating!",
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.red,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastFailed("Error while creating!");
     }
   }
 
@@ -83,33 +60,9 @@ class ConsumableDetailsPageState extends State<ConsumableDetailsPage> {
     final consumablesProvider = context.read<ConsumablesProvider>();
     var response = await consumablesProvider.updateConsumable(_consumableData!);
     if (response.statusCode == 200) {
-      BotToast.showText(
-        text: 'Consumable details updated!',
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.green,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastSucceded('Consumable details updated!');
     } else {
-      BotToast.showText(
-        text: response.body,
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.red,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastFailed(response.body);
     }
   }
 

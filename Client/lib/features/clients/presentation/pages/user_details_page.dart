@@ -8,6 +8,7 @@ import 'package:service_pro/core/localization/localization.dart';
 import 'package:service_pro/core/models/AddressModels/address_model.dart';
 import 'package:service_pro/core/models/UserModels/client_model.dart';
 import 'package:service_pro/core/models/UserModels/user_model.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/clients/provider/clients_provider.dart';
 
 import '../../../../core/custom_colors.dart';
@@ -90,33 +91,9 @@ class UserDetailsPageState extends State<UserDetailsPage> {
     final clientsProvider = context.read<ClientsProvider>();
     var response = await clientsProvider.updateAccountDetails(_userData);
     if (response.statusCode == 200) {
-      BotToast.showText(
-        text: 'Account details updated!',
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.green,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastSucceded('Account details updated!');
     } else {
-      BotToast.showText(
-        text: response.body,
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.red,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastFailed(response.body);
     }
   }
 

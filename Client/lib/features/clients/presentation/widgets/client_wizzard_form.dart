@@ -7,6 +7,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/AddressModels/address_model.dart';
 import 'package:service_pro/core/models/UserModels/client_model.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/routing/app_router.gr.dart';
 
 import '../../../../routing/app_router.dart';
@@ -89,35 +90,10 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
     var response = await clientsProvider.createClient(client);
     if (response.statusCode == 200) {
       final clientName = jsonDecode(response.body)['fullName'];
-
-      BotToast.showText(
-        text: 'Client "$clientName" created!',
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.green,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastSucceded('Client "$clientName" created!');
       router.replace(const ClientsRoute());
     } else {
-      BotToast.showText(
-        text: response.body,
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.red,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastFailed(response.body);
     }
   }
 

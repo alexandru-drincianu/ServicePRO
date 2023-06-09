@@ -6,6 +6,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/UserModels/client_model.dart';
 import 'package:service_pro/core/models/VehicleModels/vehicle_model.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/vehicles/provider/vehicles_provider.dart';
 import 'package:service_pro/routing/app_router.gr.dart';
 
@@ -105,35 +106,10 @@ class VehicleWizzardFormState extends State<VehicleWizzardForm> {
     var response = await vehiclesProvider.createVehicle(vehicleModel);
     if (response.statusCode == 200) {
       final vehicleRegistration = jsonDecode(response.body)['registration'];
-
-      BotToast.showText(
-        text: 'Vehicle "$vehicleRegistration" created!',
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.green,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastSucceded('Vehicle "$vehicleRegistration" created!');
       router.replace(const VehiclesRoute());
     } else {
-      BotToast.showText(
-        text: response.body,
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-        contentColor: Colors.red,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-      );
+      showToastFailed(response.body);
     }
   }
 
