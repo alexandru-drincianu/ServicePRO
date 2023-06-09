@@ -3,15 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/models/ConsumableModels/consumable_model.dart';
 import 'package:service_pro/core/models/WorkorderModels/workorder_item_model.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_model.dart';
 import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
 
 class ConsumablesSelectionGrid extends StatefulWidget {
   final void Function(WorkorderItemModel) addWorkorderItem;
-  final int workorderId;
+  final WorkorderModel workorder;
   const ConsumablesSelectionGrid({
     Key? key,
     required this.addWorkorderItem,
-    required this.workorderId,
+    required this.workorder,
   }) : super(key: key);
 
   @override
@@ -154,12 +155,12 @@ class _ConsumablesDataSource extends DataTableSource {
             onTap: () {
               WorkorderItemModel newWorkorderItem = WorkorderItemModel(
                 itemType: WorkorderItemType.consumable.index,
-                quantity: 0,
+                quantity: 1,
                 consumableId: consumable.id,
                 description: consumable.description,
-                price: consumable.price,
+                price: consumable.price! * 1,
                 minutes: 0,
-                workorderId: widget.workorderId,
+                workorderId: widget.workorder.id,
               );
               widget.addWorkorderItem(newWorkorderItem);
             },

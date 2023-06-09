@@ -111,6 +111,7 @@ class LaboursGridState extends State<LaboursGrid> {
                           DataColumn(label: SizedBox(width: 10)),
                           DataColumn(label: Text("Description")),
                           DataColumn(label: Text("Hourly Wage")),
+                          DataColumn(label: Text("Minutes")),
                           DataColumn(label: SizedBox(width: 10)),
                         ],
                         source: _laboursDataSource(
@@ -123,7 +124,7 @@ class LaboursGridState extends State<LaboursGrid> {
                             : _labours.length < 5
                                 ? _labours.length
                                 : 5,
-                        columnSpacing: 35,
+                        columnSpacing: 15,
                       ),
                     ),
             ],
@@ -169,6 +170,7 @@ class _laboursDataSource extends DataTableSource {
         ),
         DataCell(Text(labour.description!)),
         DataCell(Text(labour.hourlyWage!.toString())),
+        DataCell(Text(labour.minutes!.toString())),
         DataCell(
           GestureDetector(
             onTap: () => showConfirmationDialog(

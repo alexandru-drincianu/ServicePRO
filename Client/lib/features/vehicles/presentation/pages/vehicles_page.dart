@@ -215,24 +215,16 @@ class _VehiclesDataSource extends DataTableSource {
         DataCell(
           GestureDetector(
             onTap: () {
-              vehicle.workorderId != null
-                  ? router
-                      .replace(WorkorderDetailsRoute(id: vehicle.workorderId!))
-                  : _showCreateWorkorderDialog(
-                      vehicle,
-                      context,
-                      createWorkorderCallback,
-                    );
+              _showCreateWorkorderDialog(
+                vehicle,
+                context,
+                createWorkorderCallback,
+              );
             },
-            child: vehicle.workorderId != null
-                ? const Icon(
-                    Icons.construction,
-                    color: Colors.green,
-                  )
-                : const Icon(
-                    Icons.construction,
-                    color: Colors.red,
-                  ),
+            child: const Icon(
+              Icons.construction,
+              color: Colors.green,
+            ),
           ),
         ),
         DataCell(Text(vehicle.registration!)),

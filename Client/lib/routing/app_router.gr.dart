@@ -14,6 +14,7 @@
 import 'package:auto_route/auto_route.dart' as _i19;
 import 'package:flutter/material.dart' as _i20;
 
+import '../core/models/WorkorderModels/workorder_model.dart' as _i22;
 import '../features/admin/presentation/pages/admin_panel_page.dart' as _i13;
 import '../features/clients/presentation/pages/clients_page.dart' as _i4;
 import '../features/clients/presentation/pages/create_client_page.dart' as _i5;
@@ -245,7 +246,7 @@ class AppRouter extends _i19.RootStackRouter {
         routeData: routeData,
         child: _i18.WorkorderItemsPage(
           key: args.key,
-          id: args.id,
+          workorder: args.workorder,
         ),
         transitionsBuilder: _i19.TransitionsBuilders.noTransition,
         opaque: true,
@@ -743,13 +744,13 @@ class LabourDetailsRouteArgs {
 class WorkorderItemsRoute extends _i19.PageRouteInfo<WorkorderItemsRouteArgs> {
   WorkorderItemsRoute({
     _i20.Key? key,
-    required int id,
+    required _i22.WorkorderModel workorder,
   }) : super(
           WorkorderItemsRoute.name,
           path: '/workorders/:id/items/',
           args: WorkorderItemsRouteArgs(
             key: key,
-            id: id,
+            workorder: workorder,
           ),
         );
 
@@ -759,15 +760,15 @@ class WorkorderItemsRoute extends _i19.PageRouteInfo<WorkorderItemsRouteArgs> {
 class WorkorderItemsRouteArgs {
   const WorkorderItemsRouteArgs({
     this.key,
-    required this.id,
+    required this.workorder,
   });
 
   final _i20.Key? key;
 
-  final int id;
+  final _i22.WorkorderModel workorder;
 
   @override
   String toString() {
-    return 'WorkorderItemsRouteArgs{key: $key, id: $id}';
+    return 'WorkorderItemsRouteArgs{key: $key, workorder: $workorder}';
   }
 }

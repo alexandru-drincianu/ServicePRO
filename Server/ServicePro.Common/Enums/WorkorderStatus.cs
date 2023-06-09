@@ -5,5 +5,6 @@
         Arrived,
         InProgress,
         Ready,
+        Invoiced,
     }
 }

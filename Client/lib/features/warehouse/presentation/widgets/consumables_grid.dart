@@ -123,6 +123,7 @@ class ConsumablesGridState extends State<ConsumablesGrid> {
                             : _consumables.length < 5
                                 ? _consumables.length
                                 : 5,
+                        columnSpacing: 40,
                       ),
                     ),
             ],
@@ -167,7 +168,7 @@ class _ConsumablesDataSource extends DataTableSource {
           ),
         ),
         DataCell(Text(consumable.description!)),
-        DataCell(Text(consumable.price!.toString())),
+        DataCell(Text(consumable.price!.toStringAsFixed(2))),
         DataCell(
           GestureDetector(
             onTap: () => showConfirmationDialog(

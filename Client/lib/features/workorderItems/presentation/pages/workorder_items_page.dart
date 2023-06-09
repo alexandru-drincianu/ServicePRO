@@ -1,25 +1,22 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/localization/localization.dart';
-import 'package:service_pro/core/models/LabourModels/labour_model.dart';
 import 'package:service_pro/core/models/WorkorderModels/workorder_item_model.dart';
 import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/warehouse/presentation/widgets/consumables_selection_grid.dart';
 import 'package:service_pro/features/warehouse/presentation/widgets/labours_selection_grid.dart';
-import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
-import 'package:service_pro/features/warehouse/provider/labours_provider.dart';
 
-import '../../../../core/models/ConsumableModels/consumable_model.dart';
+import '../../../../core/models/WorkorderModels/workorder_model.dart';
 import '../../../../core/widgets/app_drawer.dart';
 import '../../../../routing/app_router.dart';
 import '../../../../routing/app_router.gr.dart';
 import '../../provider/workorder_item_provider.dart';
 
 class WorkorderItemsPage extends StatefulWidget {
-  final int id;
-  const WorkorderItemsPage({Key? key, required this.id}) : super(key: key);
+  final WorkorderModel workorder;
+  const WorkorderItemsPage({Key? key, required this.workorder})
+      : super(key: key);
 
   @override
   WorkorderItemsPageState createState() => WorkorderItemsPageState();
@@ -43,7 +40,7 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
   Future<void> initialize() async {
     final workorderItemsProvider = context.read<WorkorderItemsProvider>();
     final workorderItemsData =
-        await workorderItemsProvider.getWorkorderItems(widget.id);
+        await workorderItemsProvider.getWorkorderItems(widget.workorder.id!);
     setState(() {
       _workorderItems = workorderItemsData;
       _setupComplete = true;
@@ -72,67 +69,95 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
     }
   }
 
+  double calculateTotalPrice() {
+    double totalPrice = 0.0;
+    for (var wi in _workorderItems) {
+      totalPrice += wi.price!;
+    }
+    return totalPrice;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          context.translate(
+          "${context.translate(
             TranslationKeys.workorderItems,
-          ),
+          )} - ${widget.workorder.number}",
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => router.replace(WorkorderDetailsRoute(id: widget.id)),
+          onPressed: () =>
+              router.replace(WorkorderDetailsRoute(id: widget.workorder.id!)),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-        ),
-        child: SizedBox(
-          height: 800,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 50,
-                child: Center(
-                  child: ElevatedButton(
-                    child: const Text('Add workorder item'),
-                    onPressed: () {
-                      _showModal(context, addWorkorderItem, widget.id);
-                    },
-                  ),
-                ),
-              ),
-              !_setupComplete
-                  ? const Center(child: CircularProgressIndicator())
-                  : Expanded(
-                      child: PaginatedDataTable(
-                        columns: const [
-                          DataColumn(label: Text("Type")),
-                          DataColumn(label: Text("Description")),
-                          DataColumn(label: Text("Quantity")),
-                          DataColumn(label: Text("Minutes")),
-                          DataColumn(label: Text("Price")),
-                          DataColumn(label: SizedBox(width: 10)),
-                        ],
-                        source: _workorderItemsDataSource(
-                          _workorderItems,
-                          context,
-                          updateWorkorderItemList,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          child: SizedBox(
+            height: 750,
+            child: Column(
+              children: [
+                widget.workorder.isInvoiced!
+                    ? const SizedBox()
+                    : SizedBox(
+                        height: 50,
+                        child: Center(
+                          child: ElevatedButton(
+                            child: const Text('Add workorder item'),
+                            onPressed: () {
+                              _showModal(
+                                context,
+                                addWorkorderItem,
+                                widget.workorder,
+                              );
+                            },
+                          ),
                         ),
-                        columnSpacing: 10,
-                        rowsPerPage: _workorderItems.isEmpty
-                            ? 1
-                            : _workorderItems.length < 10
-                                ? _workorderItems.length
-                                : 10,
                       ),
-                    ),
-            ],
+                !_setupComplete
+                    ? const Center(child: CircularProgressIndicator())
+                    : Expanded(
+                        child: PaginatedDataTable(
+                          header: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              "Total Price: ${calculateTotalPrice().toStringAsFixed(2)}",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          columns: const [
+                            DataColumn(label: Text("Type")),
+                            DataColumn(label: Text("Description")),
+                            DataColumn(label: Text("Quantity")),
+                            DataColumn(label: Text("Minutes")),
+                            DataColumn(label: Text("Price")),
+                            DataColumn(label: SizedBox(width: 10)),
+                          ],
+                          source: _workorderItemsDataSource(
+                            _workorderItems,
+                            context,
+                            updateWorkorderItemList,
+                            widget.workorder,
+                          ),
+                          columnSpacing: 10,
+                          rowsPerPage: _workorderItems.isEmpty
+                              ? 1
+                              : _workorderItems.length < 10
+                                  ? _workorderItems.length
+                                  : 10,
+                        ),
+                      ),
+              ],
+            ),
           ),
         ),
       ),
@@ -145,11 +170,13 @@ class _workorderItemsDataSource extends DataTableSource {
   late final List<WorkorderItemModel> _workorderItems;
   final BuildContext _context;
   final Function updateWorkorderItemList;
+  final WorkorderModel workorder;
 
   _workorderItemsDataSource(
     this._workorderItems,
     this._context,
     this.updateWorkorderItemList,
+    this.workorder,
   );
 
   @override
@@ -168,20 +195,22 @@ class _workorderItemsDataSource extends DataTableSource {
         DataCell(workorderItem.itemType == WorkorderItemType.labour.index
             ? Text(workorderItem.minutes.toString())
             : const Icon(Icons.remove)),
-        DataCell(Text(workorderItem.price.toString())),
+        DataCell(Text(workorderItem.price!.toStringAsFixed(2))),
         DataCell(
-          GestureDetector(
-            onTap: () => showConfirmationDialog(
-              _context,
-              workorderItem,
-              _workorderItems,
-              updateWorkorderItemList,
-            ),
-            child: const Icon(
-              Icons.delete,
-              color: Colors.red,
-            ),
-          ),
+          workorder.isInvoiced!
+              ? const SizedBox()
+              : GestureDetector(
+                  onTap: () => showConfirmationDialog(
+                    _context,
+                    workorderItem,
+                    _workorderItems,
+                    updateWorkorderItemList,
+                  ),
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                ),
         ),
       ],
     );
@@ -207,7 +236,9 @@ Future<void> showConfirmationDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Are you sure?'),
+        title: Text(
+          'Are you sure you want to delete ${workorderItem.description}?',
+        ),
         content: const Text('This action cannot be undone.'),
         actions: <Widget>[
           TextButton(
@@ -242,21 +273,12 @@ Future<void> showConfirmationDialog(
   );
 }
 
-Future<List<LabourModel>> _fetchLabours(BuildContext context) async {
-  final labourProvider = context.read<LaboursProvider>();
-  return await labourProvider.getLabours();
-}
-
-Future<List<ConsumableModel>> _fetchConsumables(BuildContext context) async {
-  final consumablesProvider = context.read<ConsumablesProvider>();
-  return await consumablesProvider.getConsumables();
-}
-
 void _showModal(
-    BuildContext context,
-    void Function(WorkorderItemModel workorderItem) addWorkorderItem,
-    int workorderId) {
-  late bool showConsumables = false;
+  BuildContext context,
+  void Function(WorkorderItemModel workorderItem) addWorkorderItem,
+  WorkorderModel workorder,
+) {
+  late bool showConsumables = true;
   late bool showLabours = false;
   showModalBottomSheet<void>(
     isScrollControlled: true,
@@ -300,12 +322,12 @@ void _showModal(
                   if (showConsumables)
                     ConsumablesSelectionGrid(
                       addWorkorderItem: addWorkorderItem,
-                      workorderId: workorderId,
+                      workorder: workorder,
                     ),
                   if (showLabours)
                     LaboursSelectionGrid(
                       addWorkorderItem: addWorkorderItem,
-                      workorderId: workorderId,
+                      workorder: workorder,
                     ),
                 ],
               ),

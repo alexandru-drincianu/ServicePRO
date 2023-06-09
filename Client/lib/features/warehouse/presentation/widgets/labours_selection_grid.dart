@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/LabourModels/labour_model.dart';
 import 'package:service_pro/core/models/WorkorderModels/workorder_item_model.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_model.dart';
 import 'package:service_pro/features/warehouse/provider/labours_provider.dart';
 
 import '../../../../core/enums/enums.dart';
 
 class LaboursSelectionGrid extends StatefulWidget {
   final void Function(WorkorderItemModel) addWorkorderItem;
-  final int workorderId;
+  final WorkorderModel workorder;
   const LaboursSelectionGrid({
     Key? key,
     required this.addWorkorderItem,
-    required this.workorderId,
+    required this.workorder,
   }) : super(key: key);
 
   @override
@@ -105,6 +106,7 @@ class LaboursSelectionGridState extends State<LaboursSelectionGrid> {
                         columns: const [
                           DataColumn(label: Text("Description")),
                           DataColumn(label: Text("Hourly Wage")),
+                          DataColumn(label: Text("Minutes")),
                           DataColumn(label: SizedBox(width: 10)),
                         ],
                         source: _laboursDataSource(
@@ -118,7 +120,7 @@ class LaboursSelectionGridState extends State<LaboursSelectionGrid> {
                             : _labours.length < 5
                                 ? _labours.length
                                 : 5,
-                        columnSpacing: 70,
+                        columnSpacing: 30,
                       ),
                     ),
             ],
@@ -150,6 +152,7 @@ class _laboursDataSource extends DataTableSource {
       cells: [
         DataCell(Text(labour.description!)),
         DataCell(Text(labour.hourlyWage!.toString())),
+        DataCell(Text(labour.minutes!.toString())),
         DataCell(
           GestureDetector(
             onTap: () {
@@ -158,9 +161,10 @@ class _laboursDataSource extends DataTableSource {
                 quantity: 0,
                 labourId: labour.id,
                 description: labour.description,
-                price: calculateLabourPrice(labour.hourlyWage!, 0),
-                minutes: 0,
-                workorderId: widget.workorderId,
+                price:
+                    calculateLabourPrice(labour.hourlyWage!, labour.minutes!),
+                minutes: labour.minutes,
+                workorderId: widget.workorder.id,
               );
               widget.addWorkorderItem(newWorkorderItem);
             },

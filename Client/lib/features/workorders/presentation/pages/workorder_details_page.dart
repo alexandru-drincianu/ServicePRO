@@ -88,63 +88,127 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Center(
-                  child: Container(
-                    width: 200,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: WorkorderStatusColor[_workorderData.status!],
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              WorkorderStatusString[_workorderData.status!] ??
-                                  '',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                _workorderData.isInvoiced!
+                    ? const SizedBox()
+                    : Center(
+                        child: Container(
+                          width: 200,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: WorkorderStatusColor[_workorderData.status!],
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5)),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    WorkorderStatusString[
+                                            _workorderData.status!] ??
+                                        '',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ),
                               ),
+                              PopupMenuButton<WorkorderStatus>(
+                                icon: const Icon(Icons.arrow_drop_down),
+                                itemBuilder: (BuildContext context) {
+                                  return WorkorderStatus.values
+                                      .where((element) =>
+                                          element != WorkorderStatus.invoiced)
+                                      .map((WorkorderStatus status) {
+                                    return PopupMenuItem<WorkorderStatus>(
+                                      value: status,
+                                      child: Text(
+                                        WorkorderStatusString[status.index]!,
+                                      ),
+                                    );
+                                  }).toList();
+                                },
+                                onSelected:
+                                    (WorkorderStatus selectedStatus) async {
+                                  var updatedWorkorder =
+                                      _workorderData.copyWith(
+                                    status: selectedStatus.index,
+                                  );
+                                  await updateAndShowToast(
+                                    "Status updated",
+                                    updatedWorkorder,
+                                  );
+                                },
+                                offset: const Offset(0, 40),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                const SizedBox(
+                  height: 20,
+                ),
+                _workorderData.isInvoiced!
+                    ? const Text(
+                        "Workorder invoiced!",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : SizedBox(
+                        child: Center(
+                          child: SizedBox(
+                            width: 150,
+                            height: 50,
+                            child: ElevatedButton.icon(
+                              onPressed: () async {
+                                var updatedWorkorder = _workorderData.copyWith(
+                                  isInvoiced: true,
+                                  status: WorkorderStatus.invoiced.index,
+                                );
+                                await updateAndShowToast(
+                                  "Workorder invoiced!",
+                                  updatedWorkorder,
+                                );
+                              },
+                              icon: const Icon(Icons.document_scanner_outlined),
+                              label: const Text("Invoice"),
                             ),
                           ),
                         ),
-                        PopupMenuButton<WorkorderStatus>(
-                          icon: const Icon(Icons.arrow_drop_down),
-                          itemBuilder: (BuildContext context) {
-                            return WorkorderStatus.values
-                                .map((WorkorderStatus status) {
-                              return PopupMenuItem<WorkorderStatus>(
-                                value: status,
-                                child:
-                                    Text(WorkorderStatusString[status.index]!),
-                              );
-                            }).toList();
-                          },
-                          onSelected: (WorkorderStatus selectedStatus) async {
-                            var updatedWorkorder = _workorderData.copyWith(
-                              status: selectedStatus.index,
-                            );
-                            await updateAndShowToast(
-                              "Status updated",
-                              updatedWorkorder,
-                            );
-                          },
-                          offset: const Offset(0, 40),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
                 const SizedBox(
                   height: 20,
+                ),
+                Text(
+                  "Total cost: ${_workorderData.totalCost}",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  child: Center(
+                    child: ElevatedButton.icon(
+                      onPressed: () => router.replace(
+                        WorkorderItemsRoute(workorder: _workorderData),
+                      ),
+                      icon: _workorderData.isInvoiced!
+                          ? const Icon(Icons.visibility)
+                          : const Icon(Icons.settings),
+                      label: _workorderData.isInvoiced!
+                          ? const Text("See workorder items")
+                          : const Text("Manage workorder items"),
+                    ),
+                  ),
                 ),
                 const Divider(
                   color: Colors.black,
@@ -171,56 +235,59 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                 _buildRow(
                   icon: Icons.note,
                   label: 'Remarks:',
-                  text: "",
+                  text:
+                      _workorderData.isInvoiced! ? _workorderData.remarks! : "",
                 ),
-                Container(
-                  width: 320,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2.0,
-                    ),
-                  ),
-                  child: Stack(
-                    children: [
-                      TextFormField(
-                        focusNode: _focusNode,
-                        initialValue: _workorderData.remarks,
-                        maxLines: 5,
-                        onChanged: (value) {
-                          setState(() {
-                            _remarks = value;
-                          });
-                        },
-                      ),
-                      Positioned(
-                        bottom: 5,
-                        right: 5,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: CustomColors.nroGreen,
-                          ),
-                          child: IconButton(
-                            onPressed: () async {
-                              var updatedWorkorder =
-                                  _workorderData.copyWith(remarks: _remarks);
-                              await updateAndShowToast(
-                                "Remarks updated",
-                                updatedWorkorder,
-                              );
-                              _focusNode.unfocus();
-                            },
-                            icon: const Icon(Icons.save),
-                            iconSize: 30,
+                _workorderData.isInvoiced!
+                    ? const SizedBox()
+                    : Container(
+                        width: 320,
+                        decoration: BoxDecoration(
+                          border: Border.all(
                             color: Colors.black,
-                            tooltip: 'Save',
+                            width: 2.0,
                           ),
                         ),
+                        child: Stack(
+                          children: [
+                            TextFormField(
+                              focusNode: _focusNode,
+                              initialValue: _workorderData.remarks,
+                              maxLines: 5,
+                              onChanged: (value) {
+                                setState(() {
+                                  _remarks = value;
+                                });
+                              },
+                            ),
+                            Positioned(
+                              bottom: 5,
+                              right: 5,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: CustomColors.nroGreen,
+                                ),
+                                child: IconButton(
+                                  onPressed: () async {
+                                    var updatedWorkorder = _workorderData
+                                        .copyWith(remarks: _remarks);
+                                    await updateAndShowToast(
+                                      "Remarks updated",
+                                      updatedWorkorder,
+                                    );
+                                    _focusNode.unfocus();
+                                  },
+                                  icon: const Icon(Icons.save),
+                                  iconSize: 30,
+                                  color: Colors.black,
+                                  tooltip: 'Save',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -230,16 +297,6 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                SizedBox(
-                  child: Center(
-                    child: ElevatedButton.icon(
-                      onPressed: () =>
-                          router.replace(WorkorderItemsRoute(id: widget.id)),
-                      icon: const Icon(Icons.settings),
-                      label: const Text("Manage workorder items"),
-                    ),
-                  ),
                 ),
                 const SizedBox(
                   height: 20,

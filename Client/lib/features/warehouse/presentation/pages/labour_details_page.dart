@@ -22,6 +22,7 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
   late LabourModel? _labourData = const LabourModel(
     description: "",
     hourlyWage: 0,
+    minutes: 0,
     id: 0,
   );
 
@@ -92,6 +93,12 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
                   label: 'Hourly Wage',
                   text: _labourData?.hourlyWage.toString() ?? "",
                   property: "hourlyWage",
+                ),
+                _buildRow(
+                  icon: Icons.hourglass_bottom,
+                  label: 'Minutes',
+                  text: _labourData?.minutes.toString() ?? "",
+                  property: "minutes",
                 ),
                 !_inEdit
                     ? SizedBox(
@@ -263,6 +270,22 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
           },
           autovalidateMode: AutovalidateMode.onUserInteraction,
         );
+      case "minutes":
+        return TextFormField(
+          initialValue: text,
+          decoration: const InputDecoration(labelText: ''),
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onChanged: (value) {
+            var updatedLabourData = _labourData?.copyWith(
+              minutes: int.tryParse(value) ?? 0,
+            );
+            setState(() {
+              _labourData = updatedLabourData;
+            });
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+        );
+
       default:
         return const Text(
           'Invalid property',

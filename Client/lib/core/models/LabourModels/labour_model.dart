@@ -10,6 +10,7 @@ class LabourModel with _$LabourModel {
     int? id,
     @JsonKey(name: 'description') String? description,
     @JsonKey(name: 'hourlyWage') num? hourlyWage,
+    @JsonKey(name: 'minutes') int? minutes,
   }) = _LabourModel;
 
   factory LabourModel.fromJson(Map<String, dynamic> json) =>

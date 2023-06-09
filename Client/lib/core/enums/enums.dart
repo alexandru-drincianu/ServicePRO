@@ -19,12 +19,13 @@ final Map<int, String> FuelTypeString = {
   FuelType.electric.index: 'Electric',
 };
 
-enum WorkorderStatus { arrived, inProgress, ready }
+enum WorkorderStatus { arrived, inProgress, ready, invoiced }
 
 final Map<int, String> WorkorderStatusString = {
   WorkorderStatus.arrived.index: 'Arrived',
   WorkorderStatus.inProgress.index: 'In progress',
   WorkorderStatus.ready.index: 'Ready',
+  WorkorderStatus.invoiced.index: 'Invoiced',
 };
 
 final Map<int, Color> WorkorderStatusColor = {
