@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/models/ConsumableModels/consumable_model.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_item_model.dart';
 import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
 
 class ConsumablesSelectionGrid extends StatefulWidget {
-  const ConsumablesSelectionGrid({Key? key}) : super(key: key);
+  final void Function(WorkorderItemModel) addWorkorderItem;
+  final int workorderId;
+  const ConsumablesSelectionGrid({
+    Key? key,
+    required this.addWorkorderItem,
+    required this.workorderId,
+  }) : super(key: key);
 
   @override
   ConsumablesSelectionGridState createState() =>
@@ -102,13 +110,14 @@ class ConsumablesSelectionGridState extends State<ConsumablesSelectionGrid> {
                           _consumables,
                           context,
                           updateConsumablesList,
+                          widget,
                         ),
                         rowsPerPage: _consumables.isEmpty
                             ? 1
                             : _consumables.length < 5
                                 ? _consumables.length
                                 : 5,
-                        columnSpacing: 100,
+                        columnSpacing: 90,
                       ),
                     ),
             ],
@@ -123,11 +132,13 @@ class _ConsumablesDataSource extends DataTableSource {
   final List<ConsumableModel> _consumables;
   final BuildContext _context;
   final Function updateConsumablesList;
+  final ConsumablesSelectionGrid widget;
 
   _ConsumablesDataSource(
     this._consumables,
     this._context,
     this.updateConsumablesList,
+    this.widget,
   );
 
   @override
@@ -140,7 +151,18 @@ class _ConsumablesDataSource extends DataTableSource {
         DataCell(Text(consumable.price!.toString())),
         DataCell(
           GestureDetector(
-            onTap: () => {},
+            onTap: () {
+              WorkorderItemModel newWorkorderItem = WorkorderItemModel(
+                itemType: WorkorderItemType.consumable.index,
+                quantity: 0,
+                consumableId: consumable.id,
+                description: consumable.description,
+                price: consumable.price,
+                minutes: 0,
+                workorderId: widget.workorderId,
+              );
+              widget.addWorkorderItem(newWorkorderItem);
+            },
             child: const Icon(
               Icons.add,
               color: Colors.green,

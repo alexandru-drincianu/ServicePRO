@@ -35,6 +35,8 @@ mixin _$WorkorderItemModel {
   num? get price => throw _privateConstructorUsedError;
   @JsonKey(name: 'minutes')
   int? get minutes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'workorderId')
+  int? get workorderId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +58,8 @@ abstract class $WorkorderItemModelCopyWith<$Res> {
       @JsonKey(name: 'labourId') int? labourId,
       @JsonKey(name: 'description') String? description,
       @JsonKey(name: 'price') num? price,
-      @JsonKey(name: 'minutes') int? minutes});
+      @JsonKey(name: 'minutes') int? minutes,
+      @JsonKey(name: 'workorderId') int? workorderId});
 }
 
 /// @nodoc
@@ -80,6 +83,7 @@ class _$WorkorderItemModelCopyWithImpl<$Res, $Val extends WorkorderItemModel>
     Object? description = freezed,
     Object? price = freezed,
     Object? minutes = freezed,
+    Object? workorderId = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -114,6 +118,10 @@ class _$WorkorderItemModelCopyWithImpl<$Res, $Val extends WorkorderItemModel>
           ? _value.minutes
           : minutes // ignore: cast_nullable_to_non_nullable
               as int?,
+      workorderId: freezed == workorderId
+          ? _value.workorderId
+          : workorderId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -134,7 +142,8 @@ abstract class _$$_WorkorderItemModelCopyWith<$Res>
       @JsonKey(name: 'labourId') int? labourId,
       @JsonKey(name: 'description') String? description,
       @JsonKey(name: 'price') num? price,
-      @JsonKey(name: 'minutes') int? minutes});
+      @JsonKey(name: 'minutes') int? minutes,
+      @JsonKey(name: 'workorderId') int? workorderId});
 }
 
 /// @nodoc
@@ -156,6 +165,7 @@ class __$$_WorkorderItemModelCopyWithImpl<$Res>
     Object? description = freezed,
     Object? price = freezed,
     Object? minutes = freezed,
+    Object? workorderId = freezed,
   }) {
     return _then(_$_WorkorderItemModel(
       id: freezed == id
@@ -190,6 +200,10 @@ class __$$_WorkorderItemModelCopyWithImpl<$Res>
           ? _value.minutes
           : minutes // ignore: cast_nullable_to_non_nullable
               as int?,
+      workorderId: freezed == workorderId
+          ? _value.workorderId
+          : workorderId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -205,7 +219,8 @@ class _$_WorkorderItemModel implements _WorkorderItemModel {
       @JsonKey(name: 'labourId') this.labourId,
       @JsonKey(name: 'description') this.description,
       @JsonKey(name: 'price') this.price,
-      @JsonKey(name: 'minutes') this.minutes});
+      @JsonKey(name: 'minutes') this.minutes,
+      @JsonKey(name: 'workorderId') this.workorderId});
 
   factory _$_WorkorderItemModel.fromJson(Map<String, dynamic> json) =>
       _$$_WorkorderItemModelFromJson(json);
@@ -233,10 +248,13 @@ class _$_WorkorderItemModel implements _WorkorderItemModel {
   @override
   @JsonKey(name: 'minutes')
   final int? minutes;
+  @override
+  @JsonKey(name: 'workorderId')
+  final int? workorderId;
 
   @override
   String toString() {
-    return 'WorkorderItemModel(id: $id, itemType: $itemType, quantity: $quantity, consumableId: $consumableId, labourId: $labourId, description: $description, price: $price, minutes: $minutes)';
+    return 'WorkorderItemModel(id: $id, itemType: $itemType, quantity: $quantity, consumableId: $consumableId, labourId: $labourId, description: $description, price: $price, minutes: $minutes, workorderId: $workorderId)';
   }
 
   @override
@@ -256,13 +274,15 @@ class _$_WorkorderItemModel implements _WorkorderItemModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.minutes, minutes) || other.minutes == minutes));
+            (identical(other.minutes, minutes) || other.minutes == minutes) &&
+            (identical(other.workorderId, workorderId) ||
+                other.workorderId == workorderId));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, itemType, quantity,
-      consumableId, labourId, description, price, minutes);
+      consumableId, labourId, description, price, minutes, workorderId);
 
   @JsonKey(ignore: true)
   @override
@@ -281,14 +301,16 @@ class _$_WorkorderItemModel implements _WorkorderItemModel {
 
 abstract class _WorkorderItemModel implements WorkorderItemModel {
   const factory _WorkorderItemModel(
-      {final int? id,
-      @JsonKey(name: 'itemType') final int? itemType,
-      @JsonKey(name: 'quantity') final num? quantity,
-      @JsonKey(name: 'consumableId') final int? consumableId,
-      @JsonKey(name: 'labourId') final int? labourId,
-      @JsonKey(name: 'description') final String? description,
-      @JsonKey(name: 'price') final num? price,
-      @JsonKey(name: 'minutes') final int? minutes}) = _$_WorkorderItemModel;
+          {final int? id,
+          @JsonKey(name: 'itemType') final int? itemType,
+          @JsonKey(name: 'quantity') final num? quantity,
+          @JsonKey(name: 'consumableId') final int? consumableId,
+          @JsonKey(name: 'labourId') final int? labourId,
+          @JsonKey(name: 'description') final String? description,
+          @JsonKey(name: 'price') final num? price,
+          @JsonKey(name: 'minutes') final int? minutes,
+          @JsonKey(name: 'workorderId') final int? workorderId}) =
+      _$_WorkorderItemModel;
 
   factory _WorkorderItemModel.fromJson(Map<String, dynamic> json) =
       _$_WorkorderItemModel.fromJson;
@@ -316,6 +338,9 @@ abstract class _WorkorderItemModel implements WorkorderItemModel {
   @override
   @JsonKey(name: 'minutes')
   int? get minutes;
+  @override
+  @JsonKey(name: 'workorderId')
+  int? get workorderId;
   @override
   @JsonKey(ignore: true)
   _$$_WorkorderItemModelCopyWith<_$_WorkorderItemModel> get copyWith =>

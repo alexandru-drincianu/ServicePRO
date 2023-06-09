@@ -57,6 +57,15 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
     });
   }
 
+  Future<void> addWorkorderItem(WorkorderItemModel workorderItem) async {
+    final workorderItemsProvider = context.read<WorkorderItemsProvider>();
+    int? workorderItemId =
+        await workorderItemsProvider.createWorkorderItem(workorderItem);
+    setState(() {
+      _workorderItems.add(workorderItem.copyWith(id: workorderItemId));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +96,7 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
                   child: ElevatedButton(
                     child: const Text('Add workorder item'),
                     onPressed: () {
-                      _showModal(context);
+                      _showModal(context, addWorkorderItem, widget.id);
                     },
                   ),
                 ),
@@ -109,7 +118,7 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
                           context,
                           updateWorkorderItemList,
                         ),
-                        columnSpacing: 14,
+                        columnSpacing: 10,
                         rowsPerPage: _workorderItems.isEmpty
                             ? 1
                             : _workorderItems.length < 10
@@ -261,7 +270,10 @@ Future<List<ConsumableModel>> _fetchConsumables(BuildContext context) async {
   return await consumablesProvider.getConsumables();
 }
 
-void _showModal(BuildContext context) {
+void _showModal(
+    BuildContext context,
+    void Function(WorkorderItemModel workorderItem) addWorkorderItem,
+    int workorderId) {
   late bool showConsumables = false;
   late bool showLabours = false;
   showModalBottomSheet<void>(
@@ -303,8 +315,16 @@ void _showModal(BuildContext context) {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  if (showConsumables) const ConsumablesSelectionGrid(),
-                  if (showLabours) const LaboursSelectionGrid(),
+                  if (showConsumables)
+                    ConsumablesSelectionGrid(
+                      addWorkorderItem: addWorkorderItem,
+                      workorderId: workorderId,
+                    ),
+                  if (showLabours)
+                    LaboursSelectionGrid(
+                      addWorkorderItem: addWorkorderItem,
+                      workorderId: workorderId,
+                    ),
                 ],
               ),
             ),

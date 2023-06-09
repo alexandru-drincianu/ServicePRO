@@ -2,13 +2,19 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/LabourModels/labour_model.dart';
+import 'package:service_pro/core/models/WorkorderModels/workorder_item_model.dart';
 import 'package:service_pro/features/warehouse/provider/labours_provider.dart';
 
-import '../../../../routing/app_router.dart';
-import '../../../../routing/app_router.gr.dart';
+import '../../../../core/enums/enums.dart';
 
 class LaboursSelectionGrid extends StatefulWidget {
-  const LaboursSelectionGrid({Key? key}) : super(key: key);
+  final void Function(WorkorderItemModel) addWorkorderItem;
+  final int workorderId;
+  const LaboursSelectionGrid({
+    Key? key,
+    required this.addWorkorderItem,
+    required this.workorderId,
+  }) : super(key: key);
 
   @override
   LaboursSelectionGridState createState() => LaboursSelectionGridState();
@@ -105,6 +111,7 @@ class LaboursSelectionGridState extends State<LaboursSelectionGrid> {
                           _labours,
                           context,
                           updateLaboursList,
+                          widget,
                         ),
                         rowsPerPage: _labours.isEmpty
                             ? 1
@@ -126,11 +133,13 @@ class _laboursDataSource extends DataTableSource {
   late final List<LabourModel> _labours;
   final BuildContext _context;
   final Function updateLaboursList;
+  final LaboursSelectionGrid widget;
 
   _laboursDataSource(
     this._labours,
     this._context,
     this.updateLaboursList,
+    this.widget,
   );
 
   @override
@@ -143,7 +152,18 @@ class _laboursDataSource extends DataTableSource {
         DataCell(Text(labour.hourlyWage!.toString())),
         DataCell(
           GestureDetector(
-            onTap: () => {},
+            onTap: () {
+              WorkorderItemModel newWorkorderItem = WorkorderItemModel(
+                itemType: WorkorderItemType.labour.index,
+                quantity: 0,
+                labourId: labour.id,
+                description: labour.description,
+                price: calculateLabourPrice(labour.hourlyWage!, 0),
+                minutes: 0,
+                workorderId: widget.workorderId,
+              );
+              widget.addWorkorderItem(newWorkorderItem);
+            },
             child: const Icon(
               Icons.add,
               color: Colors.green,
@@ -162,4 +182,11 @@ class _laboursDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+}
+
+num calculateLabourPrice(num hourlyWage, int minutes) {
+  int minutesPerHour = 60;
+  num pricePerMinute = hourlyWage / minutesPerHour;
+  num price = pricePerMinute * minutes;
+  return price;
 }

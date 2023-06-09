@@ -17,6 +17,7 @@ class WorkorderItemModel with _$WorkorderItemModel {
     @JsonKey(name: 'description') String? description,
     @JsonKey(name: 'price') num? price,
     @JsonKey(name: 'minutes') int? minutes,
+    @JsonKey(name: 'workorderId') int? workorderId,
   }) = _WorkorderItemModel;
 
   factory WorkorderItemModel.fromJson(Map<String, dynamic> json) =>

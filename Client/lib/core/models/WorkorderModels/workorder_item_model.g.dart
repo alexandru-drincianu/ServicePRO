@@ -17,6 +17,7 @@ _$_WorkorderItemModel _$$_WorkorderItemModelFromJson(
       description: json['description'] as String?,
       price: json['price'] as num?,
       minutes: json['minutes'] as int?,
+      workorderId: json['workorderId'] as int?,
     );
 
 Map<String, dynamic> _$$_WorkorderItemModelToJson(
@@ -30,4 +31,5 @@ Map<String, dynamic> _$$_WorkorderItemModelToJson(
       'description': instance.description,
       'price': instance.price,
       'minutes': instance.minutes,
+      'workorderId': instance.workorderId,
     };

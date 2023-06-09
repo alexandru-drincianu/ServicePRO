@@ -54,7 +54,7 @@ namespace ServicePro.BusinessLogic.Services
             var workorderItem = _mapper.Map<WorkorderItem>(item);
             await _unitOfWork.WorkorderItemRepository.AddAsync(workorderItem);
 
-            return item;
+            return _mapper.Map<WorkorderItemDTO>(workorderItem);
 
         }
 
