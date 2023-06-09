@@ -61,54 +61,53 @@ class WorkordersPageState extends State<WorkordersPage> {
             children: [
               !_setupComplete
                   ? const Center(child: CircularProgressIndicator())
-                  : _workorders.isEmpty
-                      ? const Text("No workorders available")
-                      : Expanded(
-                          child: PaginatedDataTable(
-                            header: Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(12),
-                                ),
-                              ),
-                              child: TextField(
-                                controller: _searchtermController,
-                                decoration: const InputDecoration(
-                                  hintText: "Enter registration or number",
-                                ),
-                                onChanged: (value) {
-                                  var filteredVehicles = _filterWorkorders
-                                      .where(
-                                        (element) => element
-                                            .vehicle!.registration!
-                                            .contains(value),
-                                      )
-                                      .toList();
-                                  setState(() {
-                                    _workorders = filteredVehicles;
-                                  });
-                                },
-                              ),
+                  : Expanded(
+                      child: PaginatedDataTable(
+                        header: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
                             ),
-                            columns: const [
-                              DataColumn(label: SizedBox(width: 10)),
-                              DataColumn(label: Text("Number")),
-                              DataColumn(label: Text("Vehicle")),
-                              DataColumn(label: Text("Client")),
-                              DataColumn(label: Text("Total cost")),
-                              DataColumn(label: Text("Status")),
-                            ],
-                            columnSpacing: 20,
-                            source: _VehiclesDataSource(_workorders),
-                            rowsPerPage: _workorders.length <= 5
-                                ? _workorders.length
-                                : 5,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                          ),
+                          child: TextField(
+                            controller: _searchtermController,
+                            decoration: const InputDecoration(
+                              hintText: "Enter registration or number",
+                            ),
+                            onChanged: (value) {
+                              var filteredVehicles = _filterWorkorders
+                                  .where(
+                                    (element) => element.vehicle!.registration!
+                                        .contains(value),
+                                  )
+                                  .toList();
+                              setState(() {
+                                _workorders = filteredVehicles;
+                              });
+                            },
                           ),
                         ),
+                        columns: const [
+                          DataColumn(label: SizedBox(width: 10)),
+                          DataColumn(label: Text("Number")),
+                          DataColumn(label: Text("Vehicle")),
+                          DataColumn(label: Text("Client")),
+                          DataColumn(label: Text("Total cost")),
+                          DataColumn(label: Text("Status")),
+                        ],
+                        columnSpacing: 20,
+                        source: _VehiclesDataSource(_workorders),
+                        rowsPerPage: _workorders.isEmpty
+                            ? 1
+                            : _workorders.length < 10
+                                ? _workorders.length
+                                : 10,
+                      ),
+                    ),
             ],
           ),
         ),

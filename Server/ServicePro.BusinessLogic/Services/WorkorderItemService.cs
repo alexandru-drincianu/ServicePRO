@@ -4,6 +4,7 @@ using ServicePro.BusinessLogic.Services.Abstractions;
 using ServicePro.DataAccess.Entities;
 using ServicePro.DataAccess.Repository.Abstraction;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ServicePro.BusinessLogic.Services
@@ -28,7 +29,17 @@ namespace ServicePro.BusinessLogic.Services
         public async Task<IEnumerable<WorkorderItemDTO>> GetAllForWorkorder(int workorderId)
         {
             var workorderItems = await _unitOfWork.WorkorderItemRepository.GetAllForWorkorderAsync(workorderId);
-            return _mapper.Map<IEnumerable<WorkorderItemDTO>>(workorderItems);
+            return workorderItems.Select(wi => new WorkorderItemDTO
+            {
+                Id = wi.Id,
+                ItemType = wi.ItemType,
+                ConsumableId = wi.ConsumableId,
+                LabourId = wi.LabourId,
+                Quantity = wi.Quantity,
+                Minutes = wi.Minutes,
+                Description = wi.ConsumableId != null ? wi.Consumable.Description : wi.Labour.Description,
+                Price = wi.ConsumableId != null ? wi.Consumable.Price * wi.Quantity : CalculateLabourPrice(wi.Labour.HourlyWage, wi.Minutes)
+            }).ToList();
         }
 
         public async Task<WorkorderItemDTO> GetByIdAsync(int Id, bool applyChanges = true)
@@ -66,6 +77,14 @@ namespace ServicePro.BusinessLogic.Services
                 return _mapper.Map<WorkorderItemDTO>(workorderItem);
             }
             return null;
+        }
+
+        private decimal CalculateLabourPrice(decimal hourlyWage, int minutes)
+        {
+            int minutesPerHour = 60;
+            decimal pricePerMinute = hourlyWage / minutesPerHour;
+            decimal price = pricePerMinute * minutes;
+            return price;
         }
     }
 }

@@ -1,20 +1,17 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/models/ConsumableModels/consumable_model.dart';
 import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
 
-import '../../../../routing/app_router.dart';
-import '../../../../routing/app_router.gr.dart';
-
-class ConsumablesGrid extends StatefulWidget {
-  const ConsumablesGrid({Key? key}) : super(key: key);
+class ConsumablesSelectionGrid extends StatefulWidget {
+  const ConsumablesSelectionGrid({Key? key}) : super(key: key);
 
   @override
-  ConsumablesGridState createState() => ConsumablesGridState();
+  ConsumablesSelectionGridState createState() =>
+      ConsumablesSelectionGridState();
 }
 
-class ConsumablesGridState extends State<ConsumablesGrid> {
+class ConsumablesSelectionGridState extends State<ConsumablesSelectionGrid> {
   List<ConsumableModel> _consumables = [];
   List<ConsumableModel> _filterConsumables = [];
   bool _setupComplete = false;
@@ -64,16 +61,6 @@ class ConsumablesGridState extends State<ConsumablesGrid> {
           height: 600,
           child: Column(
             children: [
-              SizedBox(
-                height: 100,
-                child: Center(
-                  child: ElevatedButton.icon(
-                    onPressed: () => router.replace(ConsumableDetailsRoute()),
-                    icon: const Icon(Icons.add),
-                    label: const Text("Add Consumable"),
-                  ),
-                ),
-              ),
               !_setupComplete
                   ? const Center(child: CircularProgressIndicator())
                   : Expanded(
@@ -107,7 +94,6 @@ class ConsumablesGridState extends State<ConsumablesGrid> {
                           ),
                         ),
                         columns: const [
-                          DataColumn(label: SizedBox(width: 10)),
                           DataColumn(label: Text("Description")),
                           DataColumn(label: Text("Price")),
                           DataColumn(label: SizedBox(width: 10)),
@@ -122,6 +108,7 @@ class ConsumablesGridState extends State<ConsumablesGrid> {
                             : _consumables.length < 5
                                 ? _consumables.length
                                 : 5,
+                        columnSpacing: 100,
                       ),
                     ),
             ],
@@ -149,35 +136,14 @@ class _ConsumablesDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(
-          GestureDetector(
-            onTap: () {
-              router.replace(ConsumableDetailsRoute(id: consumable.id!));
-            },
-            child: const Icon(
-              Icons.visibility,
-              color: Color.fromARGB(
-                255,
-                58,
-                4,
-                152,
-              ),
-            ),
-          ),
-        ),
         DataCell(Text(consumable.description!)),
         DataCell(Text(consumable.price!.toString())),
         DataCell(
           GestureDetector(
-            onTap: () => showConfirmationDialog(
-              _context,
-              consumable,
-              _consumables,
-              updateConsumablesList,
-            ),
+            onTap: () => {},
             child: const Icon(
-              Icons.delete,
-              color: Colors.red,
+              Icons.add,
+              color: Colors.green,
             ),
           ),
         ),
@@ -193,72 +159,4 @@ class _ConsumablesDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
-}
-
-Future<void> showConfirmationDialog(
-  BuildContext context,
-  ConsumableModel consumable,
-  List<ConsumableModel> consumables,
-  updateConsumablesList,
-) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Are you sure?'),
-        content: const Text('This action cannot be undone.'),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('NO'),
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-          ),
-          TextButton(
-            child: const Text('YES'),
-            onPressed: () async {
-              Navigator.of(context).pop(true);
-              final response =
-                  await context.read<ConsumablesProvider>().deleteConsumable(
-                        consumable.id!,
-                      );
-              if (response.statusCode == 204) {
-                List<ConsumableModel> updatedConsumables = consumables
-                    .where((element) => element.id != consumable.id)
-                    .toList();
-                updateConsumablesList(updatedConsumables);
-                BotToast.showText(
-                  text: 'Consumable deleted!',
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.green,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
-              } else {
-                BotToast.showText(
-                  text: response.body,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.red,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

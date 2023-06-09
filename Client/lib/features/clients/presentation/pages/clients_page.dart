@@ -70,50 +70,51 @@ class ClientsPageState extends State<ClientsPage> {
               ),
               !_setupComplete
                   ? const CircularProgressIndicator()
-                  : _clients.isEmpty
-                      ? const Text("No clients available")
-                      : Expanded(
-                          child: PaginatedDataTable(
-                            header: Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(12),
-                                ),
-                              ),
-                              child: TextField(
-                                controller: _searchtermController,
-                                decoration: const InputDecoration(
-                                  hintText: "Enter username",
-                                ),
-                                onChanged: (value) {
-                                  var filteredClients = _filterClients
-                                      .where(
-                                        (element) =>
-                                            element.fullName!.contains(value),
-                                      )
-                                      .toList();
-                                  setState(() {
-                                    _clients = filteredClients;
-                                  });
-                                },
-                              ),
+                  : Expanded(
+                      child: PaginatedDataTable(
+                        header: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
                             ),
-                            columns: const [
-                              DataColumn(label: Text("")),
-                              DataColumn(label: Text("Name")),
-                              DataColumn(label: Text("Telephone")),
-                              DataColumn(label: Text("Email")),
-                              DataColumn(label: Text("Location")),
-                            ],
-                            source: _ClientsDataSource(_clients),
-                            rowsPerPage:
-                                _clients.length <= 5 ? _clients.length : 5,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                          ),
+                          child: TextField(
+                            controller: _searchtermController,
+                            decoration: const InputDecoration(
+                              hintText: "Enter username",
+                            ),
+                            onChanged: (value) {
+                              var filteredClients = _filterClients
+                                  .where(
+                                    (element) =>
+                                        element.fullName!.contains(value),
+                                  )
+                                  .toList();
+                              setState(() {
+                                _clients = filteredClients;
+                              });
+                            },
                           ),
                         ),
+                        columns: const [
+                          DataColumn(label: Text("")),
+                          DataColumn(label: Text("Name")),
+                          DataColumn(label: Text("Telephone")),
+                          DataColumn(label: Text("Email")),
+                          DataColumn(label: Text("Location")),
+                        ],
+                        source: _ClientsDataSource(_clients),
+                        rowsPerPage: _clients.isEmpty
+                            ? 1
+                            : _clients.length < 10
+                                ? _clients.length
+                                : 10,
+                      ),
+                    ),
             ],
           ),
         ),

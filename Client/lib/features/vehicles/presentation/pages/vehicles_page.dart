@@ -85,55 +85,58 @@ class VehiclesPageState extends State<VehiclesPage> {
               ),
               !_setupComplete
                   ? const CircularProgressIndicator()
-                  : _vehicles.isEmpty
-                      ? const Text("No vehicles available")
-                      : Expanded(
-                          child: PaginatedDataTable(
-                            header: Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(12),
-                                ),
-                              ),
-                              child: TextField(
-                                controller: _searchtermController,
-                                decoration: const InputDecoration(
-                                  hintText: "Enter registration",
-                                ),
-                                onChanged: (value) {
-                                  var filteredVehicles = _filterVehicles
-                                      .where(
-                                        (element) => element.registration!
-                                            .contains(value),
-                                      )
-                                      .toList();
-                                  setState(() {
-                                    _vehicles = filteredVehicles;
-                                  });
-                                },
-                              ),
+                  : Expanded(
+                      child: PaginatedDataTable(
+                        header: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
                             ),
-                            columns: const [
-                              DataColumn(label: SizedBox(width: 10)),
-                              DataColumn(label: SizedBox(width: 10)),
-                              DataColumn(label: Text("Registration")),
-                              DataColumn(label: Text("Client")),
-                              DataColumn(label: Text("Brand")),
-                              DataColumn(label: Text("Model")),
-                              DataColumn(label: Text("Mileage")),
-                            ],
-                            columnSpacing: 25,
-                            source: _VehiclesDataSource(_vehicles,
-                                createWorkorderCallback: createWorkorder,
-                                context: context),
-                            rowsPerPage:
-                                _vehicles.length <= 5 ? _vehicles.length : 5,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                          ),
+                          child: TextField(
+                            controller: _searchtermController,
+                            decoration: const InputDecoration(
+                              hintText: "Enter registration",
+                            ),
+                            onChanged: (value) {
+                              var filteredVehicles = _filterVehicles
+                                  .where(
+                                    (element) =>
+                                        element.registration!.contains(value),
+                                  )
+                                  .toList();
+                              setState(() {
+                                _vehicles = filteredVehicles;
+                              });
+                            },
                           ),
                         ),
+                        columns: const [
+                          DataColumn(label: SizedBox(width: 10)),
+                          DataColumn(label: SizedBox(width: 10)),
+                          DataColumn(label: Text("Registration")),
+                          DataColumn(label: Text("Client")),
+                          DataColumn(label: Text("Brand")),
+                          DataColumn(label: Text("Model")),
+                          DataColumn(label: Text("Mileage")),
+                        ],
+                        columnSpacing: 25,
+                        source: _VehiclesDataSource(
+                          _vehicles,
+                          createWorkorderCallback: createWorkorder,
+                          context: context,
+                        ),
+                        rowsPerPage: _vehicles.isEmpty
+                            ? 1
+                            : _vehicles.length < 10
+                                ? _vehicles.length
+                                : 10,
+                      ),
+                    ),
             ],
           ),
         ),

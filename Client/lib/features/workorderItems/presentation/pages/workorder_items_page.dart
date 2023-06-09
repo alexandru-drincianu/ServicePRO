@@ -1,9 +1,16 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/localization/localization.dart';
+import 'package:service_pro/core/models/LabourModels/labour_model.dart';
 import 'package:service_pro/core/models/WorkorderModels/workorder_item_model.dart';
+import 'package:service_pro/features/warehouse/presentation/widgets/consumables_selection_grid.dart';
+import 'package:service_pro/features/warehouse/presentation/widgets/labours_selection_grid.dart';
+import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
+import 'package:service_pro/features/warehouse/provider/labours_provider.dart';
 
+import '../../../../core/models/ConsumableModels/consumable_model.dart';
 import '../../../../core/widgets/app_drawer.dart';
 import '../../../../routing/app_router.dart';
 import '../../../../routing/app_router.gr.dart';
@@ -71,45 +78,45 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: SizedBox(
-          height: 400,
+          height: 800,
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: 50,
                 child: Center(
-                  child: Text(
-                    "Workorder items",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: ElevatedButton(
+                    child: const Text('Add workorder item'),
+                    onPressed: () {
+                      _showModal(context);
+                    },
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
               !_setupComplete
                   ? const Center(child: CircularProgressIndicator())
-                  : _workorderItems.isEmpty
-                      ? const Text("No workorder items available")
-                      : Expanded(
-                          child: PaginatedDataTable(
-                            columns: const [
-                              DataColumn(label: Text("Type")),
-                              DataColumn(label: Text("Description")),
-                              DataColumn(label: Text("Price")),
-                              DataColumn(label: Text("Quantity")),
-                              DataColumn(label: SizedBox(width: 10)),
-                            ],
-                            source: _workorderItemsDataSource(
-                              _workorderItems,
-                              context,
-                              updateWorkorderItemList,
-                            ),
-                            rowsPerPage: _workorderItems.length <= 5
-                                ? _workorderItems.length
-                                : 5,
-                          ),
+                  : Expanded(
+                      child: PaginatedDataTable(
+                        columns: const [
+                          DataColumn(label: Text("Type")),
+                          DataColumn(label: Text("Description")),
+                          DataColumn(label: Text("Quantity")),
+                          DataColumn(label: Text("Minutes")),
+                          DataColumn(label: Text("Price")),
+                          DataColumn(label: SizedBox(width: 10)),
+                        ],
+                        source: _workorderItemsDataSource(
+                          _workorderItems,
+                          context,
+                          updateWorkorderItemList,
                         ),
+                        columnSpacing: 14,
+                        rowsPerPage: _workorderItems.isEmpty
+                            ? 1
+                            : _workorderItems.length < 10
+                                ? _workorderItems.length
+                                : 10,
+                      ),
+                    ),
             ],
           ),
         ),
@@ -136,10 +143,17 @@ class _workorderItemsDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        const DataCell(Text("")),
-        const DataCell(Text("")),
-        const DataCell(Text("")),
-        const DataCell(Text("")),
+        DataCell(workorderItem.itemType == WorkorderItemType.consumable.index
+            ? const Icon(Icons.label)
+            : const Icon(Icons.perm_identity)),
+        DataCell(Text(workorderItem.description!)),
+        DataCell(workorderItem.itemType == WorkorderItemType.consumable.index
+            ? Text(workorderItem.quantity.toString())
+            : const Icon(Icons.remove)),
+        DataCell(workorderItem.itemType == WorkorderItemType.labour.index
+            ? Text(workorderItem.minutes.toString())
+            : const Icon(Icons.remove)),
+        DataCell(Text(workorderItem.price.toString())),
         DataCell(
           GestureDetector(
             onTap: () => showConfirmationDialog(
@@ -232,6 +246,70 @@ Future<void> showConfirmationDialog(
             },
           ),
         ],
+      );
+    },
+  );
+}
+
+Future<List<LabourModel>> _fetchLabours(BuildContext context) async {
+  final labourProvider = context.read<LaboursProvider>();
+  return await labourProvider.getLabours();
+}
+
+Future<List<ConsumableModel>> _fetchConsumables(BuildContext context) async {
+  final consumablesProvider = context.read<ConsumablesProvider>();
+  return await consumablesProvider.getConsumables();
+}
+
+void _showModal(BuildContext context) {
+  late bool showConsumables = false;
+  late bool showLabours = false;
+  showModalBottomSheet<void>(
+    isScrollControlled: true,
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            height: 600,
+            color: Colors.black12,
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            showConsumables = true;
+                            showLabours = false;
+                          });
+                        },
+                        child: const Text("Consumables"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            showConsumables = false;
+                            showLabours = true;
+                          });
+                        },
+                        child: const Text("Labours"),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  if (showConsumables) const ConsumablesSelectionGrid(),
+                  if (showLabours) const LaboursSelectionGrid(),
+                ],
+              ),
+            ),
+          );
+        },
       );
     },
   );

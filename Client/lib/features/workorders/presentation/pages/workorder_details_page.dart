@@ -235,8 +235,8 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                     child: ElevatedButton.icon(
                       onPressed: () =>
                           router.replace(WorkorderItemsRoute(id: widget.id)),
-                      icon: const Icon(Icons.add),
-                      label: const Text("Add workorder item"),
+                      icon: const Icon(Icons.settings),
+                      label: const Text("Manage workorder items"),
                     ),
                   ),
                 ),

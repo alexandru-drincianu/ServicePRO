@@ -25,8 +25,6 @@ mixin _$LabourModel {
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'hourlyWage')
   num? get hourlyWage => throw _privateConstructorUsedError;
-  @JsonKey(name: 'minutes')
-  int? get minutes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,8 +41,7 @@ abstract class $LabourModelCopyWith<$Res> {
   $Res call(
       {int? id,
       @JsonKey(name: 'description') String? description,
-      @JsonKey(name: 'hourlyWage') num? hourlyWage,
-      @JsonKey(name: 'minutes') int? minutes});
+      @JsonKey(name: 'hourlyWage') num? hourlyWage});
 }
 
 /// @nodoc
@@ -63,7 +60,6 @@ class _$LabourModelCopyWithImpl<$Res, $Val extends LabourModel>
     Object? id = freezed,
     Object? description = freezed,
     Object? hourlyWage = freezed,
-    Object? minutes = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -78,10 +74,6 @@ class _$LabourModelCopyWithImpl<$Res, $Val extends LabourModel>
           ? _value.hourlyWage
           : hourlyWage // ignore: cast_nullable_to_non_nullable
               as num?,
-      minutes: freezed == minutes
-          ? _value.minutes
-          : minutes // ignore: cast_nullable_to_non_nullable
-              as int?,
     ) as $Val);
   }
 }
@@ -97,8 +89,7 @@ abstract class _$$_LabourModelCopyWith<$Res>
   $Res call(
       {int? id,
       @JsonKey(name: 'description') String? description,
-      @JsonKey(name: 'hourlyWage') num? hourlyWage,
-      @JsonKey(name: 'minutes') int? minutes});
+      @JsonKey(name: 'hourlyWage') num? hourlyWage});
 }
 
 /// @nodoc
@@ -115,7 +106,6 @@ class __$$_LabourModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? description = freezed,
     Object? hourlyWage = freezed,
-    Object? minutes = freezed,
   }) {
     return _then(_$_LabourModel(
       id: freezed == id
@@ -130,10 +120,6 @@ class __$$_LabourModelCopyWithImpl<$Res>
           ? _value.hourlyWage
           : hourlyWage // ignore: cast_nullable_to_non_nullable
               as num?,
-      minutes: freezed == minutes
-          ? _value.minutes
-          : minutes // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -144,8 +130,7 @@ class _$_LabourModel implements _LabourModel {
   const _$_LabourModel(
       {this.id,
       @JsonKey(name: 'description') this.description,
-      @JsonKey(name: 'hourlyWage') this.hourlyWage,
-      @JsonKey(name: 'minutes') this.minutes});
+      @JsonKey(name: 'hourlyWage') this.hourlyWage});
 
   factory _$_LabourModel.fromJson(Map<String, dynamic> json) =>
       _$$_LabourModelFromJson(json);
@@ -158,13 +143,10 @@ class _$_LabourModel implements _LabourModel {
   @override
   @JsonKey(name: 'hourlyWage')
   final num? hourlyWage;
-  @override
-  @JsonKey(name: 'minutes')
-  final int? minutes;
 
   @override
   String toString() {
-    return 'LabourModel(id: $id, description: $description, hourlyWage: $hourlyWage, minutes: $minutes)';
+    return 'LabourModel(id: $id, description: $description, hourlyWage: $hourlyWage)';
   }
 
   @override
@@ -176,14 +158,12 @@ class _$_LabourModel implements _LabourModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.hourlyWage, hourlyWage) ||
-                other.hourlyWage == hourlyWage) &&
-            (identical(other.minutes, minutes) || other.minutes == minutes));
+                other.hourlyWage == hourlyWage));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, description, hourlyWage, minutes);
+  int get hashCode => Object.hash(runtimeType, id, description, hourlyWage);
 
   @JsonKey(ignore: true)
   @override
@@ -203,8 +183,7 @@ abstract class _LabourModel implements LabourModel {
   const factory _LabourModel(
       {final int? id,
       @JsonKey(name: 'description') final String? description,
-      @JsonKey(name: 'hourlyWage') final num? hourlyWage,
-      @JsonKey(name: 'minutes') final int? minutes}) = _$_LabourModel;
+      @JsonKey(name: 'hourlyWage') final num? hourlyWage}) = _$_LabourModel;
 
   factory _LabourModel.fromJson(Map<String, dynamic> json) =
       _$_LabourModel.fromJson;
@@ -217,9 +196,6 @@ abstract class _LabourModel implements LabourModel {
   @override
   @JsonKey(name: 'hourlyWage')
   num? get hourlyWage;
-  @override
-  @JsonKey(name: 'minutes')
-  int? get minutes;
   @override
   @JsonKey(ignore: true)
   _$$_LabourModelCopyWith<_$_LabourModel> get copyWith =>

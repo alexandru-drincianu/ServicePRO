@@ -7,14 +7,14 @@ import 'package:service_pro/features/warehouse/provider/labours_provider.dart';
 import '../../../../routing/app_router.dart';
 import '../../../../routing/app_router.gr.dart';
 
-class LaboursGrid extends StatefulWidget {
-  const LaboursGrid({Key? key}) : super(key: key);
+class LaboursSelectionGrid extends StatefulWidget {
+  const LaboursSelectionGrid({Key? key}) : super(key: key);
 
   @override
-  LaboursGridState createState() => LaboursGridState();
+  LaboursSelectionGridState createState() => LaboursSelectionGridState();
 }
 
-class LaboursGridState extends State<LaboursGrid> {
+class LaboursSelectionGridState extends State<LaboursSelectionGrid> {
   List<LabourModel> _labours = [];
   List<LabourModel> _filteredLabours = [];
   bool _setupComplete = false;
@@ -64,16 +64,6 @@ class LaboursGridState extends State<LaboursGrid> {
           height: 600,
           child: Column(
             children: [
-              SizedBox(
-                height: 100,
-                child: Center(
-                  child: ElevatedButton.icon(
-                    onPressed: () => router.replace(LabourDetailsRoute()),
-                    icon: const Icon(Icons.add),
-                    label: const Text("Add Labour"),
-                  ),
-                ),
-              ),
               !_setupComplete
                   ? const Center(child: CircularProgressIndicator())
                   : Expanded(
@@ -107,7 +97,6 @@ class LaboursGridState extends State<LaboursGrid> {
                           ),
                         ),
                         columns: const [
-                          DataColumn(label: SizedBox(width: 10)),
                           DataColumn(label: Text("Description")),
                           DataColumn(label: Text("Hourly Wage")),
                           DataColumn(label: SizedBox(width: 10)),
@@ -122,7 +111,7 @@ class LaboursGridState extends State<LaboursGrid> {
                             : _labours.length < 5
                                 ? _labours.length
                                 : 5,
-                        columnSpacing: 35,
+                        columnSpacing: 70,
                       ),
                     ),
             ],
@@ -150,35 +139,14 @@ class _laboursDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(
-          GestureDetector(
-            onTap: () {
-              router.replace(LabourDetailsRoute(id: labour.id!));
-            },
-            child: const Icon(
-              Icons.visibility,
-              color: Color.fromARGB(
-                255,
-                58,
-                4,
-                152,
-              ),
-            ),
-          ),
-        ),
         DataCell(Text(labour.description!)),
         DataCell(Text(labour.hourlyWage!.toString())),
         DataCell(
           GestureDetector(
-            onTap: () => showConfirmationDialog(
-              _context,
-              labour,
-              _labours,
-              updateLaboursList,
-            ),
+            onTap: () => {},
             child: const Icon(
-              Icons.delete,
-              color: Colors.red,
+              Icons.add,
+              color: Colors.green,
             ),
           ),
         ),
@@ -194,72 +162,4 @@ class _laboursDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
-}
-
-Future<void> showConfirmationDialog(
-  BuildContext context,
-  LabourModel labour,
-  List<LabourModel> labours,
-  updateLaboursList,
-) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Are you sure?'),
-        content: const Text('This action cannot be undone.'),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('NO'),
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-          ),
-          TextButton(
-            child: const Text('YES'),
-            onPressed: () async {
-              Navigator.of(context).pop(true);
-              final response =
-                  await context.read<LaboursProvider>().deleteLabour(
-                        labour.id!,
-                      );
-              if (response.statusCode == 204) {
-                List<LabourModel> updatedLabours = labours
-                    .where((element) => element.id != labour.id)
-                    .toList();
-                updateLaboursList(updatedLabours);
-                BotToast.showText(
-                  text: 'Labour deleted!',
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.green,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
-              } else {
-                BotToast.showText(
-                  text: response.body,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                  contentColor: Colors.red,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                );
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
