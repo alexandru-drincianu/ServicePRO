@@ -74,6 +74,13 @@ namespace ServicePro.BusinessLogic.Services
             var workorderItem = _mapper.Map<WorkorderItem>(item);
             await _unitOfWork.WorkorderItemRepository.UpdateAsync(workorderItem, id);
 
+            var workorder = await _unitOfWork.WorkorderRepository.GetWorkorderByIdAsync(item.WorkorderId);
+            var workorderItems = await _unitOfWork.WorkorderItemRepository.GetAllForWorkorderAsync(item.WorkorderId);
+
+            workorder.TotalCost = CalculateWorkorderTotal(workorderItems);
+
+            await _unitOfWork.WorkorderRepository.UpdateAsync(workorder, workorder.Id);
+
             return item;
 
         }
@@ -84,6 +91,13 @@ namespace ServicePro.BusinessLogic.Services
             if (workorderItem != null)
             {
                 await _unitOfWork.WorkorderItemRepository.RemoveAsync(workorderItem);
+
+                var workorder = await _unitOfWork.WorkorderRepository.GetWorkorderByIdAsync(workorderItem.WorkorderId);
+                var workorderItems = await _unitOfWork.WorkorderItemRepository.GetAllForWorkorderAsync(workorderItem.WorkorderId);
+
+                workorder.TotalCost = CalculateWorkorderTotal(workorderItems);
+
+                await _unitOfWork.WorkorderRepository.UpdateAsync(workorder, workorder.Id);
 
                 return _mapper.Map<WorkorderItemDTO>(workorderItem);
             }
