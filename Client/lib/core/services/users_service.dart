@@ -197,6 +197,7 @@ class UserService extends BaseHttpService {
         json.encode(
           model,
         ),
+        token,
       );
       return res;
     } on BaseException {

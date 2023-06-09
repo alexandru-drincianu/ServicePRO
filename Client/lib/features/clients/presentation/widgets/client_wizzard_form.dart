@@ -28,8 +28,8 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
 
   String? telephoneNumber = "";
   String countryValue = "";
-  String? stateValue = "";
-  String? cityValue = "";
+  String stateValue = "";
+  String cityValue = "";
 
   @override
   void dispose() {
@@ -55,13 +55,13 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
       case 1:
         return _streetController.text.isNotEmpty &&
             countryValue.isNotEmpty &&
-            cityValue!.isNotEmpty &&
-            stateValue!.isNotEmpty;
+            cityValue.isNotEmpty &&
+            stateValue.isNotEmpty;
       case 2:
         return _streetController.text.isNotEmpty &&
             countryValue.isNotEmpty &&
-            cityValue!.isNotEmpty &&
-            stateValue!.isNotEmpty &&
+            cityValue.isNotEmpty &&
+            stateValue.isNotEmpty &&
             _fullnameController.text.isNotEmpty &&
             _emailController.text.isNotEmpty &&
             telephoneNumber!.isNotEmpty;
@@ -81,9 +81,9 @@ class ClientWizzardFormState extends State<ClientWizzardForm> {
       notes: "",
       address: AddressModel(
         street: _streetController.text,
-        city: cityValue!,
+        city: cityValue,
         country: countryValue.substring(4).trim(),
-        county: stateValue!,
+        county: stateValue,
       ),
     );
     var response = await clientsProvider.createClient(client);
