@@ -54,6 +54,13 @@ namespace ServicePro.BusinessLogic.Services
             var workorderItem = _mapper.Map<WorkorderItem>(item);
             await _unitOfWork.WorkorderItemRepository.AddAsync(workorderItem);
 
+            var workorder = await _unitOfWork.WorkorderRepository.GetWorkorderByIdAsync(item.WorkorderId);
+            var workorderItems = await _unitOfWork.WorkorderItemRepository.GetAllForWorkorderAsync(item.WorkorderId);
+
+            workorder.TotalCost = CalculateWorkorderTotal(workorderItems);
+
+            await _unitOfWork.WorkorderRepository.UpdateAsync(workorder, workorder.Id);
+
             return _mapper.Map<WorkorderItemDTO>(workorderItem);
 
         }
@@ -85,6 +92,23 @@ namespace ServicePro.BusinessLogic.Services
             decimal pricePerMinute = hourlyWage / minutesPerHour;
             decimal price = pricePerMinute * minutes;
             return price;
+        }
+
+        private decimal CalculateWorkorderTotal(List<WorkorderItem> workorderItems)
+        {
+            decimal totalCost = 0;
+            foreach (var workorderItem in workorderItems)
+            {
+                if(workorderItem.LabourId != null && workorderItem.LabourId != 0)
+                {
+                    totalCost += CalculateLabourPrice(workorderItem.Labour.HourlyWage, workorderItem.Labour.Minutes);
+                }
+                if (workorderItem.ConsumableId != null && workorderItem.ConsumableId != 0)
+                {
+                    totalCost += workorderItem.Consumable.Price * workorderItem.Quantity;
+                }
+            }
+            return totalCost;
         }
     }
 }

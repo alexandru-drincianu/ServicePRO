@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/models/WorkorderModels/workorder_model.dart';
@@ -95,6 +96,7 @@ class WorkordersPageState extends State<WorkordersPage> {
                           DataColumn(label: SizedBox(width: 10)),
                           DataColumn(label: Text("Number")),
                           DataColumn(label: Text("Vehicle")),
+                          DataColumn(label: Text("Arrived date")),
                           DataColumn(label: Text("Client")),
                           DataColumn(label: Text("Total cost")),
                           DataColumn(label: Text("Status")),
@@ -148,6 +150,9 @@ class _VehiclesDataSource extends DataTableSource {
         ),
         DataCell(Text(workorder.number!)),
         DataCell(Text(workorder.vehicle!.registration!)),
+        DataCell(Text(
+          DateFormat('yyyy-MM-dd').format(workorder.arrivedDate!),
+        )),
         DataCell(Text(workorder.vehicle!.user!.name)),
         DataCell(Text(workorder.totalCost!.toString())),
         DataCell(Text(WorkorderStatusString[workorder.status!] ?? '')),

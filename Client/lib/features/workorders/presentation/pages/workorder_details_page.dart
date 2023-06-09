@@ -173,6 +173,7 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                                 var updatedWorkorder = _workorderData.copyWith(
                                   isInvoiced: true,
                                   status: WorkorderStatus.invoiced.index,
+                                  departedDate: DateTime.now(),
                                 );
                                 await updateAndShowToast(
                                   "Workorder invoiced!",
