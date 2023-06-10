@@ -2,10 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_credit_card/credit_card_brand.dart';
+import 'package:flutter_credit_card/credit_card_form.dart';
+import 'package:flutter_credit_card/credit_card_model.dart';
+import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:flutter_credit_card/custom_card_type_icon.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:service_pro/core/custom_colors.dart';
 import 'package:service_pro/core/enums/enums.dart';
 import 'package:service_pro/core/helpers/pdf_provider.dart';
 import 'package:service_pro/core/localization/localization.dart';
@@ -53,6 +59,22 @@ class UserInvoicesPageState extends State<UserInvoicesPage> {
       _filterInvoices = invoicesData;
       _setupComplete = true;
     });
+  }
+
+  Future<void> updateInvoice(InvoiceModel invoice) async {
+    final invoicesProvider = context.read<InvoicesProvider>();
+    final result = await invoicesProvider.updateInvoice(invoice);
+    if (result.statusCode == 200) {
+      showToastSucceded("Invoice paid!");
+      int index = _invoices.indexWhere((item) => item.id == invoice.id);
+      if (index != -1) {
+        setState(() {
+          _invoices[index] = invoice;
+        });
+      }
+    } else {
+      showToastFailed("Payment failed!");
+    }
   }
 
   @override
@@ -112,7 +134,8 @@ class UserInvoicesPageState extends State<UserInvoicesPage> {
                           DataColumn(label: SizedBox(width: 10)),
                         ],
                         columnSpacing: 10,
-                        source: _InvoicesDataSource(_invoices, context),
+                        source: _InvoicesDataSource(
+                            _invoices, context, updateInvoice),
                         rowsPerPage: _invoices.isEmpty
                             ? 1
                             : _invoices.length < 10
@@ -132,8 +155,9 @@ class UserInvoicesPageState extends State<UserInvoicesPage> {
 class _InvoicesDataSource extends DataTableSource {
   final List<InvoiceModel> _invoices;
   final BuildContext _context;
+  Function updateInvoice;
 
-  _InvoicesDataSource(this._invoices, this._context);
+  _InvoicesDataSource(this._invoices, this._context, this.updateInvoice);
 
   @override
   DataRow getRow(int index) {
@@ -218,7 +242,11 @@ class _InvoicesDataSource extends DataTableSource {
           invoice.invoiceStatus == InvoiceStatus.open.index
               ? GestureDetector(
                   onTap: () {
-                    print("pay");
+                    _showModal(
+                      _context,
+                      updateInvoice,
+                      invoice,
+                    );
                   },
                   child: const Icon(
                     Icons.payment,
@@ -250,4 +278,115 @@ Future<void> savePDFFile(File pdfFile) async {
   } on PlatformException catch (e) {
     showToastFailed('Failed to save PDF: ${e.message}');
   }
+}
+
+void _showModal(
+  BuildContext context,
+  Function updateInvoice,
+  InvoiceModel invoice,
+) {
+  String cardNumber = '';
+  String expiryDate = '';
+  String cardHolderName = '';
+  String cvvCode = '';
+  bool isCvvFocused = false;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  showModalBottomSheet<void>(
+    isScrollControlled: true,
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            height: 700,
+            color: Colors.black12,
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CreditCardWidget(
+                    cardBgColor: CustomColors.nroGreen,
+                    cardNumber: cardNumber,
+                    expiryDate: expiryDate,
+                    cardHolderName: cardHolderName,
+                    cvvCode: cvvCode,
+                    showBackView: isCvvFocused,
+                    onCreditCardWidgetChange:
+                        (CreditCardBrand creditCardBrand) {},
+                    customCardTypeIcons: const <CustomCardTypeIcon>[],
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        CreditCardForm(
+                          obscureCvv: true,
+                          obscureNumber: true,
+                          cardNumber: cardNumber,
+                          cvvCode: cvvCode,
+                          isHolderNameVisible: true,
+                          isCardNumberVisible: true,
+                          isExpiryDateVisible: true,
+                          cardHolderName: cardHolderName,
+                          expiryDate: expiryDate,
+                          themeColor: Colors.blue,
+                          textColor: Colors.black,
+                          formKey: formKey,
+                          onCreditCardModelChange:
+                              (CreditCardModel? creditCardModel) {
+                            setState(() {
+                              cardNumber = creditCardModel!.cardNumber;
+                              expiryDate = creditCardModel.expiryDate;
+                              cardHolderName = creditCardModel.cardHolderName;
+                              cvvCode = creditCardModel.cvvCode;
+                              isCvvFocused = creditCardModel.isCvvFocused;
+                            });
+                          },
+                        ),
+                      ]),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        updateInvoice(invoice.copyWith(
+                          invoiceStatus: InvoiceStatus.paid.index,
+                        ));
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      decoration: const BoxDecoration(
+                        color: CustomColors.nroGreen,
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Pay',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'halter',
+                          fontSize: 14,
+                          package: 'flutter_credit_card',
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
 }

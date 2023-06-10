@@ -73,8 +73,8 @@ namespace ServicePro.API.Controllers
                 return BadRequest("Invalid request");
             }
 
-            var consumable = await _invoiceService.UpdateAsync(newInvoice, id);
-            return Ok(consumable);
+            var invoice = await _invoiceService.UpdateAsync(newInvoice, id);
+            return Ok(invoice);
         }
 
         [HttpDelete("{invoiceId}")]
