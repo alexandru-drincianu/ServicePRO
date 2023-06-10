@@ -22,6 +22,14 @@ namespace ServcicePro.DataAccess.Repository
             return await _context.Set<Workorder>().Include(wo => wo.Vehicle).ThenInclude(v => v.User).OrderByDescending(i => i.ArrivedDate).ToListAsync();
         }
 
+        public async Task<List<Workorder>> GetAllWorkordersForUserAsync(int userId)
+        {
+            return await _context.Set<Workorder>().Include(wo => wo.Vehicle).ThenInclude(v => v.User)
+                .Where(wo => wo.Vehicle.UserId == userId)
+                .OrderByDescending(i => i.ArrivedDate)
+                .ToListAsync();
+        }
+
         public async Task<Workorder> GetWorkorderByIdAsync(int id)
         {
             return await _context.Set<Workorder>().Include(wo => wo.Vehicle).ThenInclude(v => v.User).FirstOrDefaultAsync(wo => wo.Id == id);

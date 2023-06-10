@@ -29,6 +29,15 @@ namespace ServicePro.API.Controllers
             return Ok(invoices);
         }
 
+        [HttpGet]
+        [Route("user/{userId}")]
+        [ProducesResponseType(typeof(IEnumerable<InvoiceDTO>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllForUser(int userId)
+        {
+            var invoices = await _invoiceService.GetAllForUser(userId);
+            return Ok(invoices);
+        }
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(InvoiceDTO), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetById(int id)

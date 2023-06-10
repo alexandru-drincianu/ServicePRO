@@ -115,17 +115,21 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               onTap: () => router.replace(const ClientsRoute()),
             ),
-          if (_user?.role != UserRole.client.index)
-            ListTile(
-              leading: const Icon(Icons.directions_car),
-              title: Text(
-                context.translate(
-                  TranslationKeys.vehicles,
-                ),
+          ListTile(
+            leading: const Icon(Icons.directions_car),
+            title: Text(
+              context.translate(
+                TranslationKeys.vehicles,
               ),
-              onTap: () => router.replace(const VehiclesRoute()),
             ),
-          if (_user?.role == UserRole.admin.index)
+            onTap: () {
+              _user?.role == UserRole.client.index
+                  ? router.replace(UserVehiclesRoute(id: _user!.id))
+                  : router.replace(const VehiclesRoute());
+            },
+          ),
+          if (_user?.role == UserRole.admin.index ||
+              _user?.role == UserRole.client.index)
             ListTile(
               leading: const Icon(Icons.document_scanner),
               title: Text(
@@ -133,18 +137,25 @@ class _AppDrawerState extends State<AppDrawer> {
                   TranslationKeys.invoices,
                 ),
               ),
-              onTap: () => router.replace(const InvoicesRoute()),
+              onTap: () {
+                _user?.role == UserRole.admin.index
+                    ? router.replace(const InvoicesRoute())
+                    : router.replace(UserInvoicesRoute(id: _user!.id));
+              },
             ),
-          if (_user?.role != UserRole.client.index)
-            ListTile(
-              leading: const Icon(Icons.construction),
-              title: Text(
-                context.translate(
-                  TranslationKeys.workorders,
-                ),
+          ListTile(
+            leading: const Icon(Icons.construction),
+            title: Text(
+              context.translate(
+                TranslationKeys.workorders,
               ),
-              onTap: () => router.replace(const WorkordersRoute()),
             ),
+            onTap: () {
+              _user?.role == UserRole.client.index
+                  ? router.replace(UserWorkordersRoute(id: _user!.id))
+                  : router.replace(const WorkordersRoute());
+            },
+          ),
           if (_user?.role != UserRole.client.index)
             ListTile(
               leading: const Icon(Icons.warehouse),

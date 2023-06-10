@@ -31,5 +31,14 @@ namespace ServcicePro.DataAccess.Repository
                 .OrderByDescending(i => i.CreatedDate)
                 .ToListAsync();
         }
+
+        public async Task<List<Invoice>> GetAllForUserAsync(int userId)
+        {
+            return await _context.Set<Invoice>()
+                .Include(i => i.Workorder).ThenInclude(w => w.Vehicle).ThenInclude(v => v.User).ThenInclude(u => u.Address)
+                .Where(i => i.Workorder.Vehicle.UserId == userId)
+                .OrderByDescending(i => i.CreatedDate)
+                .ToListAsync();
+        }
     }
 }

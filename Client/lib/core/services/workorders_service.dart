@@ -44,6 +44,39 @@ class WorkorderService extends BaseHttpService {
     return List<WorkorderModel>.empty();
   }
 
+  Future<List<WorkorderModel>> getWorkordersForUser(int userId) async {
+    try {
+      final res = await get(
+        buildUri(
+          Constants.apiBaseUrl,
+          "$_workordersPath/user/$userId",
+        ),
+        token,
+      );
+      if (res.statusCode == HttpStatus.ok) {
+        List<dynamic> body = jsonDecode(res.body);
+        List<WorkorderModel> result = body
+            .map(
+              (item) => WorkorderModel.fromJson(item),
+            )
+            .toList();
+        return result;
+      }
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+    return List<WorkorderModel>.empty();
+  }
+
   Future<WorkorderModel?> getWorkorderById(int id) async {
     try {
       final res = await get(

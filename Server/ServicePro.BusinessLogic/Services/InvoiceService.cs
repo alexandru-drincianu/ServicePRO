@@ -28,6 +28,12 @@ namespace ServicePro.BusinessLogic.Services
             return _mapper.Map<IEnumerable<InvoiceDTO>>(invoices);
         }
 
+        public async Task<IEnumerable<InvoiceDTO>> GetAllForUser(int userId)
+        {
+            var invoices = await _unitOfWork.InvoiceRepository.GetAllForUserAsync(userId);
+            return _mapper.Map<IEnumerable<InvoiceDTO>>(invoices);
+        }
+
         public async Task<InvoiceDTO> GetByIdAsync(int Id, bool applyChanges = true)
         {
             var invoice = await _unitOfWork.InvoiceRepository.GetInvoiceByIdAsync(Id);

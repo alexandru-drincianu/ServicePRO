@@ -13,13 +13,20 @@ class ClientHomePage extends StatefulWidget {
 class ClientHomePageState extends State<ClientHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        Text(
-          "Client Home Page",
+    return const Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SizedBox(
+            child: Text(
+              "Welcome to ServicePRO!",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+            ),
+          ),
         ),
-      ],
-      // Add the ClientWizzardForm as a child widget here
+      ),
     );
   }
 }

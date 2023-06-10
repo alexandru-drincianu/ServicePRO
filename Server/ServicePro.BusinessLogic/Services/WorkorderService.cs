@@ -32,6 +32,12 @@ namespace ServicePro.BusinessLogic.Services
             return _mapper.Map<IEnumerable<WorkorderDTO>>(workorders);
         }
 
+        public async Task<IEnumerable<WorkorderDTO>> GetAllForUser(int userId)
+        {
+            var workorders = await _unitOfWork.WorkorderRepository.GetAllWorkordersForUserAsync(userId);
+            return _mapper.Map<IEnumerable<WorkorderDTO>>(workorders);
+        }
+
         public async Task<WorkorderDTO> GetByIdAsync(int Id, bool applyChanges = true)
         {
             var workorder = await _unitOfWork.WorkorderRepository.GetWorkorderByIdAsync(Id);

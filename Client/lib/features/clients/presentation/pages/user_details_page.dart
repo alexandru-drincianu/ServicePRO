@@ -13,6 +13,8 @@ import 'package:service_pro/features/clients/provider/clients_provider.dart';
 
 import '../../../../core/custom_colors.dart';
 import '../../../../core/widgets/app_drawer.dart';
+import '../../../../routing/app_router.dart';
+import '../../../../routing/app_router.gr.dart';
 import '../../../login/provider/login_provider.dart';
 
 class UserDetailsPage extends StatefulWidget {

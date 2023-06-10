@@ -27,6 +27,23 @@ class InvoicesProvider extends ChangeNotifier {
     return List<InvoiceModel>.empty();
   }
 
+  Future<List<InvoiceModel>> getInvoicesForUser(int userId) async {
+    try {
+      final res = await _invoiceService.getInvoicesForUser(userId);
+      return res;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+    } finally {
+      // After changing state to success or error, rebuild widgets.
+      notifyListeners();
+    }
+    return List<InvoiceModel>.empty();
+  }
+
   Future<InvoiceModel?> getInvoiceById(int id) async {
     try {
       final res = await _invoiceService.getInvoiceById(id);

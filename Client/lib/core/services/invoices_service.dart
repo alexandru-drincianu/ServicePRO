@@ -45,6 +45,39 @@ class InvoiceService extends BaseHttpService {
     return List<InvoiceModel>.empty();
   }
 
+  Future<List<InvoiceModel>> getInvoicesForUser(int userId) async {
+    try {
+      final res = await get(
+        buildUri(
+          Constants.apiBaseUrl,
+          "$_invoicesPath/user/$userId",
+        ),
+        token,
+      );
+      if (res.statusCode == HttpStatus.ok) {
+        List<dynamic> body = jsonDecode(res.body);
+        List<InvoiceModel> result = body
+            .map(
+              (item) => InvoiceModel.fromJson(item),
+            )
+            .toList();
+        return result;
+      }
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+    return List<InvoiceModel>.empty();
+  }
+
   Future<InvoiceModel?> getInvoiceById(int id) async {
     try {
       final res = await get(

@@ -11,6 +11,7 @@ namespace ServicePro.BusinessLogic.Services.Abstractions
     public interface IWorkorderService
     {
         public Task<IEnumerable<WorkorderDTO>> GetAll();
+        Task<IEnumerable<WorkorderDTO>> GetAllForUser(int userId);
         public Task<WorkorderDTO> AddAsync(WorkorderDTO item, bool applyChanges = true);
         public Task<WorkorderDTO> UpdateAsync(WorkorderDTO item, int id, bool applyChanges = true);
         public Task<WorkorderDTO> RemoveAsync(int orderId, bool applyChanges = true);

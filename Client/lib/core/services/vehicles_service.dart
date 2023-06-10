@@ -48,6 +48,39 @@ class VehicleService extends BaseHttpService {
     return List<VehicleModel>.empty();
   }
 
+  Future<List<VehicleModel>> getVehiclesForUser(int userId) async {
+    try {
+      final res = await get(
+        buildUri(
+          Constants.apiBaseUrl,
+          "$_vehiclesPath/user/$userId",
+        ),
+        token,
+      );
+      if (res.statusCode == HttpStatus.ok) {
+        List<dynamic> body = jsonDecode(res.body);
+        List<VehicleModel> result = body
+            .map(
+              (item) => VehicleModel.fromJson(item),
+            )
+            .toList();
+        return result;
+      }
+    } on BaseException {
+      rethrow;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+      throw const BaseException(
+        errorId: 'registration_error',
+      );
+    }
+    return List<VehicleModel>.empty();
+  }
+
   Future<VehicleModel?> getVehicleById(int id) async {
     try {
       final res = await get(

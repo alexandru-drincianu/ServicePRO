@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:service_pro/features/admin/presentation/pages/admin_panel_page.dart';
 import 'package:service_pro/features/info/presentation/pages/new_mechanic_info_page.dart';
 import 'package:service_pro/features/vehicles/presentation/pages/create_vehicle_page.dart';
+import 'package:service_pro/features/vehicles/presentation/pages/user_vehicle_page.dart';
 import 'package:service_pro/features/workorderItems/presentation/pages/workorder_items_page.dart';
 import 'package:service_pro/features/workorders/presentation/pages/workorder_details_page.dart';
 
@@ -9,6 +10,7 @@ import '../features/clients/presentation/pages/clients_page.dart';
 import '../features/clients/presentation/pages/create_client_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/invoices/presentation/pages/invoices_page.dart';
+import '../features/invoices/presentation/pages/user_invoices_page.dart';
 import '../features/login/presentation/pages/login_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 import '../features/vehicles/presentation/pages/vehicles_page.dart';
@@ -16,6 +18,7 @@ import '../features/vehicles/presentation/pages/vehicle_details_page.dart';
 import '../features/warehouse/presentation/pages/consumable_details_page.dart';
 import '../features/warehouse/presentation/pages/labour_details_page.dart';
 import '../features/warehouse/presentation/pages/warehouse_page.dart';
+import '../features/workorders/presentation/pages/user_workorders_page.dart';
 import '../features/workorders/presentation/pages/workorders_page.dart';
 import '../features/clients/presentation/pages/user_details_page.dart';
 import 'app_router.gr.dart';
@@ -122,6 +125,21 @@ part 'routes.dart';
     AutoRoute(
       path: Routes.invoices,
       page: InvoicesPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.userInvoices,
+      page: UserInvoicesPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.userVehicles,
+      page: UserVehiclesPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.userWorkorders,
+      page: UserWorkordersPage,
       guards: [AuthGuard],
     ),
     // Unknown routes will take users to home page.

@@ -13,6 +13,7 @@ namespace ServicePro.BusinessLogic.Services.Abstractions
     public interface IVehicleService
     {
         Task<IEnumerable<VehicleResponseDTO>> GetAll();
+        Task<IEnumerable<VehicleResponseDTO>> GetAllForUser(int userId);
         Task<VehicleResponseDTO> CreateAsync(VehicleRequestDTO item);
         Task<VehicleResponseDTO> GetById(int id);
         Task<VehicleScanModel> UploadLicensePlatePhoto(IFormFile picture);

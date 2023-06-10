@@ -31,6 +31,15 @@ namespace ServicePro.API.Controllers
         }
 
         [HttpGet]
+        [Route("user/{userId}")]
+        [ProducesResponseType(typeof(IEnumerable<VehicleResponseDTO>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllForUser(int userId)
+        {
+            var vehicles = await _vehicleService.GetAllForUser(userId);
+            return Ok(vehicles);
+        }
+
+        [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(typeof(VehicleResponseDTO), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetVehicleById([FromRoute] int id)

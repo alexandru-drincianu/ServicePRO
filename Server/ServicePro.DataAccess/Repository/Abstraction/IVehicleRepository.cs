@@ -11,6 +11,7 @@ namespace ServcicePro.DataAccess.Repository.Abstraction
     public interface IVehicleRepository
     {
         Task<List<Vehicle>> GetVehiclesAsync();
+        Task<List<Vehicle>> GetVehiclesForUserAsync(int userId);
         Task<Vehicle> GetVehicleByIdAsync(int id);
         Task<Vehicle> GetVehicleByLicensePlateAsync(string licensePlate);
         Task AddAsync(Vehicle item, bool applyChanges = true);

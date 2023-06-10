@@ -21,11 +21,13 @@ class Routes {
   static const vehicles = '/vehicles';
   static const createVehicles = '/vehicles/create';
   static const vehicleDetails = '/vehicles/:id';
+  static const userVehicles = '/user/:id/vehicles';
 
   // workorder
   static const workorders = '/workorders';
   static const workorderDetails = '/workorders/:id';
   static const workorderItems = '/workorders/:id/items/';
+  static const userWorkorders = '/user/:id/workorders';
 
   // warehouse
   static const warehouse = '/warehouse';
@@ -34,4 +36,5 @@ class Routes {
 
   // invoices
   static const invoices = '/invoices';
+  static const userInvoices = '/user/:id/invoices';
 }

@@ -26,6 +26,23 @@ class WorkordersProvider extends ChangeNotifier {
     return List<WorkorderModel>.empty();
   }
 
+  Future<List<WorkorderModel>> getWorkordersForUser(int userId) async {
+    try {
+      final res = await _workorderService.getWorkordersForUser(userId);
+      return res;
+    } catch (e, stacktrace) {
+      Fimber.e(
+        'Unhandled error',
+        ex: e,
+        stacktrace: stacktrace,
+      );
+    } finally {
+      // After changing state to success or error, rebuild widgets.
+      notifyListeners();
+    }
+    return List<WorkorderModel>.empty();
+  }
+
   Future<WorkorderModel?> getWorkorderById(int id) async {
     try {
       final res = await _workorderService.getWorkorderById(id);

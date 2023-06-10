@@ -28,6 +28,15 @@ namespace ServicePro.API.Controllers
             return Ok(workorders);
         }
 
+        [HttpGet]
+        [Route("user/{userId}")]
+        [ProducesResponseType(typeof(IEnumerable<WorkorderDTO>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllForUser(int userId)
+        {
+            var workorders = await _workorderService.GetAllForUser(userId);
+            return Ok(workorders);
+        }
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(WorkorderDTO), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetById(int id)
