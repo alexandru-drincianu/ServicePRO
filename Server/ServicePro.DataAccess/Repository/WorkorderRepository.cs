@@ -4,6 +4,7 @@ using ServicePro.DataAccess.Context;
 using ServicePro.DataAccess.Entities;
 using ServicePro.DataAccess.Repository;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ServcicePro.DataAccess.Repository
@@ -18,7 +19,7 @@ namespace ServcicePro.DataAccess.Repository
 
         public async Task<List<Workorder>> GetAllWorkordersAsync()
         {
-            return await _context.Set<Workorder>().Include(wo => wo.Vehicle).ThenInclude(v => v.User).ToListAsync();
+            return await _context.Set<Workorder>().Include(wo => wo.Vehicle).ThenInclude(v => v.User).OrderByDescending(i => i.ArrivedDate).ToListAsync();
         }
 
         public async Task<Workorder> GetWorkorderByIdAsync(int id)

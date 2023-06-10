@@ -71,7 +71,8 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
 
     if (workorderItem.labourId != null) {
       foundItem = _workorderItems.indexWhere(
-              (item) => item.labourId == updatedWorkorderItem.labourId) !=
+            (item) => item.labourId == updatedWorkorderItem.labourId,
+          ) !=
           -1;
     }
 
@@ -109,7 +110,7 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
   double calculateTotalPrice() {
     double totalPrice = 0.0;
     for (var wi in _workorderItems) {
-      totalPrice += wi.totalCost!;
+      totalPrice += double.tryParse(wi.totalCost!.toStringAsFixed(2)) ?? 0.0;
     }
     return totalPrice;
   }
