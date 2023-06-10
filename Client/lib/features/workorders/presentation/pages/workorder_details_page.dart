@@ -236,8 +236,9 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                 _buildRow(
                   icon: Icons.note,
                   label: 'Remarks:',
-                  text:
-                      _workorderData.isInvoiced! ? _workorderData.remarks! : "",
+                  text: _workorderData.isInvoiced!
+                      ? _workorderData.remarks ?? ""
+                      : "",
                 ),
                 _workorderData.isInvoiced!
                     ? const SizedBox()

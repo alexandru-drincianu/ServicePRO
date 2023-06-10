@@ -1,0 +1,15 @@
+﻿using ServicePro.BusinessLogic.DTOs.Invoices;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace ServicePro.BusinessLogic.Services.Abstractions
+{
+    public interface IInvoiceService
+    {
+        public Task<IEnumerable<InvoiceDTO>> GetAll();
+        public Task<InvoiceDTO> AddAsync(InvoiceDTO item, bool applyChanges = true);
+        public Task<InvoiceDTO> UpdateAsync(InvoiceDTO item, int id, bool applyChanges = true);
+        public Task<InvoiceDTO> RemoveAsync(int Id, bool applyChanges = true);
+        public Task<InvoiceDTO> GetByIdAsync(int Id, bool applyChanges = true);
+    }
+}

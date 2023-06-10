@@ -26,6 +26,7 @@ namespace ServicePro.DataAccess.Context
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Labour> Labours { get; set; }
         public virtual DbSet<Consumable> Consumables { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
 
 
 

@@ -21,6 +21,7 @@ namespace ServicePro.DataAccess.Repository
         public IWorkorderItemRepository WorkorderItemRepository { get; }
         public IConsumableRepository ConsumableRepository { get; }
         public ILabourRepository LabourRepository { get; }
+        public IInvoiceRepository InvoiceRepository { get; }
 
         #endregion
 
@@ -34,7 +35,7 @@ namespace ServicePro.DataAccess.Repository
             WorkorderItemRepository = new WorkorderItemRepository(dbContext);
             ConsumableRepository = new ConsumableRepository(dbContext);
             LabourRepository = new LabourRepository(dbContext);
-            
+            InvoiceRepository = new InvoiceRepository(dbContext);
         }
 
         public int CommitChanges()
