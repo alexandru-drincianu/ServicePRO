@@ -1,4 +1,5 @@
 ﻿using ServicePro.BusinessLogic.DTOs.Invoices;
+using ServicePro.BusinessLogic.DTOs.Orders;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace ServicePro.BusinessLogic.Services.Abstractions
     {
         public Task<IEnumerable<InvoiceDTO>> GetAll();
         public Task<InvoiceDTO> AddAsync(InvoiceDTO item, bool applyChanges = true);
+        public Task<InvoiceDTO> CreateFromWorkorder(WorkorderDTO workorderDTO);
         public Task<InvoiceDTO> UpdateAsync(InvoiceDTO item, int id, bool applyChanges = true);
         public Task<InvoiceDTO> RemoveAsync(int Id, bool applyChanges = true);
         public Task<InvoiceDTO> GetByIdAsync(int Id, bool applyChanges = true);

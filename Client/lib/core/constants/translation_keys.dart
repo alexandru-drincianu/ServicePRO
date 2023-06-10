@@ -26,6 +26,7 @@ class TranslationKeys {
   static const workorderDetails = 'workorder_details';
   static const consumableDetails = 'consumable_details';
   static const labourDetails = 'labour_details';
+  static const invoices = 'invoices';
 
   // Login Page
   static const username = 'login_username';

@@ -12,7 +12,7 @@ namespace ServicePro.BusinessLogic.DTOs.Orders
 
     public class WorkorderDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? VehicleId { get; set; }
         public Vehicle? Vehicle { get; set; }
         public WorkorderStatus? Status { get; set; }

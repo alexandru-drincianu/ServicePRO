@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using ServicePro.BusinessLogic.DTOs.Invoices;
+using ServicePro.BusinessLogic.DTOs.Orders;
 using ServicePro.BusinessLogic.Services.Abstractions;
+using ServicePro.Common.Enums;
 using ServicePro.DataAccess.Entities;
 using ServicePro.DataAccess.Repository.Abstraction;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -38,6 +41,28 @@ namespace ServicePro.BusinessLogic.Services
             await _unitOfWork.InvoiceRepository.AddAsync(invoice);
 
             return item;
+
+        }
+
+        public async Task<InvoiceDTO> CreateFromWorkorder(WorkorderDTO workorderDTO)
+        {
+            var workorder = await _unitOfWork.WorkorderRepository.GetWorkorderByIdAsync(workorderDTO.Id);
+            workorder.Status = WorkorderStatus.Invoiced;
+            workorder.DepartedDate = DateTime.Now;
+            workorder.IsInvoiced = true;
+            await _unitOfWork.WorkorderRepository.UpdateAsync(workorder, workorder.Id);
+
+            var invoice = new Invoice
+            {
+                InvoiceStatus = InvoiceStatus.Open,
+                CreatedDate = DateTime.Now,
+                WorkorderId = workorder.Id,
+                Number = $"INV-{workorder.Id}",
+            };
+
+            await _unitOfWork.InvoiceRepository.AddAsync(invoice);
+
+            return _mapper.Map<InvoiceDTO>(invoice);
 
         }
 

@@ -56,6 +56,9 @@ namespace ServicePro.DataAccess.Context
             modelBuilder.Entity<Labour>()
                         .Property(p => p.HourlyWage)
                         .HasColumnType("decimal(18,4)");
+            modelBuilder.Entity<WorkorderItem>()
+                        .Property(p => p.TotalCost)
+                        .HasColumnType("decimal(18,4)");
         }
     }
 }

@@ -8,8 +8,9 @@ namespace ServicePro.BusinessLogic.DTOs.Invoices
     {
         public int Id { get; set; }
         public string Number { get; set; }
+        public int WorkorderId { get; set;}
         public WorkorderDTO Workorder { get; set; }
         public InvoiceStatus InvoiceStatus { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

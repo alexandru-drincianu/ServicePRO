@@ -8,6 +8,7 @@ import 'package:service_pro/features/workorders/presentation/pages/workorder_det
 import '../features/clients/presentation/pages/clients_page.dart';
 import '../features/clients/presentation/pages/create_client_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
+import '../features/invoices/presentation/pages/invoices_page.dart';
 import '../features/login/presentation/pages/login_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 import '../features/vehicles/presentation/pages/vehicles_page.dart';
@@ -116,6 +117,11 @@ part 'routes.dart';
     AutoRoute(
       path: Routes.workorderItems,
       page: WorkorderItemsPage,
+      guards: [AuthGuard],
+    ),
+    AutoRoute(
+      path: Routes.invoices,
+      page: InvoicesPage,
       guards: [AuthGuard],
     ),
     // Unknown routes will take users to home page.

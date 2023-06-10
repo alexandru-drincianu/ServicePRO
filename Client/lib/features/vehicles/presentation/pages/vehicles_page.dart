@@ -49,6 +49,7 @@ class VehiclesPageState extends State<VehiclesPage> {
   void createWorkorder(int vehicleId) async {
     final workordersProvider = context.read<WorkordersProvider>();
     final model = WorkorderModel(
+      id: 0,
       vehicleId: vehicleId,
       status: WorkorderStatus.arrived.index,
       arrivedDate: DateTime.now(),

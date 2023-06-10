@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:service_pro/core/services/consumables_service.dart';
+import 'package:service_pro/core/services/invoices_service.dart';
 import 'package:service_pro/core/services/labours_service.dart';
 import 'package:service_pro/core/services/users_service.dart';
 import 'package:service_pro/core/services/vehicles_service.dart';
@@ -28,4 +29,5 @@ void setupLocator() {
   locator.registerLazySingleton<WorkorderItemService>(
     () => WorkorderItemService(),
   );
+  locator.registerLazySingleton<InvoiceService>(() => InvoiceService());
 }

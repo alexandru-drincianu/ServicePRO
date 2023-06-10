@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:service_pro/core/localization/localization.dart';
 import 'package:service_pro/core/models/WorkorderModels/workorder_model.dart';
 import 'package:service_pro/core/widgets/toast_message.dart';
+import 'package:service_pro/features/invoices/provider/invoices_provider.dart';
 import 'package:service_pro/features/workorders/provider/workorders_provider.dart';
 
 import '../../../../core/custom_colors.dart';
@@ -175,7 +176,7 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                                   status: WorkorderStatus.invoiced.index,
                                   departedDate: DateTime.now(),
                                 );
-                                await updateAndShowToast(
+                                await invoice(
                                   "Workorder invoiced!",
                                   updatedWorkorder,
                                 );
@@ -310,6 +311,23 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
             ),
       drawer: const AppDrawer(),
     );
+  }
+
+  Future<void> invoice(
+    String message,
+    WorkorderModel workorder,
+  ) async {
+    var response = await context
+        .read<InvoicesProvider>()
+        .createInvoiceFromWorkorder(workorder);
+    if (response != null && response != 0) {
+      setState(() {
+        _workorderData = workorder;
+      });
+      showToastSucceded(message);
+    } else {
+      showToastFailed("Failed to create invoice!");
+    }
   }
 
   Future<void> updateAndShowToast(

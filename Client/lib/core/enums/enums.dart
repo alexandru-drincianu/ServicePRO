@@ -40,3 +40,10 @@ final Map<int, String> WorkorderItemTypeString = {
   WorkorderItemType.consumable.index: 'Consumable',
   WorkorderItemType.labour.index: 'Labour',
 };
+
+enum InvoiceStatus { open, paid }
+
+final Map<int, String> InvoiceStatusString = {
+  InvoiceStatus.open.index: 'Open',
+  InvoiceStatus.paid.index: 'Paid',
+};

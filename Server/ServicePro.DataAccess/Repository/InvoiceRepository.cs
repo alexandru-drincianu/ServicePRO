@@ -28,6 +28,7 @@ namespace ServcicePro.DataAccess.Repository
         {
             return await _context.Set<Invoice>()
                 .Include(i => i.Workorder).ThenInclude(w => w.Vehicle).ThenInclude(v => v.User)
+                .OrderByDescending(i => i.CreatedDate)
                 .ToListAsync();
         }
     }

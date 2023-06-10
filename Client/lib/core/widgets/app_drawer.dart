@@ -125,6 +125,16 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               onTap: () => router.replace(const VehiclesRoute()),
             ),
+          if (_user?.role == UserRole.admin.index)
+            ListTile(
+              leading: const Icon(Icons.document_scanner),
+              title: Text(
+                context.translate(
+                  TranslationKeys.invoices,
+                ),
+              ),
+              onTap: () => router.replace(const InvoicesRoute()),
+            ),
           if (_user?.role != UserRole.client.index)
             ListTile(
               leading: const Icon(Icons.construction),

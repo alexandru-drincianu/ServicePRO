@@ -14,6 +14,6 @@ namespace ServicePro.DataAccess.Entities
         [ForeignKey("WorkorderId")]
         public Workorder Workorder { get; set; }
         public InvoiceStatus InvoiceStatus { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

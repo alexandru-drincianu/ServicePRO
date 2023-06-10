@@ -19,6 +19,7 @@
   "workorder_details":"Workorder details",
   "consumable_details":"Consumable details",
   "labour_details":"Labour details",
+  "invoices":"Invoices",
   "user_details":"User details",
   "home_title": "Home",
   "add_order_error": "Add order failed.",

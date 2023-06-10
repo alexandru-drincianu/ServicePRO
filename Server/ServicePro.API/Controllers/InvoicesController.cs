@@ -33,16 +33,25 @@ namespace ServicePro.API.Controllers
         [ProducesResponseType(typeof(InvoiceDTO), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetById(int id)
         {
-            var consumable = await _invoiceService.GetByIdAsync(id);
-            return Ok(consumable);
+            var invoice = await _invoiceService.GetByIdAsync(id);
+            return Ok(invoice);
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(InvoiceDTO), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> Create([FromBody] InvoiceDTO newInvoice)
         {
-            var consumable = await _invoiceService.AddAsync(newInvoice);
-            return Created(nameof(GetById), consumable); ;
+            var invoice = await _invoiceService.AddAsync(newInvoice);
+            return Created(nameof(GetById), invoice); ;
+        }
+
+        [HttpPost]
+        [Route("fromWorkorder")]
+        [ProducesResponseType(typeof(InvoiceDTO), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> CreateFromWorkorder([FromBody] WorkorderDTO workorderDTO)
+        {
+            var invoice = await _invoiceService.CreateFromWorkorder(workorderDTO);
+            return Created(nameof(GetById), invoice); ;
         }
 
         [HttpPut("{id}")]

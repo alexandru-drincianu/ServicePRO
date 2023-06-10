@@ -31,4 +31,7 @@ class Routes {
   static const warehouse = '/warehouse';
   static const consumableDetails = '/consumables/:id';
   static const labourDetails = '/labours/:id';
+
+  // invoices
+  static const invoices = '/invoices';
 }
