@@ -1,12 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:service_pro/core/enums/enums.dart';
+import 'package:service_pro/core/helpers/pdf_provider.dart';
 import 'package:service_pro/core/localization/localization.dart';
 import 'package:service_pro/core/models/InvoiceModels/invoice_model.dart';
+import 'package:service_pro/core/widgets/toast_message.dart';
+import 'package:service_pro/routing/routing.dart';
+import 'package:path/path.dart' as path;
 
 import '../../../../core/widgets/app_drawer.dart';
 import '../../../../routing/app_router.dart';
+import '../../../workorderItems/provider/workorder_item_provider.dart';
 import '../../provider/invoices_provider.dart';
 
 class InvoicesPage extends StatefulWidget {
@@ -92,15 +102,17 @@ class InvoicesPageState extends State<InvoicesPage> {
                           ),
                         ),
                         columns: const [
+                          DataColumn(label: SizedBox(width: 10)),
                           DataColumn(label: Text("Number")),
                           DataColumn(label: Text("Vehicle")),
                           DataColumn(label: Text("Created Date")),
                           DataColumn(label: Text("Client")),
                           DataColumn(label: Text("Total cost")),
                           DataColumn(label: Text("Status")),
+                          DataColumn(label: SizedBox(width: 10)),
                         ],
-                        columnSpacing: 20,
-                        source: _InvoicesDataSource(_invoices),
+                        columnSpacing: 10,
+                        source: _InvoicesDataSource(_invoices, context),
                         rowsPerPage: _invoices.isEmpty
                             ? 1
                             : _invoices.length < 10
@@ -119,10 +131,9 @@ class InvoicesPageState extends State<InvoicesPage> {
 
 class _InvoicesDataSource extends DataTableSource {
   final List<InvoiceModel> _invoices;
+  final BuildContext _context;
 
-  _InvoicesDataSource(
-    this._invoices,
-  );
+  _InvoicesDataSource(this._invoices, this._context);
 
   @override
   DataRow getRow(int index) {
@@ -130,14 +141,96 @@ class _InvoicesDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
+        DataCell(
+          GestureDetector(
+            onTap: () {
+              router.replace(WorkorderDetailsRoute(id: invoice.workorderId!));
+            },
+            child: const Icon(
+              Icons.visibility,
+              color: Color.fromARGB(
+                255,
+                58,
+                4,
+                152,
+              ),
+            ),
+          ),
+        ),
         DataCell(Text(invoice.number!)),
         DataCell(Text(invoice.workorder!.vehicle!.registration!)),
         DataCell(Text(
           DateFormat('yyyy-MM-dd').format(invoice.createdDate!),
         )),
-        DataCell(Text(invoice.workorder!.vehicle!.user!.name)),
+        DataCell(Text(invoice.workorder!.vehicle!.user!.fullName!)),
         DataCell(Text(invoice.workorder!.totalCost!.toStringAsFixed(2))),
         DataCell(Text(InvoiceStatusString[invoice.invoiceStatus!] ?? '')),
+        DataCell(
+          GestureDetector(
+            onTap: () async {
+              var workorderItems = await _context
+                  .read<WorkorderItemsProvider>()
+                  .getWorkorderItems(invoice.workorderId!);
+              File file = await generateInvoicePdf(invoice, workorderItems);
+              // ignore: use_build_context_synchronously
+              Navigator.push(
+                _context,
+                MaterialPageRoute(
+                  builder: (context) => Scaffold(
+                    appBar: AppBar(
+                      title: const Text('PDF Preview'),
+                    ),
+                    body: Column(
+                      children: [
+                        Expanded(
+                          child: PDFView(
+                            filePath: file.path,
+                            enableSwipe: true,
+                            swipeHorizontal: true,
+                            autoSpacing: false,
+                            pageFling: false,
+                            onError: (error) {
+                              showToastFailed('Could not open PDF!');
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                path.basename(file.path),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: IconButton(
+                                  onPressed: () {
+                                    savePDFFile(file);
+                                  },
+                                  icon: const Icon(Icons.download),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+            child: const Icon(
+              Icons.picture_as_pdf,
+              color: Colors.green,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -150,4 +243,15 @@ class _InvoicesDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+}
+
+Future<void> savePDFFile(File pdfFile) async {
+  try {
+    final dir = await getExternalStorageDirectory();
+    final path = '${dir?.path}/invoice.pdf';
+    await pdfFile.copy(path);
+    showToastSucceded('PDF saved successfully!');
+  } on PlatformException catch (e) {
+    showToastFailed('Failed to save PDF: ${e.message}');
+  }
 }

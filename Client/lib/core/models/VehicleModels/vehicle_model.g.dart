@@ -12,7 +12,7 @@ _$_VehicleModel _$$_VehicleModelFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as int?,
       user: json['user'] == null
           ? null
-          : UserDetails.fromJson(json['user'] as Map<String, dynamic>),
+          : ClientModel.fromJson(json['user'] as Map<String, dynamic>),
       registration: json['registration'] as String?,
       brand: json['brand'] as String?,
       model: json['model'] as String?,

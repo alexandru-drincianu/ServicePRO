@@ -60,20 +60,39 @@ class WorkorderItemsPageState extends State<WorkorderItemsPage> {
     var consumable = workorderItem.consumable;
     var updatedWorkorderItem =
         workorderItem.copyWith(consumable: null, labour: null);
-    final workorderItemsProvider = context.read<WorkorderItemsProvider>();
-    int? workorderItemId =
-        await workorderItemsProvider.createWorkorderItem(updatedWorkorderItem);
-    if (workorderItemId == null || workorderItemId == 0) {
-      showToastFailed("Failed adding item");
+
+    bool foundItem = false;
+
+    if (updatedWorkorderItem.consumableId != null) {
+      foundItem = _workorderItems.indexWhere((item) =>
+              item.consumableId == updatedWorkorderItem.consumableId) !=
+          -1;
+    }
+
+    if (workorderItem.labourId != null) {
+      foundItem = _workorderItems.indexWhere(
+              (item) => item.labourId == updatedWorkorderItem.labourId) !=
+          -1;
+    }
+
+    if (foundItem) {
+      showToastFailed("Item already present!");
     } else {
-      showToastSucceded("Item added");
-      setState(() {
-        _workorderItems.add(workorderItem.copyWith(
-          id: workorderItemId,
-          labour: labour,
-          consumable: consumable,
-        ));
-      });
+      final workorderItemsProvider = context.read<WorkorderItemsProvider>();
+      int? workorderItemId = await workorderItemsProvider
+          .createWorkorderItem(updatedWorkorderItem);
+      if (workorderItemId == null || workorderItemId == 0) {
+        showToastFailed("Failed adding item");
+      } else {
+        showToastSucceded("Item added");
+        setState(() {
+          _workorderItems.add(workorderItem.copyWith(
+            id: workorderItemId,
+            labour: labour,
+            consumable: consumable,
+          ));
+        });
+      }
     }
   }
 

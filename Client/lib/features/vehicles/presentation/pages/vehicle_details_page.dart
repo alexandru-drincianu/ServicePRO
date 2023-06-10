@@ -94,7 +94,7 @@ class VehicleDetailsPageState extends State<VehicleDetailsPage> {
                 _buildRow(
                   icon: Icons.person,
                   label: 'Owner:',
-                  text: _vehicleData.user!.name,
+                  text: _vehicleData.user!.fullName!,
                   buttonLabel: 'Go to profile',
                   onPressed: () {
                     router.replace(UserDetailsRoute(id: _vehicleData.user!.id));

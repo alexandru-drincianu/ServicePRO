@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:service_pro/core/models/UserModels/client_model.dart';
 import 'package:service_pro/core/models/UserModels/user_details.dart';
 
 part 'vehicle_model.freezed.dart';
@@ -12,7 +13,7 @@ class VehicleModel with _$VehicleModel {
   const factory VehicleModel({
     int? id,
     @JsonKey(name: 'userId') int? userId,
-    @JsonKey(name: 'user') UserDetails? user,
+    @JsonKey(name: 'user') ClientModel? user,
     @JsonKey(name: 'registration') String? registration,
     @JsonKey(name: 'brand') String? brand,
     @JsonKey(name: 'model') String? model,

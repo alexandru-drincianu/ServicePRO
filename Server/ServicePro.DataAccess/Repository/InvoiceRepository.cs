@@ -20,14 +20,14 @@ namespace ServcicePro.DataAccess.Repository
         public async Task<Invoice> GetInvoiceByIdAsync(int invoiceId)
         {
             return await _context.Set<Invoice>()
-                .Include(i => i.Workorder).ThenInclude(w => w.Vehicle).ThenInclude(v => v.User)
+                .Include(i => i.Workorder).ThenInclude(w => w.Vehicle).ThenInclude(v => v.User).ThenInclude(u => u.Address)
                 .FirstOrDefaultAsync(i => i.Id == invoiceId);
         }
 
         public async Task<List<Invoice>> GetAllAsync()
         {
             return await _context.Set<Invoice>()
-                .Include(i => i.Workorder).ThenInclude(w => w.Vehicle).ThenInclude(v => v.User)
+                .Include(i => i.Workorder).ThenInclude(w => w.Vehicle).ThenInclude(v => v.User).ThenInclude(u => u.Address)
                 .OrderByDescending(i => i.CreatedDate)
                 .ToListAsync();
         }

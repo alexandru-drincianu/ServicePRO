@@ -156,14 +156,9 @@ class WorkorderDetailsPageState extends State<WorkorderDetailsPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                _workorderData.isInvoiced!
-                    ? const Text(
-                        "Workorder invoiced!",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
+                _workorderData.isInvoiced! ||
+                        _workorderData.status != WorkorderStatus.ready.index
+                    ? const SizedBox()
                     : SizedBox(
                         child: Center(
                           child: SizedBox(

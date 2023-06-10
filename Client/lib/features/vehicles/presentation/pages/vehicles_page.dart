@@ -229,7 +229,7 @@ class _VehiclesDataSource extends DataTableSource {
           ),
         ),
         DataCell(Text(vehicle.registration!)),
-        DataCell(Text(vehicle.user!.name)),
+        DataCell(Text(vehicle.user!.fullName!)),
         DataCell(Text(vehicle.brand!)),
         DataCell(Text(vehicle.model!)),
         DataCell(Text(vehicle.mileage.toString())),

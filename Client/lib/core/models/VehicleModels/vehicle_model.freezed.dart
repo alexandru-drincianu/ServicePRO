@@ -24,7 +24,7 @@ mixin _$VehicleModel {
   @JsonKey(name: 'userId')
   int? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'user')
-  UserDetails? get user => throw _privateConstructorUsedError;
+  ClientModel? get user => throw _privateConstructorUsedError;
   @JsonKey(name: 'registration')
   String? get registration => throw _privateConstructorUsedError;
   @JsonKey(name: 'brand')
@@ -55,7 +55,7 @@ abstract class $VehicleModelCopyWith<$Res> {
   $Res call(
       {int? id,
       @JsonKey(name: 'userId') int? userId,
-      @JsonKey(name: 'user') UserDetails? user,
+      @JsonKey(name: 'user') ClientModel? user,
       @JsonKey(name: 'registration') String? registration,
       @JsonKey(name: 'brand') String? brand,
       @JsonKey(name: 'model') String? model,
@@ -64,7 +64,7 @@ abstract class $VehicleModelCopyWith<$Res> {
       @JsonKey(name: 'fuelType') int? fuelType,
       @JsonKey(name: 'workorderId') int? workorderId});
 
-  $UserDetailsCopyWith<$Res>? get user;
+  $ClientModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -103,7 +103,7 @@ class _$VehicleModelCopyWithImpl<$Res, $Val extends VehicleModel>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserDetails?,
+              as ClientModel?,
       registration: freezed == registration
           ? _value.registration
           : registration // ignore: cast_nullable_to_non_nullable
@@ -137,12 +137,12 @@ class _$VehicleModelCopyWithImpl<$Res, $Val extends VehicleModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $UserDetailsCopyWith<$Res>? get user {
+  $ClientModelCopyWith<$Res>? get user {
     if (_value.user == null) {
       return null;
     }
 
-    return $UserDetailsCopyWith<$Res>(_value.user!, (value) {
+    return $ClientModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
@@ -159,7 +159,7 @@ abstract class _$$_VehicleModelCopyWith<$Res>
   $Res call(
       {int? id,
       @JsonKey(name: 'userId') int? userId,
-      @JsonKey(name: 'user') UserDetails? user,
+      @JsonKey(name: 'user') ClientModel? user,
       @JsonKey(name: 'registration') String? registration,
       @JsonKey(name: 'brand') String? brand,
       @JsonKey(name: 'model') String? model,
@@ -169,7 +169,7 @@ abstract class _$$_VehicleModelCopyWith<$Res>
       @JsonKey(name: 'workorderId') int? workorderId});
 
   @override
-  $UserDetailsCopyWith<$Res>? get user;
+  $ClientModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -206,7 +206,7 @@ class __$$_VehicleModelCopyWithImpl<$Res>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserDetails?,
+              as ClientModel?,
       registration: freezed == registration
           ? _value.registration
           : registration // ignore: cast_nullable_to_non_nullable
@@ -264,7 +264,7 @@ class _$_VehicleModel implements _VehicleModel {
   final int? userId;
   @override
   @JsonKey(name: 'user')
-  final UserDetails? user;
+  final ClientModel? user;
   @override
   @JsonKey(name: 'registration')
   final String? registration;
@@ -335,7 +335,7 @@ abstract class _VehicleModel implements VehicleModel {
   const factory _VehicleModel(
       {final int? id,
       @JsonKey(name: 'userId') final int? userId,
-      @JsonKey(name: 'user') final UserDetails? user,
+      @JsonKey(name: 'user') final ClientModel? user,
       @JsonKey(name: 'registration') final String? registration,
       @JsonKey(name: 'brand') final String? brand,
       @JsonKey(name: 'model') final String? model,
@@ -354,7 +354,7 @@ abstract class _VehicleModel implements VehicleModel {
   int? get userId;
   @override
   @JsonKey(name: 'user')
-  UserDetails? get user;
+  ClientModel? get user;
   @override
   @JsonKey(name: 'registration')
   String? get registration;

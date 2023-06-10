@@ -153,7 +153,7 @@ class _VehiclesDataSource extends DataTableSource {
         DataCell(Text(
           DateFormat('yyyy-MM-dd').format(workorder.arrivedDate!),
         )),
-        DataCell(Text(workorder.vehicle!.user!.name)),
+        DataCell(Text(workorder.vehicle!.user!.fullName!)),
         DataCell(Text(workorder.totalCost!.toString())),
         DataCell(Text(WorkorderStatusString[workorder.status!] ?? '')),
       ],
