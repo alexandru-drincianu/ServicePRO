@@ -7,6 +7,8 @@ import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/warehouse/provider/consumables_provider.dart';
 
 import '../../../../core/widgets/app_drawer.dart';
+import '../../../../routing/app_router.dart';
+import '../../../../routing/app_router.gr.dart';
 
 class ConsumableDetailsPage extends StatefulWidget {
   final int? id;
@@ -74,6 +76,10 @@ class ConsumableDetailsPageState extends State<ConsumableDetailsPage> {
           context.translate(
             TranslationKeys.consumableDetails,
           ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => router.replace(const WarehouseRoute()),
         ),
       ),
       body: _setupComplete

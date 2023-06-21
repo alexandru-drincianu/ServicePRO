@@ -5,8 +5,10 @@ import 'package:service_pro/core/localization/localization.dart';
 import 'package:service_pro/core/models/LabourModels/labour_model.dart';
 import 'package:service_pro/core/widgets/toast_message.dart';
 import 'package:service_pro/features/warehouse/provider/labours_provider.dart';
+import 'package:service_pro/routing/routing.dart';
 
 import '../../../../core/widgets/app_drawer.dart';
+import '../../../../routing/app_router.dart';
 
 class LabourDetailsPage extends StatefulWidget {
   final int? id;
@@ -72,8 +74,12 @@ class LabourDetailsPageState extends State<LabourDetailsPage> {
       appBar: AppBar(
         title: Text(
           context.translate(
-            TranslationKeys.consumableDetails,
+            TranslationKeys.labourDetails,
           ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => router.replace(const WarehouseRoute()),
         ),
       ),
       body: _setupComplete
