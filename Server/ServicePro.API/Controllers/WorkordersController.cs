@@ -67,7 +67,7 @@ namespace ServicePro.API.Controllers
             return Ok(workorder);
         }
 
-        [HttpDelete("{orderId}")]
+        [HttpDelete("{workorderId}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Delete(int workorderId)

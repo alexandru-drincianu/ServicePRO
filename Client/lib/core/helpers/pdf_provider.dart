@@ -123,7 +123,9 @@ Future<File> generateInvoicePdf(
                         pw.Text(item.description ?? ''),
                         pw.Align(
                           alignment: pw.Alignment.centerRight,
-                          child: pw.Text('${item.quantity ?? ''}'),
+                          child: pw.Text(
+                            '${item.quantity != 0 ? item.quantity : ''}',
+                          ),
                         ),
                         pw.Align(
                           alignment: pw.Alignment.centerRight,
