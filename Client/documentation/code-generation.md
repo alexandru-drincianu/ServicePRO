@@ -30,4 +30,3 @@ If you need mutable properties please use the following annotation:
 @unfreezed
 ```
 
-You can check more about this topic yourself [here](https://pub.dev/documentation/freezed/latest/#defining-a-mutable-class-instead-of-an-immutable-one).

@@ -32,16 +32,16 @@ class BaseHttpService {
 }
 ```
 
-An example of extending this service in order to use the get method can be found in [Orders service](https://gitlab.netrom.live/netrom/flutter/rnd/-/blob/main/Boilerplate/lib/core/services/orders_service.dart):
+An example of extending this service in order to use the get method can be found in **Vehicle Service**
 
 ```dart
 import 'base_http_service.dart';
 
-class OrdersService extends BaseHttpService {
+class VehicleService extends BaseHttpService {
 
-    static const ordersRoute = 'orders';
+    static const ordersRoute = 'Vechiles';
 
-    Future<List<OrderModel>> fetchOrders() async {
+    Future<List<Vehicles>> fetchVehicles() async {
         try {
             final res = await get(
                 buildUri(
@@ -63,7 +63,3 @@ class OrdersService extends BaseHttpService {
     }
 }
 ```
-
-## Alternatives
-
-An alternative for using the HTTP package is [dio](https://pub.dev/packages/dio) which supports global configuration, interceptors, request cancellation, file uploading/downloading, timeout, custom adapters, etc.
